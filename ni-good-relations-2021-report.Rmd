@@ -1,0 +1,2273 @@
+---
+title: "Northern Ireland Good Relations Indicators 2021 Report"
+lang: "en"
+output:
+  html_document:
+    fig_caption: false
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    css: "style.css"
+    self_contained: true
+params:
+  pre_release: false
+---
+
+<!--Add tabbing to table of contents for accessibility-->
+<body onload="tabOrder()">
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE) # Do not include any R code in final output
+knitr::opts_chunk$set(warning = FALSE) # Do not include warnings in final output
+knitr::opts_chunk$set(message = FALSE) # Do not include messages in final output
+knitr::opts_chunk$set(out.width = "100%") # Ensure all figures fill the page width
+
+# Get the PACkage MANager library "pacman"
+if(!require(pacman)) install.packages("pacman")
+library(pacman)
+
+# Read in R libraries
+p_load("htmltools", # Used for coding html page elements, eg banners and headings
+       "dplyr", # Data manipulation
+       "httr", # Downloading of external data from web sources
+       "plotly", # Plotting interactive web graphics
+       "tidyr", # Data manipulation
+       "foreign", # Reading in SPSS data
+       "base64enc", # Encoding images in infographics
+       "readxl", # Reading data in xls or xlsx format
+       "readODS", # Reading data in ODS format
+       "tippy", # Hover text for footnotes
+       "english", # Used for commentary
+       "janitor", # Tidying data
+       "tibble", # Reshaping data
+       "openxlsx", # Create excel table behind download button
+       "xfun", # Embeds csv/excel data behind buttons
+       "docxtractr", # Extracts values from Microsoft Word data sources
+       "stringr") # Works with character strings
+       
+# Reads in all functions from functions folder
+for (file in list.files(path = "functions", pattern = "*.R")) {
+  source(paste0("functions/",file))
+}
+
+
+# If no figures for YLT 2020 then set NILTyear to 2020 and leave Yltyear at 2019.
+
+# Year NILT data refer to
+NILTyear <- 2021
+# Year YLT data refer to. 
+YLTyear <- 2021
+# Solving for year of missing YLT data in 2021 report
+lastYLTyear <- if(YLTyear == 2021) {
+  YLTyear - 2
+} else {
+  YLTyear - 1
+}
+# Year to refer to joint figures
+LTyear <- max(NILTyear, YLTyear)
+# Year PSNI Hate Crime Statistics refer to
+psniYear <- "2021/22"
+# Year NIHE homeless due to intimidation statistics refer to
+niheYear <- "2021/22"
+# Most recent school Omnibus Survey
+omniYear <- 2018
+# Last year of integrated schools admission data to use
+intYear <- "2021/22"
+
+# Original Publication date
+pubDate <- "xxxx"
+# Name of report contact
+contact <- "Daniel Nelson-Donaghy"
+
+# Read in spss data
+NILT <- read.spss("data/NILT 2021.sav", to.data.frame = TRUE)
+YLT <- read.spss("data/YLT 2020-21.sav", to.data.frame = TRUE)
+
+# Location of PSNI tables on hate crimes
+psniTables <- "https://www.psni.police.uk/globalassets/inside-the-psni/our-statistics/hate-motivation-statistics/2020-21/q4/hate-motivations-tables-mar-_21.xls"
+
+# Location of NIHE tables on homelessness
+niheTables <- "data/Homelessness- Intimidation by Council Area.docx"
+
+```
+
+```{r banner}
+
+banner(leftImage = "NISRA-full-name-stacked-white.png",
+       leftAlt = "NISRA logo",
+       rightImage = "TEO-white-stacked.png",
+       rightAlt = "Executive Office logo")
+
+tbucDiagram()
+
+```
+
+```{r analysis, results = FALSE}
+# Used for identifying variables
+# yltNames <- data.frame(names(YLT), attributes(YLT)$variable.labels)
+# niltNames <- data.frame(names(NILT), attributes(NILT)$variable.labels)
+
+# NILT/YLT FIGURES
+# Read historic NILT/YLT data in 
+data <- readRDS(paste0("data/dataTo", LTyear - 1, ".RDS")) %>%
+  round2()
+
+# Data frame of just previous year's figures for comparisons and fix to round 2018 values
+dataOld <- data %>%
+  filter(year == LTyear - 1)
+
+# Corrects an error in the dataOld frame where the below figure was incorrect - Brian, if you come across this
+# abomination, feel free to change so it's being done the right way, this was just my best guess and it seems to work
+
+if (LTyear == 2021) {
+  dataOld['f1y_NoR'][dataOld['f1y_NoR'] == 48] <- 43
+}
+
+# Calculate new values for Figures 1-4, 6, 8, 11-12 and 16 from current NILT and YLT ####
+niltNew <- data.frame(year = NILTyear,
+                      f1_adults = colPct(NILT, RLRELAGO, "Better"),
+                      f1a_Cath = colPct(NILT, RLRELAGO, "Better", religion = "Catholic"),
+                      f1a_Prot = colPct(NILT, RLRELAGO, "Better", religion = "Protestant"),
+                      f1a_NoR = colPct(NILT, RLRELAGO, "Better", religion = "No religion"),
+                      f2_adults = colPct(NILT, RLRELFUT, "Better"),
+                      f3a_adults = colPct(NILT, FEELCATH, c("Very favourable", "Favourable")),
+                      f3b_adults = colPct(NILT, FEELPROT, c("Very favourable", "Favourable")),
+                      f3c_adults = colPct(NILT, FEELMEG, c("Very favourable", "Favourable")),
+                      f6b_yes = colPct(NILT, COMDIV, c("A lot", "A little")),
+                      f6b_no = colPct(NILT, COMDIV, c("Not at all")),
+                      f6_lot = colPct(NILT, COMDIV, "A lot"),
+                      f6_little = colPct(NILT, COMDIV, "A little"),
+                      f6_dunno = colPct(NILT, COMDIV, "Don't know"),
+                      f7_LC = colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably")),
+                      f7_park = colPct(NILT, PARKOPEN, c("Yes, definitely", "Yes, probably")),
+                      f7_lib = colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably")),
+                      f7_SHCN = colPct(NILT, SHCNOPEN, c("Yes, definitely", "Yes, probably")),
+                      f8_pct = colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably")),
+                      f11_workplace = colPct(NILT, WORKCULT2, c("Yes, definitely", "Yes, probably")),
+                      f11_neighbourhood = colPct(NILT, NGHCULT2, c("Yes, definitely", "Yes, probably")),
+                      f12_neighbourhood = colPct(NILT, MXRLGNGH, "Mixed religion neighbourhood"),
+                      f12_workplace = colPct(NILT, MXRLGWRK, "Mixed religion workplace"),
+                      f12_school = colPct(NILT, OWNMXSCH, "Mixed religion school"),
+                      f16_aR = colPct(NILT, REPMUR2, "Yes"),
+                      f16_iR = colPct(NILT, REPMURAL, "Yes"),
+                      f16_aL = colPct(NILT, LOYMUR2, "Yes"),
+                      f16_iL = colPct(NILT, LOYMURAL, "Yes"),
+                      f17_compare = colPct(NILT, NISAFEWL, c("Strongly agree", "Agree")),
+                      f18_prot = colPct(NILT, GOPSCHL, c("Very safe", "Quite safe")),
+                      f18_cath = colPct(NILT, GOCSCHL, c("Very safe", "Quite safe")),
+                      f18_gaa = colPct(NILT, GOGAA, c("Very safe", "Quite safe")),
+                      f18_orange = colPct(NILT, GOOH, c("Very safe", "Quite safe")),
+                      f19_resident = colPct(NILT, PLINEREM, c("I would like the Peace Lines to come down now", "I would like the Peace Lines to come down in the future"), resident = TRUE),
+                      f20_adultNeigh = colPct(NILT, UBELNGH, c("Yes, definitely", "Yes, probably")),
+                      f20_adultNI = colPct(NILT, UBELNI, c("Yes, definitely", "Yes, probably")),
+                      f21b_neighbourhood = colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely")),
+                      f21b_NI = colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely")),
+                      f22_cath = colPct(NILT, CTHCRICH, c("Strongly agree", "Agree")),
+                      f22_prot = colPct(NILT, PRCRICH, c("Strongly agree", "Agree")),
+                      f22_me = colPct(NILT, EMCRICH, c("Strongly agree", "Agree")),
+                      f23_compare = colPct(NILT, CULTRESP, c("Strongly agree", "Agree")),
+                      RLRELAGO_n = unweighted_n(NILT$RLRELAGO),
+                      RLRELFUT_n = unweighted_n(NILT$RLRELFUT),
+                      RLRELAGO_nCath = unweighted_n(NILT$RLRELAGO[NILT$RELIGCAT == "Catholic"]),
+                      RLRELAGO_nProt = unweighted_n(NILT$RLRELAGO[NILT$RELIGCAT == "Protestant"]),
+                      RLRELAGO_nNoR = unweighted_n(NILT$RLRELAGO[NILT$RELIGCAT == "No religion"]),
+                      SCHLCULT2_n = unweighted_n(NILT$SCHLCULT2),
+                      NISAFEWL_n = unweighted_n(NILT$NISAFEWL),
+                      INFLLOCL_n = unweighted_n(NILT$INFLLOCL),
+                      INFLNI_n = unweighted_n(NILT$INFLNI),
+                      LOYMURAL_n = unweighted_n(NILT$LOYMURAL),
+                      REPMURAL_n = unweighted_n(NILT$REPMURAL),
+                      LOYMUR2_n = unweighted_n(NILT$LOYMUR2),
+                      REPMUR2_n = unweighted_n(NILT$REPMUR2),
+                      COMDIV_n = unweighted_n(NILT$COMDIV),
+                      LCOPEN_n = unweighted_n(NILT$LCOPEN),
+                      PARKOPEN_n = unweighted_n(NILT$PARKOPEN),
+                      LIBOPEN_n = unweighted_n(NILT$LIBOPEN),
+                      SHCNOPEN_n = unweighted_n(NILT$SHCNOPEN),
+                      WORKCULT2_n = unweighted_n(NILT$WORKCULT2),
+                      NGHCULT2_n = unweighted_n(NILT$NGHCULT2),
+                      CULTRESP_n = unweighted_n(NILT$CULTRESP),
+                      MXRLGNGH_n = unweighted_n(NILT$MXRLGNGH),
+                      MXRLGWRK_n = unweighted_n(NILT$MXRLGWRK),
+                      OWNMXSCH_n = unweighted_n(NILT$OWNMXSCH),
+                      GOPSCHL_n = unweighted_n(NILT$GOPSCHL),
+                      GOCSCHL_n = unweighted_n(NILT$GOCSCHL),
+                      GOGAA_n = unweighted_n(NILT$GOGAA),
+                      GOOH_n = unweighted_n(NILT$GOOH),
+                      UBELNGH_n = unweighted_n(NILT$UBELNGH),
+                      UBELNI_n = unweighted_n(NILT$UBELNI),
+                      PRCRICH_n = unweighted_n(NILT$PRCRICH),
+                      CTHCRICH_n = unweighted_n(NILT$CTHCRICH),
+                      EMCRICH_n = unweighted_n(NILT$EMCRICH),
+                      PLINEREM_Rn = unweighted_n(NILT$PLINEREM[NILT$PLINELIV == "Within a few streets of the nearest Peace Line"]))
+
+yltNew <- data.frame(year = YLTyear,
+                     f1_young =  colPct(YLT, RLRELAGO, "Better"),
+                     f1y_Cath = colPct(YLT, RLRELAGO, "Better", religion = "Catholic"),
+                     f1y_Prot = colPct(YLT, RLRELAGO, "Better", religion = "Protestant"),
+                     f1y_NoR = colPct(YLT, RLRELAGO, "Better", religion = "No religion"),
+                     f2_young =  colPct(YLT, RLRELFUT, "Better"),
+                     f3a_young = colPct(YLT, FEELCATH, c("Very favourable", "Quite favourable")),
+                     f3b_young = colPct(YLT, FEELPROT, c("Very favourable", "Quite favourable")),
+                     f3c_young = colPct(YLT, FEELMEC, c("Very favourable", "Quite favourable")),
+                     f4a_male = colPct(YLT, SOCDIFF, c("Very often", "Sometimes"), gender = "Male"),
+                     f4a_female = colPct(YLT, SOCDIFF, c("Very often", "Sometimes"), gender = "Female"),
+                     f4a_overall = colPct(YLT, SOCDIFF, c("Very often", "Sometimes")),
+                     f4_Cath = colPct(YLT, SOCDIFF, c("Very often", "Sometimes"), religion = "Catholic"),
+                     f4_Prot = colPct(YLT, SOCDIFF, c("Very often", "Sometimes"), religion = "Protestant"),
+                     f4_NoR = colPct(YLT, SOCDIFF, c("Very often", "Sometimes"), religion = "No religion"),
+                     f20_youngNeigh = colPct(YLT, BELONGNG, c("Yes, definitely", "Yes, probably")),
+                     f20_youngNI = colPct(YLT, BELONGNI, c("Yes, definitely", "Yes, probably")),
+                     f21a_neighbourhood = colPct(YLT, INFLHERE, c("Yes, probably", "Yes, definitely")),
+                     f21a_NI = colPct(YLT, INFLUNI, c("Yes, probably", "Yes, definitely")),
+                     RLRELAGO_YnCath = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == toupper("Catholic")]),
+                     RLRELAGO_YnProt = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == toupper("Protestant")]),
+                     RLRELAGO_YnNoR = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == toupper("No religion")]),
+                     RLRELAGO_Yn = unweighted_n(YLT$RLRELAGO),
+                     RLRELFUT_Yn = unweighted_n(YLT$RLRELFUT),
+                     FEELCATH_Yn = unweighted_n(YLT$FEELCATH),
+                     FEELPROT_Yn = unweighted_n(YLT$FEELPROT),
+                     FEELMEC_Yn = unweighted_n(YLT$FEELMEC),
+                     SOCDIFF_Yn = unweighted_n(YLT$SOCDIFF),
+                     SOCDIFF_YnCath = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Catholic")]),
+                     SOCDIFF_YnProt = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Protestant")]),
+                     SOCDIFF_YnMale = unweighted_n(YLT$SOCDIFF[YLT$RSEX == "Male"]),
+                     SOCDIFF_YnFemale = unweighted_n(YLT$SOCDIFF[YLT$RSEX == "Female"]),
+                     BELONGNG_Yn = unweighted_n(YLT$BELONGNG),
+                     BELONGNI_Yn = unweighted_n(YLT$BELONGNI),
+                     INFLHERE_Yn = unweighted_n(YLT$INFLHERE),
+                     INFLUNI_Yn = unweighted_n(YLT$INFLUNI))
+
+dataNew <- full_join(niltNew, yltNew)
+
+# Remove duplication of YLT values in final data frame if YLT not run
+if (YLTyear %in% data$year) {
+  dataNew <- dataNew %>%
+    filter(year != YLTyear)
+}
+
+# Remove duplication of NILT values in final data frame if NILT not run
+if (NILTyear %in% data$year) {
+  dataNew <- dataNew %>%
+    filter(year != NILTyear)
+}
+
+# Add new data to historic
+data <- rbind(data, dataNew)
+
+# Save out new data to be picked up next year
+saveRDS(data, file = paste0("data/dataTo", LTyear, ".RDS"))
+
+# SCHOOL OMNIBUS SURVEY FIGURES
+# Import School Omnibus Survey Data
+omniData <- readRDS(paste0("data/omniTo", omniYear, ".RDS"))
+
+# PSNI HATE CRIME FIGURES
+# Generate file names for historic and new PSNI data series
+historicPsni <- paste0("data/psniTo", as.numeric(substr(psniYear, 1, 4)) - 1, "-", as.numeric(substr(psniYear, 6, 7)) - 1, ".RDS")
+psniSave <- paste0("data/psniTo", sub("/", "-", psniYear), ".RDS")
+
+# Read hisoric PSNI figures in
+psni <- readRDS(historicPsni)
+
+# Read PSNI Excel tables from web location -
+# Link not working any more as of 03/10/2022
+# GET(psniTables, write_disk(psniDL <- paste0("data/psni-data-", sub("/", "-", psniYear),".xls"), overwrite = TRUE))
+
+# PSNI data no longer available on site, use code below to read from folder
+psniDL <- paste0("data/psni-data-", sub("/", "-", psniYear),".xls")
+
+
+# Construct table of hate crimes for last two years from Table 1
+hateCrimeTable <- cbind(read_xls(psniDL, sheet = "Table 1", range = "A5:A11"),
+                        read_xls(psniDL, sheet = "Table 1", range = "F5:G11"))
+
+# Rename columns
+names(hateCrimeTable) <- gsub("Apr'", "20", names(hateCrimeTable))
+names(hateCrimeTable) <- gsub("-Mar'", "/", names(hateCrimeTable))
+
+# Select current year, re-code categories and rotate table to form new line
+psniNew <- hateCrimeTable %>%
+  select(motivation = `...1`, all_of(psniYear)) %>%
+  mutate(motivation = case_when(motivation == "Racist" ~ "Racial",
+                                motivation == "Faith/Religion" ~ "Religion",
+                                TRUE ~ motivation)) %>%
+  t() %>% as.data.frame()
+
+# Tidy data for new year's figures
+names(psniNew) <- psniNew[1, ]
+psniNew <- psniNew[2, ]
+psniNew[] <- lapply(psniNew, function(x) as.numeric(as.character(x)))
+
+psniNew$year <- psniYear
+
+# NIHE HOMELESSNESS FIGURES
+# Generate file names for historic and new homeless data series
+historicHomeless <- paste0("data/niheTo", as.numeric(substr(niheYear, 1, 4)) - 1, "-", as.numeric(substr(niheYear, 6, 7)) - 1, ".RDS")
+homelessSave <- paste0("data/niheTo", sub("/", "-", niheYear), ".RDS")
+
+# Read historic Homeless figures in
+nihe <- readRDS(historicHomeless)
+
+# Read word document containing homeless statistics
+homelessDoc <- read_docx(niheTables)
+  
+# Extract first table from word document and write to data frame
+homelessTable <-  docx_extract_tbl(homelessDoc, tbl_number = 1) %>%
+  as.data.frame()
+
+# Rename columns to overcome merged cells along top and mark unnecessary ones for deletion
+names(homelessTable) <- c("year", "ASB", "delete", "Disability", "delete", "Paramilitary", "delete", "Racial", "delete", "Sectarian", "delete", "Orientation", "delete", "Total", "delete")
+
+# Create new line of nihe data by 
+niheNew <- homelessTable[!grepl("delete", names(homelessTable))] %>%
+  filter(year == niheYear) %>%
+  mutate(ASB = case_when(ASB == "-" ~ as.numeric(NA),
+                            TRUE ~ as.numeric(ASB)),
+         Disability = case_when(Disability == "-" ~ as.numeric(NA),
+                            TRUE ~ as.numeric(Disability)),
+         Paramilitary = as.numeric(Paramilitary),
+         Racial = case_when(Racial == "-" ~ as.numeric(NA),
+                            TRUE ~ as.numeric(Racial)),
+         Sectarian = as.numeric(Sectarian),
+         Orientation = case_when(Orientation == "-" ~ as.numeric(NA),
+                            TRUE ~ as.numeric(Orientation)),
+         Total = as.numeric(Total),
+         Other = Total - sum(Paramilitary, Racial, Sectarian, na.rm = TRUE),
+         Other2 = Total - sum(Paramilitary, ASB, Sectarian, na.rm = TRUE))
+
+niheNewbind <- niheNew %>%  select(year, Paramilitary, Sectarian, Racial, Other)
+ 
+
+# niheNewb <- homelessTable[!grepl("delete", names(homelessTable))] %>%
+#   filter(year == niheYear) %>%
+#   mutate(Paramilitary = as.numeric(Paramilitary),
+#          Racial = case_when(Racial == "-" ~ as.numeric(NA),
+#                             TRUE ~ as.numeric(Racial)),
+#          Sectarian = as.numeric(Sectarian),
+#          Total = as.numeric(Total),
+#          Other = Total - sum(Paramilitary, Sectarian, Racial, na.rm = TRUE)) %>%
+#   select(year, Paramilitary, Sectarian, Racial, Other)
+
+
+# Extract Figure 1 values from data, drop f1_ from variable names
+fig1 <- extractFig("f1")
+  
+# Extract Figure 2 values from data, drop f2 from variable names
+fig2 <- extractFig("f2")
+
+# Extract Figure 3a values from data, drop f3a from variable names
+fig3a <- extractFig("f3a")
+
+# Extract Figure 3b values from data, drop f3b from variable names
+fig3b <- extractFig("f3b")
+
+# Extract Figure 3c values from data, drop f3b from variable names
+fig3c <- extractFig("f3c")
+
+# Combining above into fig3d
+fig3d <- data.frame(community = c("Catholic\ncommunities", "Protestant\ncommunities", "Minority Ethnic\ncommunities"),
+                    young = c(dataNew$f3a_young, dataNew$f3b_young, dataNew$f3c_young),
+                    adults = c(dataNew$f3a_adults, dataNew$f3b_adults, dataNew$f3c_adults))
+
+# Combined figure 3 data frame for download buttons
+fig3 <- left_join(left_join(fig3a, fig3b, by = "year"), fig3c, by = "year")
+
+# Extract Figure 4a values from data, drop f4a from variable names
+fig4a <- extractFig("f4a") %>%
+  filter(year != 2020)
+
+# Figure 4b calculated directly from YLT data
+fig4b <- data.frame(religion = c("Catholic", "Protestant", "No religion"),
+                    often = c(dataNew$f4_Cath, dataNew$f4_Prot, dataNew$f4_NoR))
+
+# Combined figure 4 data frame for download buttons
+fig4 <- left_join(fig4a, extractFig("f4"))
+
+# Comment in to remove 2020 gap in bar chart
+# fig4a <- fig4a %>%
+#   mutate(year = as.character(year))
+
+# Figure 5 calculated directly from YLT data
+fig5 <- data.frame(activity = c("Projects", "Classes", "Facilities/\nEquipment"),
+                   young = c(colPct(YLT, DONEWHAT2, "Ticked"),
+                             colPct(YLT, DONEWHAT1, "Ticked"),
+                             colPct(YLT, DONEWHAT3, "Ticked")))
+
+# Figure 6a calculated directly from NILT data
+fig6a <- NILT %>%  # NILT data
+  filter(!is.na(COMDIV)) %>% # Filter out any NA's in column
+  group_by(option = COMDIV) %>% # group by COMDIV
+  summarise(tot = sum(WTFACTOR)) %>% # Weighted totals for each option
+  mutate(pct = round2(tot/sum(tot) * 100)) %>% # Weighted percentage
+  select(-tot) %>% # Drop tot column from data
+  as.data.frame() # Output as data frame
+
+# Extract Figure 6b values from data, drop f6b from variable names
+fig6b <- extractFig("f6b")
+
+# Combined data frame for download buttons
+fig6 <- left_join(fig6b, extractFig("f6"))
+
+# Figure 7 calculated directly from NILT data
+fig7 <- data.frame(area = c("Leisure Centres", "Parks", "Libraries", "Shopping Centres"),
+                   def = c(colPct(NILT, LCOPEN, "Yes, definitely"),
+                           colPct(NILT, PARKOPEN, "Yes, definitely"),
+                           colPct(NILT, LIBOPEN, "Yes, definitely"),
+                           colPct(NILT, SHCNOPEN, "Yes, definitely")),
+                   prob = c(colPct(NILT, LCOPEN, "Yes, probably"),
+                            colPct(NILT, PARKOPEN, "Yes, probably"),
+                            colPct(NILT, LIBOPEN, "Yes, probably"),
+                            colPct(NILT, SHCNOPEN, "Yes, probably")))
+
+# Extract Figure 8 values from data, drop f8 from variable names
+fig8 <- extractFig("f8") %>%
+  filter(!is.na(pct))
+
+# Extract 3 most recent years
+fig9 <- tail(omniData, 3) %>%
+  # Remove yes and no columns
+  select(-no) %>%
+  # Rotate data
+  t() %>%
+  # Convert back to data frame
+  as.data.frame() %>%
+  # Reorganise data
+  row_to_names(row_number = 1) %>%
+  mutate(activity = rownames(.),
+         activity = case_when(activity == "yes" ~ "Overall",
+                              TRUE ~ activity)) %>%
+  select(activity, 1:3) %>%
+  remove_rownames() %>%
+  bind_rows(slice(., 1)) %>% 
+  slice(-1)
+
+
+# Manual input of Figure 10
+fig10 <- data.frame(year = c(2001, 2006, 2009, 2011, 2016),
+                    catholic = c(26, 24, 25, 24, 25),
+                    protestant = c(38, 37, 40, 43, 38),
+                    mixed = c(33, 36, 31, 31, 31),
+                    dunno = c(4, 3, 4, 2, 6))
+
+# Extract Figure 11 values from data, drop f11 from variable names
+fig11 <- extractFig("f11") %>%
+  filter(!is.na(workplace)) # Filter out years question not asked
+
+# Extract Figure 12 values from data, drop f12 from variable names
+fig12 <- extractFig("f12")
+
+fig13 <- data.frame(year = c("2013/14", "2014/15", "2015/16", "2016/17", "2017/18", "2018/19", "2019/20", "2020/21", "2021/22"),
+                    pct = c(10, 18, 19, 15, 18, 21, 20, 24, 16)) %>%
+  filter(year <= intYear)
+
+intEnroll <- 7.7
+
+# Note - fig13_n2 here is calculated from integer percentage - may need reviewed.
+
+fig13_n1 <- 2151
+fig13_n2 <- 2525
+
+# Add new data to historic
+fig14 <- rbind(psni, psniNew)
+rownames(fig14) <- 1:nrow(fig14)
+
+saveRDS(fig14, psniSave)
+
+# Fig 15b made by combining new and historic
+fig15b <- rbind(nihe, niheNewbind)
+
+fig15b <- full_join(fig15b, niheNew)
+
+fig15b <- fig15b %>% mutate(Other2 = NULL)
+
+fig15b <- fig15b[-c(1:3),]
+
+fig15b <- fig15b %>% select("year", "Paramilitary", "Sectarian", "ASB", "Racial", "Other", "Total")
+
+fig15b["Other"][fig15b["Other"] == 24] <- 7
+
+fig15b["Other"][fig15b["Other"] == 111] <- 113
+
+fig15byear <- fig15b$year
+
+fig15b2 <- fig15b %>% mutate(year = NULL, Total = NULL)
+
+fig15b$Total = rowSums(fig15b2, na.rm = TRUE)
+
+fig15b <- fig15b %>% mutate(year = fig15byear, Racial = NULL)
+
+saveRDS(fig15b, homelessSave)
+
+# Fig15a calculated as reshape of niheNew data frame
+fig15a <- data.frame(option = names(niheNew)[names(niheNew) != "year"],
+                     num = unlist(niheNew[names(niheNew) != "year"], use.names = FALSE))
+
+fig15a <- fig15a[-c(2, 4, 6, 7, 8), ]
+                
+fig15a["option"][fig15a["option"] == "Other2"] <- "Other"
+
+fig15a <- fig15a[c(2,1,3,4),]
+
+# Extract Figure 16 values from data, drop f16 from variable names
+fig16 <- extractFig("f16")
+
+# Figure 17 calculated directly from NILT data
+fig17 <- data.frame(respondents = c("All respondents", "Catholic\nrespondents", "Protestant\nrespondents", "Respondents with\nno religion"),
+                   strongly = c(colPct(NILT, NISAFEWL, "Strongly agree"),
+                                colPct(NILT, NISAFEWL, "Strongly agree", religion = "Catholic"),
+                                colPct(NILT, NISAFEWL, "Strongly agree", religion = "Protestant"),
+                                colPct(NILT, NISAFEWL, "Strongly agree", religion = "No religion")),
+                   agree = c(colPct(NILT, NISAFEWL, "Agree"),
+                             colPct(NILT, NISAFEWL, "Agree", religion = "Catholic"),
+                             colPct(NILT, NISAFEWL, "Agree", religion = "Protestant"),
+                             colPct(NILT, NISAFEWL, "Agree", religion = "No religion")))
+
+# Figure 18 calculated directly from NILT data
+fig18 <- data.frame(location = c("GAA Club  ", "Orange Hall  ", "Protestant  \nSecondary  \nSchool  ", "Catholic  \nSecondary  \nSchool  "),
+                    All = c(colPct(NILT, GOGAA, c("Very safe", "Quite safe")),
+                            colPct(NILT, GOOH, c("Very safe", "Quite safe")),
+                            colPct(NILT, GOPSCHL, c("Very safe", "Quite safe")),
+                            colPct(NILT, GOCSCHL, c("Very safe", "Quite safe"))),
+                    no = c(colPct(NILT, GOGAA, c("Very safe", "Quite safe"), religion = "No religion"),
+                           colPct(NILT, GOOH, c("Very safe", "Quite safe"), religion = "No religion"),
+                           colPct(NILT, GOPSCHL, c("Very safe", "Quite safe"), religion = "No religion"),
+                           colPct(NILT, GOCSCHL, c("Very safe", "Quite safe"), religion = "No religion")),
+                    Protestant = c(colPct(NILT, GOGAA, c("Very safe", "Quite safe"), religion = "Protestant"),
+                                   colPct(NILT, GOOH, c("Very safe", "Quite safe"), religion = "Protestant"),
+                                   colPct(NILT, GOPSCHL, c("Very safe", "Quite safe"), religion = "Protestant"),
+                                   colPct(NILT, GOCSCHL, c("Very safe", "Quite safe"), religion = "Protestant")),
+                    Catholic = c(colPct(NILT, GOGAA, c("Very safe", "Quite safe"), religion = "Catholic"),
+                                 colPct(NILT, GOOH, c("Very safe", "Quite safe"), religion = "Catholic"),
+                                 colPct(NILT, GOPSCHL, c("Very safe", "Quite safe"), religion = "Catholic"),
+                                 colPct(NILT, GOCSCHL, c("Very safe", "Quite safe"), religion = "Catholic")))
+
+# Figure 19 calculated directly from NILT data ####
+fig19 <- data.frame(resident = c("All", "Residents*", "Protestant\nresidents", "Catholic\nresidents", "Residents with\nno religion"),
+                    now = c(colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now"),
+                            colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
+                                   resident = TRUE),
+                            colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
+                                   resident = TRUE, religion = "Protestant"),
+                            colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
+                                   resident = TRUE, religion = "Catholic"),
+                            colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
+                                   resident = TRUE, religion = "No religion")),
+                    future = c(colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future"),
+                               colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
+                                      resident = TRUE),
+                               colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
+                                      resident = TRUE, religion = "Protestant"),
+                               colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
+                                      resident = TRUE, religion = "Catholic"),
+                               colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
+                                      resident = TRUE, religion = "No religion")),
+                    nowOrFuture = c(colPct(NILT, PLINEREM,
+                                           c("I would like the Peace Lines to come down now",
+                                             "I would like the Peace Lines to come down in the future")),
+                                    colPct(NILT, PLINEREM,
+                                           c("I would like the Peace Lines to come down now",
+                                             "I would like the Peace Lines to come down in the future"),
+                                           resident = TRUE),
+                                    colPct(NILT, PLINEREM,
+                                           c("I would like the Peace Lines to come down now",
+                                             "I would like the Peace Lines to come down in the future"),
+                                           resident = TRUE, religion = "Protestant"),
+                                    colPct(NILT, PLINEREM, 
+                                           c("I would like the Peace Lines to come down now",
+                                             "I would like the Peace Lines to come down in the future"),
+                                           resident = TRUE, religion = "Catholic"),
+                                    colPct(NILT, PLINEREM,
+                                           c("I would like the Peace Lines to come down now",
+                                             "I would like the Peace Lines to come down in the future"),
+                                           resident = TRUE, religion = "No religion"))) %>%
+  mutate(now = if_else(resident %in% c("All", "Residents*"), now, NA),
+         future = if_else(resident %in% c("All", "Residents*"), future, NA))
+
+# Version of data frame for generating plot
+fig19p <- fig19 %>%
+  mutate(nowOrFuture = if_else(!resident %in% c("All", "Residents*"), nowOrFuture, NA))
+
+# Figure 20a calculated directly from YLT data
+fig20a <- data.frame(belong = c("Neighbourhood", "Northern\nIreland"),
+                     prob = c(colPct(YLT, BELONGNG, "Yes, probably"),
+                              colPct(YLT, BELONGNI, "Yes, probably")),
+                     def = c(colPct(YLT, BELONGNG, "Yes, definitely"),
+                             colPct(YLT, BELONGNI, "Yes, definitely")))
+
+# Figure 20b calculated directly from NILT data
+fig20b <- data.frame(belong = c("Neighbourhood", "Northern\nIreland"),
+                     prob = c(colPct(NILT, UBELNGH, "Yes, probably"),
+                              colPct(NILT, UBELNI, "Yes, probably")),
+                     def = c(colPct(NILT, UBELNGH, "Yes, definitely"),
+                             colPct(NILT, UBELNI, "Yes, definitely")))
+
+# Combined data frame for download buttons
+fig20 <- left_join(fig20a, fig20b, by = "belong")
+
+# Figure 21a calculated directly from YLT data
+fig21a <- data.frame(influence = c("Neighbourhood", "Northern\nIreland"),
+                     prob = c(colPct(YLT, INFLHERE, "Yes, probably"),
+                              colPct(YLT, INFLUNI, "Yes, probably")),
+                     def = c(colPct(YLT, INFLHERE, "Yes, definitely"),
+                             colPct(YLT, INFLUNI, "Yes, definitely")))
+
+# Figure 21b calculated directly from NILT data
+fig21b <- data.frame(influence = c("Neighbourhood", "Northern\nIreland"),
+                     prob = c(colPct(NILT, INFLLOCL, "Yes, probably"),
+                              colPct(NILT, INFLNI, "Yes, probably")),
+                     def = c(colPct(NILT, INFLLOCL, "Yes, definitely"),
+                             colPct(NILT, INFLNI, "Yes, definitely")))
+
+# Combined data frame for download buttons
+fig21 <- left_join(fig21a, fig21b, by = "influence")
+
+# Figure 22 calculated directly from NILT data
+fig22 <- data.frame(community = c("Catholic\ncommunities", "Protestant\ncommunities", "Minority Ethnic\ncommunities"),
+                   strongly = c(colPct(NILT, CTHCRICH, "Strongly agree"),
+                                colPct(NILT, PRCRICH, "Strongly agree"),
+                                colPct(NILT, EMCRICH, "Strongly agree")),
+                   agree = c(colPct(NILT, CTHCRICH, "Agree"),
+                                colPct(NILT, PRCRICH, "Agree"),
+                                colPct(NILT, EMCRICH, "Agree")))
+
+# Figure 23 calculated directly from NILT data
+fig23 <- data.frame(community = c("All", "Catholic", "Protestant", "No religion"),
+                   strongly = c(colPct(NILT, CULTRESP, "Strongly agree"),
+                                colPct(NILT, CULTRESP, "Strongly agree", religion = "Catholic"),
+                                colPct(NILT, CULTRESP, "Strongly agree", religion = "Protestant"),
+                                colPct(NILT, CULTRESP, "Strongly agree", religion = "No religion")),
+                   agree = c(colPct(NILT, CULTRESP, "Agree"),
+                             colPct(NILT, CULTRESP, "Agree", religion = "Catholic"),
+                             colPct(NILT, CULTRESP, "Agree", religion = "Protestant"),
+                             colPct(NILT, CULTRESP, "Agree", religion = "No religion")))
+
+
+# Figure 24 ####
+historic <- readRDS(paste0("data/historicTo", LTyear - 1, ".RDS"))
+
+historicNew <- data.frame(year = 2021,
+                          adults = round2(dataNew$f1_adults),
+                          protestant = round2(dataNew$f1a_Prot),
+                          catholic = round2(dataNew$f1a_Cath),
+                          sixteen = round2(dataNew$f1_young))
+
+fig24 <- rbind(historic, historicNew)
+
+fig24p <- fig24 %>% mutate(dash1 = case_when(year == 2019 ~ sixteen,
+                           year == 2020 ~ lag(sixteen),
+                           TRUE ~ as.numeric(NA)),
+         dash2 = case_when(year > 2019 ~ as.numeric(NA),
+                           TRUE ~ sixteen),
+         dash3 = case_when(year == 2020 ~ lag(sixteen),
+                           year < 2020 ~ as.numeric(NA),
+                           TRUE ~ sixteen),
+         hover_text = case_when(is.na(sixteen) ~ "No YLT survey ran",
+                                TRUE ~ paste("16 year olds :", round2(sixteen))))
+
+saveRDS(fig24, paste0("data/historicTo", LTyear, ".RDS"))
+
+
+```
+
+The [Together: Building a United Community Strategy (2013)](https://www.executiveoffice-ni.gov.uk/publications/together-building-united-community-strategy) outlines a vision of a united community, based on equality of opportunity, the desirability of good relations and reconciliation.
+
+This publication monitors indicators for the four key priorities of the T:BUC Strategy: our children and young people; our shared community; our safe community; and our cultural expression.
+
+```{r techNotes}
+
+source("commentary/fig0.R")
+
+techNotes(f0para1, f0para2)
+
+```
+
+```{r Guidance}
+
+if (params$pre_release != TRUE) {
+
+  p(a(href = "Interactive-Guidance.html", "Click here to view  guidance on the interactive figures used throughout this report"))
+
+}
+
+```
+
+## Executive Summary
+
+### Our Children and Young People
+
+```{r children and young people infogrpahic, out.width = "830px", out.height =  "575px"}
+
+# Changing the below to youngInfographic_alt() will insert a version of the infographic that has space for two, rather than three, variables on the right-hand side. Alternate images are available in the images folder and can be called in the function as appropriate.
+
+youngInfographic()
+
+ source("commentary/execSum1.R")
+
+```
+
+-   `r adults`% of adults and `r young`% of young people think that relations between Protestants and Catholics are better now than they were five years ago. `r sigStatement`
+
+-   `r projects`% of young people have 'done projects' with pupils from other schools; `r classes`% have 'shared classes'; and `r equipment`% 'shared sports facilities or equipment' where the pupils are from a different religious background.
+
+### Our Shared Community
+
+```{r shared infogrpahic, out.width = "830px", out.height =  "575px"}
+
+# Using sharedInfographic will produce the infographic with 4 spaces on the left and 3 on the right. sharedInfographic_alt1 has 3 spaces on each side. sharedInfographic_alt2 has 3 spaces on the left and 2 spaces on the right. sharedInfographic_alt3 has 3 spaces across the whole screen.  sharedInfographic_alt4 has 4 spaces across the whole screen.
+
+sharedInfographic()
+
+source("commentary/execSum2.R")
+
+```
+
+-   `r leisure`% of adults think that leisure centres in their area are 'shared and open' to both Catholics and Protestants; `r park`% think this about parks; `r library`% think this about libraries and `r shopping`% think this about shopping centres.
+
+-   `r workplace`% of respondents said they would prefer a mixed religion workplace; `r neighbourhood`% a mixed religion neighbourhood; and `r school`% mixed religion schools.
+
+```{r safe infogrpahic, out.width = "830px", out.height =  "575px"}
+
+h3(style = "page-break-before: always;", "Our Safe Community")
+
+safeInfographic()
+
+source("commentary/execSum3.R")
+
+```
+
+-   `r safeTown`% of respondents said that they see town centres as safe and welcoming places for people of all walks of life. `r sigStatement`
+
+-   `r safeProtestant`% of respondents say they feel 'very' or 'quite' safe going to events held in a Protestant secondary school; `r safeCatholic`% to events held in a Catholic secondary school; `r safeGAA`% to events held in a GAA club; and `r safeOrange`% to events held in an Orange Hall.
+
+### Our Cultural Expression
+
+```{r cultural infogrpahic, out.width = "830px", out.height =  "575px"}
+
+culturalInfographic()
+
+source("commentary/execSum4.R")
+
+```
+
+-   `r protAgree`% of respondents think that the culture and traditions of Protestant communities add to the richness and diversity of Northern Ireland society; `r cathAgree`% think this about Catholic communities; and `r minorityAgree`% think this about Minority Ethnic communities.
+
+-   `r sigStatement`
+
+## 1. Our Children and Young People
+
+```{r indicator 1.1a}
+
+indicator("1.1a",
+          "Percentage (%) who think that relations between Protestants and Catholics are better now than they were five years ago",
+          "Improving attitudes, as perceived by young people responding to the Young Life and Times (YLT) survey, is an invaluable measure of attitudinal change. Direct comparisons can be made with adults using the Northern Ireland Life and Times (NILT) survey.")
+
+# The code to generate this commentary can be found in the R file below:
+source("commentary/fig1.R")
+
+```
+
+**Current Year (`r LTyear`):**
+
+In `r LTyear`, `r dataNew$f1_adults`% of adults and `r dataNew$f1_young`% of young people think that relations between Protestants and Catholics *are better now* than they were five years ago.
+
+```{r figure 1}
+
+chartTitle(1, "% who think that relations between Protestants and Catholics are <i>better now</i> than they were five years ago")
+
+lineChart21(data = fig1,
+          x = "year",
+          y1 = "adults",
+          y2 = "young",
+          y1Name = "Adults",
+          y2Name = "Young People")
+
+downloadButtons(fig = fig1,
+                indicator = "1.1a",
+                headers = c("Year", "Adults (%)", "Young People (%)"))
+  
+```
+
+Source: NILT/YLT
+
+Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+
+```{r how 1}
+
+# The two paragraphs of text generated above are output in a "How we got here" style box
+howWeGotHere(f1para1, f1para2)
+
+```
+
+```{r indicator 1.1a2}
+
+indicator("1.1a",
+          "Percentage (%) who think that relations between Protestants and Catholics will be better in five years' time",
+          "Improving attitudes, as perceived by young people responding to the Young Life and Times (YLT) survey, is an invaluable measure of attitudinal change. Direct comparisons can be made with adults using the Northern Ireland Life and Times (NILT) survey.")
+
+```
+
+**Current Year (`r LTyear`):**
+
+In `r LTyear`, `r round2(dataNew$f2_adults)`% of adults and `r round2(dataNew$f2_young)`% of young people think that relations between Protestants and Catholics will be better in five years' time.
+
+```{r figure 2}
+
+chartTitle(2, "% who think that relations between Protestants and Catholics <i>will be better</i> in five years' time")
+
+lineChart21(data = fig2,
+          x = "year",
+          y1 = "adults",
+          y2 = "young",
+          y1Name = "Adults",
+          y2Name = "Young People")
+
+downloadButtons(fig = fig2,
+                indicator = "1.1a",
+                headers = c("Year", "Adults (%)", "Young People (%)"))
+
+```
+
+Source: NILT/YLT
+
+Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+
+```{r how 2}
+
+# The code to generate this commentary can be found in the R file below:
+source("commentary/fig2.R")
+
+# The paragraph of text generated above is output in a "How we got here" style box
+howWeGotHere(f2para1)
+
+```
+
+```{r indicator 1.1b}
+
+indicator("1.1b",
+          "Percentage (%) who feel favourable towards people from: Catholic communities, Protestant communities, Minority Ethnic communities",
+          "Improving attitudes, as perceived by young people responding to the Young Life and Times (YLT) survey, is an invaluable measure of attitudinal change. Direct comparisons can be made with adults using the Northern Ireland Life and Times (NILT) survey.")
+
+# The code to generate this commentary can be found in the R file below:
+source("commentary/fig3.R")
+
+```
+
+**Current Year (`r LTyear`):**
+
+`r round2(dataNew$f3a_young)`% of young people responded that they feel favourable towards people from Catholic communities; `r round2(dataNew$f3b_young)`% towards people from Protestant communities; and `r round2(dataNew$f3c_young)`% towards people from Minority Ethnic communities. This `r adultYoungSig` the proportion of adults who feel favourable towards people from: Catholic communities, `r round2(dataNew$f3a_adults)`%; Protestant communities, `r round2(dataNew$f3b_adults)`%; and Minority Ethnic communities, `r round2(dataNew$f3c_adults)`%.
+
+```{r figure 3}
+
+chartTitle(3, "% who feel favourable towards people from: Catholic communities, Protestant communities, Minority Ethnic communities")
+
+plot3a <- lineChart21(data = fig3a,
+                    x = "year",
+                    y1 = "adults",
+                    y2 = "young",
+                    y1Name = "Adults",
+                    y2Name = "Young People",
+                    title = "Catholic communities")
+
+plot3b <- lineChart21(data = fig3b,
+                    x = "year",
+                    y1 = "adults",
+                    y2 = "young",
+                    y1Name = "Adults",
+                    y2Name = "Young People",
+                    title = "Protestant communities")
+
+plot3c <- lineChart21(data = fig3c,
+                    x = "year",
+                    y1 = "adults",
+                    y2 = "young",
+                    y1Name = "Adults",
+                    y2Name = "Young People",
+                    title = "Minority Ethnic communities")
+
+plot3d <- clusteredBar(data = fig3d,
+                       x = "community",
+                       y1 = "adults",
+                       y2 = "young",
+                       y1Name = "Adults",
+                       y2Name = "Young People",
+                       title = NILTyear)
+
+div(class = "row",
+  div(class = "col-sm-6", plot3a),
+  div(class = "col-sm-6", plot3b))
+div(class = "row",
+  div(class = "col-sm-6", plot3c),
+  div(class = "col-sm-6", plot3d))
+
+downloadButtons(fig = fig3,
+                indicator = "1.1b",
+                headers = c("Year",
+                            "Young People who feel favourable towards Catholic communities (%)",
+                            "Adults who feel favourable towards Catholic communities (%)",
+                            "Young People who feel favourable towards Protestant communities (%)",
+                            "Adults who feel favourable towards Protestant communities (%)",
+                            "Young People who feel favourable towards Minority Ethnic communities (%)",
+                            "Adults who feel favourable towards Minority Ethnic communities (%)"))
+
+```
+
+Source: NILT/YLT
+
+Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+
+```{r how 3}
+
+howWeGotHere(f3para1, f3para2)
+
+```
+
+```{r indicator 1.2a}
+indicator("1.2a",
+          "Percentage (%) of young people who regularly socialise or play sport with people from a different religious community",
+          "The number of young people regularly socialising or playing sport with people from a different community shows the extent of positive cross-community contact.")
+
+# The code to generate this commentary can be found in the R file below:
+source("commentary/fig4.R")
+
+```
+
+**Current Year (`r YLTyear`):**
+
+`r round2(dataNew$f4a_overall)`% of young people 'very often' or 'sometimes' socialise or play sport with people from a different religious community. `r religionSigsentence` `r genderSigsentence`
+
+```{r figure 4}
+
+chartTitle(4, "% of young people who regularly socialise or play sport with people from a different religious community")
+
+plot4a <- clusteredBarWithLine(data = fig4a,
+                               x = "year",
+                               y1 = "male",
+                               y2 = "female",
+                               line = "overall",
+                               y1Name = "Male",
+                               y2Name = "Female",
+                               lineName = "Overall")
+
+plot4b <- barChart(data = fig4b,
+                   chartTitle = "<b>Respondent religion<b>",
+                   x = "religion",
+                   y = "often", 
+                   legendItem = "very often or sometimes")
+
+div(class = "row",
+  div(class = "col-sm-8", style = "padding: 0px; margin-top: 10px", plot4a),
+  div(class = "col-sm-4", style = "padding: 0px;", plot4b),
+  )
+
+downloadButtons(fig = fig4,
+                indicator = "1.2a",
+                headers = c("Year", "Male (%)", "Female (%)", "Overall (%)", "Catholic (%)", "Protestant (%)", "No Religion (%)"))
+
+```
+
+Source: YLT
+
+Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+
+```{r how 4}
+
+# The paragraph of text generated above is output in a "How we got here" style box
+howWeGotHere(f4para1)
+
+```
+
+```{r indicator 1.2b}
+
+indicator("1.2b",
+          "Percentage (%) of young people who have: shared sports facilities or equipment; shared classes; or done projects, with pupils from other schools where the pupils are from a different religious background",
+          "Finding out the opinions of young people who have done projects, and shared classes or facilities with pupils from other schools where the pupils are from a different religious background helps to show what works, and where resources are best allocated.")
+
+# The code to generate this commentary can be found in the R file below:
+source("commentary/fig5.R")
+
+```
+
+**Current Year (`r YLTyear`):**
+
+`r f5_projects`% of young people have 'done projects' with pupils from other schools, while `r f5_classes`% have 'shared classes', and `r f5_equipment`% 'shared sports facilities or equipment'.
+
+```{r figure 5}
+
+chartTitle(5, "% of young people who have: shared sports facilites or equipment; shared classes; or done projects, with pupils from other schools where the pupils are from a different religious background")
+
+barChart(data = fig5,
+         x = "activity",
+         y = "young")
+
+downloadButtons(fig = fig5,
+                indicator = "1.2b",
+                headers = c("Activity", "Young People (%)"))
+```
+
+Source: YLT
+
+Note: % of young people refers to those who took part in shared education.
+
+```{r how 5}
+
+howWeGotHere("A shared education model is included in alternating 'Young Life and Times' surveys. Data from previous years are not directly comparable due to changes in the wording and ordering of questions.")
+
+```
+
+## 2. Our Shared Community
+
+```{r indicator 2.1a}
+
+indicator("2.1a",
+          "Percentage (%) who think that Protestants and Catholics tend to go to different local shops or use different GP surgeries and other services in their area",
+          "It is important that all public services and shared spaces are seen as accessible to the whole community.")
+
+# The code to generate this commentary can be found in the R file below:
+source("commentary/fig6.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r f6no`% of respondents do not think Protestants and Catholics use different shops and services in their area, while `r f6yes`% of respondents think this does tend to happen. `r relStatement` `r genderStatement`
+
+```{r figure 6}
+
+chartTitle(6, "% who think that Protestant and Catholics tend to go to different local shops or use different GP surgeries and other services in the area")
+
+plot6a <- donutChart(data = fig6a,
+                     values = "pct",
+                     sections = "option")
+
+plot6b <- lineChart(data = fig6b,
+                    x = "year",
+                    y1 = "yes",
+                    y2 = "no",
+                    y1Name = "A lot or A little",
+                    y2Name = "Not at all")
+
+div(class = "row",
+  div(class = "col-sm-4", plot6a),
+  div(class = "col-sm-8", plot6b))
+
+downloadButtons(fig = fig6,
+                indicator = "2.1a",
+                headers = c("Year", "A lot or a little (%)", "Not at all (%)", "A lot (%)", "A little (%)", "Don't know (%)"))
+
+
+```
+
+Source: NILT
+
+```{r how 6}
+
+howWeGotHere(f6para1, f6para2)
+
+```
+
+```{r indicator 2.1b}
+
+indicator("2.1b",
+          "Percentage (%) who think that leisure centres, parks, libraries, and shopping centres in their area are 'shared and open' to both Protestants and Catholics",
+          "It is important that all public services and shared spaces are seen as accessible to the whole community.")
+
+# The code to generate this commentary can be found in the R file below:
+source("commentary/fig7.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+Considering which public spaces in their area, the vast majority of respondents report that leisure centres (`r f7_LC`%), parks (`r f7_park`%), libraries (`r f7_lib`%) and shopping centres (`r f7_shop`%) are 'shared and open' to both Protestants and Catholics. `r leisureSentence` `r parkSentence` `r librarySentence` `r shopSentence` `r genderSentence`
+
+```{r figure 7}
+
+chartTitle(7, "% who think that leisure centres, parks, libraries, and shopping centres in their area are 'shared and open' to both Protestants and Catholics")
+
+stackedBar(data = fig7,
+           x = "area",
+           y1 = "def",
+           y2 = "prob",
+           y1Name = "Yes, definitely",
+           y2Name = "Yes, probably")
+
+downloadButtons(fig = fig7,
+                indicator = "2.1b",
+                headers = c("Location", "Yes, definitely (%)", "Yes, probably (%)"))
+
+```
+
+Source: NILT
+
+Note: Figures include respondents who responded "Yes, definitely" and "Yes, probably", and exclude those who responded "None in this area" to ensure comparability with previous years.
+
+```{r how 7}
+
+howWeGotHere(f7para1, f7para2)
+
+```
+
+```{r indicator 2.1c}
+
+indicator("2.1c",
+          "Percentage (%) of those who have children at school who think that their child's school is somewhere they can be open about their cultural identity",
+          "With education playing such a fundamental role in the development of children, it is important that schools are seen as places where they feel they can be open about their cultural identity.")
+
+source("commentary/fig8.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r f8`% of respondents who have children at school think that their child's school is somewhere their children can be open about their cultural identity. `r f8religionsentence` `r f8gendersentence`
+
+```{r figure 8}
+
+chartTitle(8, "% of those who have children at school who think that their child's school is somewhere they can be open about their cultural identity")
+
+lineChart(data = fig8,
+          x = "year",
+          y1 = "pct",
+          y1Name = "% of adults")
+
+downloadButtons(fig = fig8,
+                indicator = "2.1c",
+                headers = c("Year", "Agree (%)"))
+
+```
+
+Source: NILT
+
+```{r how 8}
+
+howWeGotHere(f8para1)
+
+```
+
+```{r indicator 2.1d}
+
+indicator("2.1d",
+          "Percentage (%) whose school has been involved in shared education with another school in the last academic year, broken down by type of activity",
+          "Shared education is being taken forward as one of the key elements of the Together: Building a United Community strategy.")
+
+source("commentary/fig9.R")
+
+```
+
+**Current Year (`r omniYear`):**
+
+`r schools`% of schools were involved in shared education with another school in the last academic year. Of those schools who were involved in shared education with another school in the last academic year; `r projects`% had participated in projects; `r resources`% shared resources; `r classes`% have shared classes which are provided other than through the entitlement framework; `r extra`% have shared extra-curricular activities; `r classes2`% have shared classes under the entitlement framework; `r shared`% of schools have developed shared policies; `r teachers`% shared teachers; `r equipment`% share equipment; and, `r other`% have shared education in 'other' ways.
+
+```{r figure 9}
+
+chartTitle(9, "% whose school has been involved in shared education with another school in the last academic year, broken down by type of activity")
+
+clusteredBar(data = fig9,
+             x = "activity",
+             y1 = "2015",
+             y2 = "2016",
+             y3 = "2018",
+             legend = "bottom")
+
+downloadButtons(fig = fig9,
+                indicator = "2.1d",
+                headers = c("Activity", "2015 (%)", "2016 (%)", "2018 (%)"))
+
+```
+
+\*entitlement framework sets out the minimum number and range of courses a school should offer at Key Stage 4 and Post-16
+
+Source: School Omnibus Survey `r omniYear`
+
+Note: Following the 2016 School Omnibus Survey a decision was taken to move the School Omnibus Survey from an annual survey to a biennial survey.
+
+```{r how 9}
+
+howWeGotHere(f9para1)
+
+```
+
+```{r indicator 2.1e}
+
+indicator("2.1e",
+          "Percentage (%) who see the area they live in as Protestant, Catholic or mixed",
+          "If shared spaces in Northern Ireland are to thrive, perception of segregation in housing needs to be reduced.")
+
+source("commentary/fig10.R")
+
+```
+
+**Current Year (2016):**
+
+`r f10prot`% of respondents see the area they live in as "totally" or "mainly" Protestant. A significantly lower proportion (`r f10cath`%) see the area they live in as "totally" or "mainly" Catholic. `r f10mixed`% see their area as mixed.
+
+```{r figure 10}
+
+chartTitle(10, "% who see the area they live in as Protestant, Catholic or mixed")
+
+lineChart(data = fig10,
+          x = "year",
+          y1 = "protestant",
+          y1Name = "Totally/Mainly Protestant",
+          y2 = "catholic",
+          y2Name = "Totally/Mainly Catholic",
+          y3 = "mixed",
+          y3Name = "Mixed",
+          y4 = "dunno",
+          y4Name = "Don't know/Refused")
+
+downloadButtons(fig = fig10,
+                indicator = "2.1e",
+                headers = c("Year", "Totally/Mainly Catholic (%)", "Totally/Mainly Protestant (%)", "Mixed (%)", "Don't know/Refused (%)"))
+
+```
+
+Source: House Condition Survey 2016
+
+Note: The House Condition Survey is generally only conducted every 5 years. An additional run of the survey was conducted in 2009 due to emerging data needs at that time, subsequently the survey returned to its original 5 year cycle which it continues to follow. The next House Condition Survey is not due until 2022.
+
+```{r how 10}
+
+howWeGotHere("Since 2001, there has been little change in how people describe the religious make-up of the area they live in.")
+
+```
+
+```{r indicator 2.2a}
+
+indicator("2.2a",
+          "Percentage (%) who would define their neighbourhood/workplace as somewhere they can be open about their cultural identity",
+          "The accessibility of Shared Space to all, including neighbourhoods and workplaces is a central tenet of good relations policy going forward.")
+
+source("commentary/fig11.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r f11SigStatement`
+
+```{r figure 11}
+
+chartTitle(11, "% who would define their neighbourhood/workplace as somewhere they can be open about their cultural identity")
+
+lineChart(data = fig11,
+          x = "year",
+          y1 = "workplace",
+          y1Name = "Workplace",
+          y2 = "neighbourhood",
+          y2Name = "Neighbourhood")
+
+downloadButtons(fig = fig11,
+                indicator = "2.2a",
+                headers = c("Year", "Workplace (%)", "Neighbourhood (%)"))
+
+```
+
+Source: NILT
+
+```{r how 11}
+
+howWeGotHere(f11para1, f11para2)
+
+```
+
+```{r indicator 2.2b}
+
+indicator("2.2b",
+          "Percentage (%) who would prefer mixed religion neighbourhoods, workplaces, and schools",
+          "Preference for mixed neighbourhoods and workplaces is an important indicator of attitudes towards other communities, as well as an indicator of preference for a shared community.")
+
+source("commentary/fig12.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r f12cysentence1` `r f12cysentence2`
+
+```{r figure 12}
+
+chartTitle(12, "% who would prefer mixed religion neighbourhoods, workplaces, and schools")
+
+lineChart(data = fig12,
+          x = "year",
+          y1 = "workplace",
+          y1Name = "Workplace",
+          y2 = "neighbourhood",
+          y2Name = "Neighbourhood",
+          y3 = "school",
+          y3Name = "School")
+
+downloadButtons(fig = fig12,
+                indicator = "2.2b",
+                headers = c("Year", "Neighbourhood (%)", "Workplace (%)", "School (%)"))
+
+```
+
+Source: NILT
+
+```{r how 12}
+
+howWeGotHere(f12para1)
+
+```
+
+```{r indicator 2.2c}
+
+indicator("2.2c",
+          "Percentage (%) of first preference applications to post-primary integrated schools that do not result in admissions",
+          "Preference for integrated education is an important indicator of attitudes towards other communities, as well as an indicator of preference for a shared community.")
+
+source("commentary/fig13.R")
+
+```
+
+**Current Year (`r intYear`):**
+
+In `r intYear`, `r pct`% of first preference applications to post-primary integrated schools did not result in admission to that particular school. Of all pupils enrolled at grant-aided schools in `r intYear`, `r intEnroll`% attended integrated schools.
+
+```{r figure 13}
+
+chartTitle(13, "% of first preference applications to post-primary integrated schools that do not result in admissions")
+
+lineChart(data = fig13,
+          x = "year",
+          y1 = "pct",
+          y1Name = "% of applications")
+
+downloadButtons(fig = fig13,
+                indicator = "2.2c",
+                headers = c("Year", "Applications (%)"))
+
+```
+
+Source: NI School Census
+
+```{r how 13}
+
+howWeGotHere(f13para1, f13para2)
+
+```
+
+## 3. Our Safe Community
+
+```{r indicator 3.1a}
+
+indicator("3.1a",
+          "Number of hate crimes",
+          "An increase in good relations should result in lower numbers of hate crimes and incidents being committed.")
+
+source("commentary/fig14.R")
+
+```
+
+**Current Year (`r psniYear`):**
+
+In `r psniYear`, `r psniNew$Sectarian` sectarian and `r psniNew$Racial` racially motivated hate crimes were recorded. `r allOthers`
+
+```{r figure 14}
+
+chartTitle(14, "Number of hate crimes")
+
+lineChart(data = fig14,
+          x = "year",
+          y1 = "Racial",
+          y2 = "Sectarian",
+          y3 = "Transphobic",
+          y4 = "Homophobic",
+          y5 = "Religion",
+          y6 = "Disability",
+          yHeight = 1200)
+
+downloadButtons(fig = fig14,
+                indicator = "3.1a",
+                headers = c("Year", "Racial", "Homophobic", "Sectarian", "Religion", "Disability", "Transphobic"))
+
+```
+
+Source: PSNI
+
+```{r how 14}
+
+howWeGotHere(f14para1)
+
+```
+
+```{r Indicator 3.1b}
+
+indicator("3.1b",
+          "Number of people presenting as homeless as a result of intimidation",
+          "The number presenting as homeless due to intimidation is an indicator of people's fears around safety, as well as allowing us to measure the prevalence of intimidation.")
+
+source("commentary/fig15.R")
+
+```
+
+**Current Year (`r niheYear`):**
+
+`r paraPct`% of the `r intimTot` households that presented as homeless due to intimidation in `r niheYear` did so because of paramilitary intimidation.
+
+```{r figure 15}
+
+chartTitle(15, "Number of NIHE clients presenting as homeless due to intimidation")
+
+plot15a <- donutChart(data = fig15a,
+                      values = "num",
+                      sections = "option",
+                      colours = c("#426bba", "#c4db0d", "#d0cece", "#002469"),
+                      title = niheYear)
+
+plot15b <- lineChart(data = fig15b,
+                     x = "year",
+                     y1 = "Total",
+                     yHeight = 700)
+
+div(class = "row",
+    div(class = "col-sm-4", plot15a),
+    div(class = "col-sm-8", plot15b))
+
+fig15 <- fig15b[-c(6), ]
+
+fig15c <- fig15b[-c(1:5), ]
+
+fig15 <- fig15 %>% mutate(Paramilitary = NA, Sectarian = NA, ASB = NA, Other = NA)
+
+fig15 <- rbind(fig15, fig15c)
+
+downloadButtons(fig = fig15,
+                indicator = "3.1b",
+                headers = c("Year", "Paramilitary", "Sectarian", "ASB", "Other", "Total"))
+
+```
+
+Source: NIHE
+
+\*other includes racial, disability, and sexual orientation. In previous years, the "other" category included anti-social behaviour, disability and sexual orientation; however, the categories presented in this report were changed in 2021 to reflect changes in how NIHE present this data.
+
+```{r how 15}
+
+# howWeGotHere(paste0("Between ", niheYearLast," and ", niheYear, ", there has been a decrease in the number of NIHE clients presenting as homeless due to paramilitary intimidation, sectarian intimidation and other intimidation (i.e. anti-social behaviour, disability, and sexual orientation). Those presenting as homeless due to ", biggestChangeReason," has shown the largest decrease (", biggestChange, "%) between ", niheYearLast," and ", niheYear, "."))
+
+howWeGotHere("Changes in how NIHE present this data mean that comparisons cannot be made with years prior to 2021.")
+
+```
+
+```{r Indicator 3.1c}
+
+indicator("3.1c",
+          "Percentage (%) of people who felt: annoyed by republican murals; intimidated by republican murals; annoyed by loyalist murals; intimidated by loyalist murals",
+          "A reduction in the use of murals, kerb-paintings and flags to mark territory will result in a community where people feel safe moving around and are not inhibited by fear.")
+
+source("commentary/fig16.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r annoyedR`% of respondents said that they had been annoyed by republican murals, kerb-paintings or flags in the last year; with `r intimidatedR`% feeling intimidated by them. `r f16Sig` respondents said they had been annoyed by loyalist murals, kerb-paintings or flags in the last year (`r annoyedL`%); with `r intimidatedL`% intimidated by them.
+
+```{r figure 16}
+
+chartTitle(16, "% of people who felt: annoyed by republican murals; intimidated by republican murals; annoyed by loyalist murals; intimidated by loyalist murals")
+
+lineChart(data = fig16,
+          x = "year",
+          y1 = "aR",
+          y1Name = "Annoyed - Republican",
+          y2 = "iR",
+          y2Name = "Intimidated - Republican",
+          y3 = "aL",
+          y3Name = "Annoyed - Loyalist",
+          y4 = "iL",
+          y4Name = "Intimidated - Loyalist")
+
+downloadButtons(fig = fig16,
+                indicator = "3.1c",
+                headers = c("Year", "Annoyed - Republican (%)", "Intimidated - Republican (%)", "Annoyed - Loyalist (%)", "Intimidated - Loyalist (%)"))
+
+```
+
+Source: NILT
+
+```{r how 16}
+
+howWeGotHere(f16para1)
+
+```
+
+```{r Indicator 3.2a}
+
+indicator("3.2a",
+          "Percentage (%) of people who see town centres as safe and welcoming places for people of all walks of life",
+          "Town centres must be seen as places where people can feel safe in moving around, and where life choices are not inhibited by fears around safety.")
+
+source("commentary/fig17.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r townSafe`% of respondents see town centres as safe and welcoming places for people of all walks of life. `r townSafeCath`% of Catholic respondents, `r townSafeProt`% of Protestant respondents and `r townSafeNo`% of respondents with no religion report this.
+
+```{r figure 17}
+
+chartTitle(17, "% of people who see town centres as safe and welcoming places for people of all walks of life")
+
+stackedBar(data = fig17,
+           x = "respondents",
+           y1 = "strongly",
+           y1Name = "Strongly Agree",
+           y2 = "agree",
+           y2Name = "Agree")
+
+downloadButtons(fig = fig17,
+                indicator = "3.2a",
+                headers = c("Respondents", "Strongly Agree (%)", "Agree (%)"))
+
+```
+
+Source: NILT
+
+```{r how 17}
+
+howWeGotHere(f17para1)
+
+```
+
+```{r Indicator 3.2b}
+
+indicator("3.2b",
+          "Percentage (%) of people feeling safe going to events held in: a GAA club, an Orange Hall, a Protestant secondary school, a Catholic secondary school",
+          "Asking people about where they feel safe helps to measure whether all communities are perceived as welcoming for everybody. This helps to identify what extra steps we can take to overcome negative perceptions.")
+
+source("commentary/fig18.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+In `r NILTyear`, `r GAAsafe`% of respondents say they feel 'very' or 'quite' safe going to events held in a GAA club; `r orangeSafe`% to events held in an Orange Hall; `r protSafe`% to events held in a Protestant secondary school; and `r cathSafe`% to events held in a Catholic secondary school.
+
+```{r figure 18}
+
+chartTitle(18, "% of people feeling safe going to events held in: a GAA club, an Orange Hall, a Protestant secondary school, a Catholic secondary school")
+
+horizontalBar(fig18,
+              x1 = "Catholic",
+              x2 = "Protestant",
+              x3 = "no",
+              x3Name = "No religion",
+              x4 = "All",
+              y = "location")
+
+downloadButtons(fig = fig18,
+                indicator = "3.2b",
+                headers = c("Location", "All (%)", "No religion (%)", "Protestant (%)", "Catholic (%)"))
+  
+```
+
+Source: NILT
+
+```{r how 18}
+
+howWeGotHere(f18para1, f18para2)
+
+```
+
+```{r Indicator 3.2c}
+
+indicator("3.2c",
+          "Percentage (%) who would like to see peace lines come down now or in the near future",
+          "Peace Lines impact on the delivery of services and reduce the potential for communities living in these areas to attract and benefit from inward investment. This indicator helps identify where more work is needed to create the conditions and gain the confidence of the community that will allow the peace lines to come down.")
+
+source("commentary/fig19.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+In `r NILTyear`, `r all`% of all respondents want the Peace Lines to come down now or in the future and `r residents`% of those who live within a few streets of the Peace Lines want this.
+
+```{r figure 19}
+
+chartTitle(19, "% who would like to see peace lines come down now or in the near future")
+
+stackedBar(data = fig19p,
+           x = "resident",
+           y1 = "now",
+           y1Name = "I would like the Peace Lines to come down now",
+           y2 = "future",
+           y2Name = "I would like the Peace Lines to come down in the future",
+           y3 = "nowOrFuture",
+           y3Name = "I would like the Peace Lines to come down now or in the future")
+
+downloadButtons(fig = fig19,
+                indicator = "3.2c",
+                headers = c("Respondents",
+                            "I would like the Peace Lines to come down now (%)",
+                            "I would like the Peace Lines to come down in the future (%)",
+                            "I would like the Peace Lines to come down now or in the future (%)"))
+
+```
+
+Source: NILT
+
+\*residents are defined as those that indicate they live "within a few streets of the nearest Peace Lines"
+
+```{r how 19}
+
+howWeGotHere(f19para1)
+
+```
+
+## 4. Our Cultural Expression
+
+```{r Indicator 4.1a}
+
+indicator("4.1a",
+          "Percentage (%) who feel a sense of belonging to: their neighbourhood; Northern Ireland",
+          "This indicator measures people's sense of belonging towards their neighbourhood and Northern Ireland as a whole; and compares young people to adults.")
+
+source("commentary/fig20.R")
+
+```
+
+**Current Year (`r LTyear`):**
+
+`r belongNeigh`% of adults say they feel a sense of belonging towards their neighbourhood, while `r belongNI`% say they feel a sense of belonging to Northern Ireland. `r adultyoungSentence`
+
+`r adultneighreligionsentence` `r youngneighreligionsentence` `r adultNIreligionsentence` `r youngNIreligionsentence`
+
+```{r figure 20}
+
+chartTitle(20, "% who feel a sense of belonging to: their neighbourhood; Northern Ireland")
+
+stackedBarSplit(fig20a, fig20b,
+                x = "belong",
+                y1 = "prob",
+                y1Name = "Yes, probably",
+                y2 = "def",
+                y2Name = "Yes, definitely",
+                title1 = "Young people",
+                title2 = "Adults")
+
+downloadButtons(fig = fig20,
+                indicator = "4.1a",
+                headers = c("Belonging to",
+                            'Young people answering "Yes, probably" (%)',
+                            'Young people answering "Yes, definitely" (%)',
+                            'Adults answering "Yes, probably" (%)',
+                            'Adults answering "Yes, definitely" (%)'))
+
+```
+
+Source: NILT/YLT
+
+```{r how 20}
+
+howWeGotHere(f20para1, f20para2)
+
+```
+
+```{r Indicator 4.1b}
+
+indicator("4.1b",
+          "Percentage (%) of people who feel they have an influence on decisions made in: their neighbourhood; Northern Ireland",
+          "For people to feel like they belong to their community, it is important that they feel like they have an influence when it comes to decisions made in their neighbourhood and in Northern Ireland.")
+
+source("commentary/fig21.R")
+
+```
+
+**Current Year (`r LTyear`):**
+
+`r adultneighNIsentence` `r adultyoungsentence`
+
+`r paste(genderSentence, religionneighSentence, religionNISentence)`
+
+```{r figure 21}
+
+chartTitle(21, "% of people who feel they have an influence on decisions made in: their neighbourhood; Northern Ireland")
+
+stackedBarSplit(fig21a, fig21b,
+                x = "influence",
+                y1 = "prob",
+                y1Name = "Yes, probably",
+                y2 = "def",
+                y2Name = "Yes, definitely",
+                title1 = "Young people",
+                title2 = "Adults")
+
+downloadButtons(fig = fig21,
+                indicator = "4.1b",
+                headers = c("Influence on",
+                            'Young people answering "Yes, probably" (%)',
+                            'Young people answering "Yes, definitely" (%)',
+                            'Adults answering "Yes, probably" (%)',
+                            'Adults answering "Yes, definitely" (%)'))
+
+```
+
+Source: NILT/YLT
+
+Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+
+```{r how 21}
+
+howWeGotHere(f21para1, f21para2)
+
+```
+
+```{r Indicator 4.2a}
+
+indicator("4.2a",
+          "Percentage (%) who think the culture and traditions of: Catholic communities; Protestant communities; Minority Ethnic communities, add to the richness and diversity of Northern Ireland society",
+          "Embracing cultural diversity and celebrating cultural expression will be key to good relations in the future.")
+
+source("commentary/fig22.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r f22Statement` `r f22insig`
+
+```{r figure 22}
+
+chartTitle(22, "% who think the culture and traditions of: Catholic communities; Protestant communities; Minority Ethnic communities, add to the richness and diversity of Northern Ireland society")
+
+stackedBar(data = fig22,
+           x = "community",
+           y1 = "strongly",
+           y1Name = "Strongly Agree",
+           y2 = "agree",
+           y2Name = "Agree")
+
+downloadButtons(fig = fig22,
+                indicator = "4.2a",
+                headers = c("Community", "Strongly Agree (%)", "Agree (%)"))
+
+```
+
+Source: NILT
+
+```{r how 22}
+
+howWeGotHere(f22para1)
+
+```
+
+```{r Indicator 4.2b}
+
+indicator("4.2b",
+          "Percentage (%) who feel their own cultural identity is respected by society",
+          "If our society is to be based on mutual respect, then everyone must feel that their own cultural identity is respected by the society in which they live.")
+
+source("commentary/fig23.R")
+
+```
+
+**Current Year (`r NILTyear`):**
+
+`r approxRespected` of adult respondents (`r respected`%) feel that their own cultural identity is respected by society. `r cathRespected`% of Catholic respondents, `r protRespected`% of Protestant respondents and `r noRespected`% of respondents with no religion feel this.
+
+```{r figure 23}
+
+chartTitle(23, "% who feel their own cultural identity is respected by society")
+
+stackedBar(data = fig23,
+           x = "community",
+           y1 = "strongly",
+           y1Name = "Strongly Agree",
+           y2 = "agree",
+           y2Name = "Agree")
+
+downloadButtons(fig = fig23,
+                indicator = "4.2b",
+                headers = c("Community", "Strongly Agree (%)", "Agree (%)"))
+
+```
+
+Source: NILT
+
+```{r how 23}
+
+howWeGotHere(f23para1)
+
+```
+
+## Indicators by Outcome
+
+```{r indicators}
+indicatorsByOutcome()
+```
+
+## Timeline of Indicator 1.1a
+
+```{r figure 24, out.width = "900px"}
+
+chartTitle(24, "% who think that relations between Protestants and Catholics are better now than they were five years ago")
+
+plot_ly(fig24p,
+        x = ~year,   # x axis variable
+        y = ~adults, # y axis variable
+        name = "Adults",   # lengend label for this line
+        line = list(color = "#002469", width = 4),  # colour and width of this line
+        type = "scatter",   # to create a line graph we first choose scatter as the type
+        mode = "lines",   # and set the mode to lines
+        hovertext = ~paste("Adults :", round2(adults)),
+        hoverinfo = "x+text",
+        connectgaps = TRUE) %>%  # To connect gaps across missing data points
+  # Add another line to same graph:
+  add_trace(y = ~protestant,   # y axis variable, no need to add new x axis
+            name = "Protestant (Adults)",   # legend label
+            hovertext = ~paste("Protestant (Adults) :", round2(protestant)),    
+            line = list(color = "#8A9B08")) %>%     # Change colour, line width will be same as above
+    # Add another line to same graph:
+  add_trace(y = ~catholic,   # y axis variable, no need to add new x axis
+            name = "Catholic (Adults)",   # legend label
+            hovertext = ~paste("Catholic (Adults) :", round2(catholic)),
+            line = list(color = "#426bba")) %>%     # Change colour, line width will be same as above
+  # Add another line to same graph:
+  add_trace(y = ~dash2,   # y axis variable, no need to add new x axis
+            name = "16 year olds",   # legend label
+            hovertext = ~hover_text,
+            line = list(color = "#979191")) %>%     # Change colour, line width will be same as above
+  # Add another line to same graph:
+  add_trace(y = ~dash3,   # y axis variable, no need to add new x axis
+            name = "16 year olds",   # legend label
+            hovertext = ~hover_text,
+            line = list(color = "#979191"),
+            showlegend = FALSE) %>%
+  add_trace(y = ~dash1,
+            name = "16 year olds",
+            hovertext = "",
+            line = list(color = "#979191",
+                        dash = "dash"),
+            showlegend = FALSE) %>%
+  # Start styling the graph:
+  layout(legend = list(orientation = "h",    # Here the legend is changed to horizontal 
+                       yanchor = "top",     # And placed just under the x axis
+                       y = -0.1,
+                       xanchor = "center",     # And centred
+                       x = 0.5),
+         xaxis = list(title = "",               # Remove title and gridlines from x axis
+                      showgrid = FALSE,
+                      tickangle = 0),
+         yaxis = list(title = "",               # Remove title from y axis and extend range from 0 to 100
+                      range = list(0, 100),
+                      showline = TRUE,
+                      showgrid = FALSE),
+         hovermode = "x unified",   # Adds hover label
+  annotations = list(
+    # following lines commented out to remove "2021" marker on graph as it was squashed against 2020 - add back in to
+    # include current year marker on graph x axis
+    # list(text = ~if(max(year) %% 5 == 0) {""} else {max(year)}, showarrow = FALSE,
+    #      x = ~max(year), xref = "x", xanchor = "center",
+    #      y = 0, yref = "paper", yanchor = "top"),
+    list(text = "1994 -\nCeasefire", showarrow = FALSE,
+         x = 1994, xref = "x", xanchor = "center",
+         y = 70, yref = "y", yanchor = "middle"),
+    list(text = "1998 -\nGood\nFriday\nAgreement", showarrow = FALSE,
+         x = 1998, xref = "x", xanchor = "center",
+         y = 70, yref = "y", yanchor = "middle"),
+    list(text = "2001 -\nHoly Cross\nDispute", showarrow = FALSE,
+         x = 2001, xref = "x", xanchor = "center",
+         y = 60, yref = "y", yanchor = "middle"),
+    list(text = "2007 -\n'Settled'\nDevolution", showarrow = FALSE,
+         x = 2007, xref = "x", xanchor = "center",
+         y = 80, yref = "y", yanchor = "middle"),
+    list(text = "2012 -\nFlag\nProtests", showarrow = FALSE,
+         x = 2012, xref = "x", xanchor = "center",
+         y = 70, yref = "y", yanchor = "middle"),
+    list(text = "2015 -\nFresh Start\nAgreement", showarrow = FALSE,
+         x = 2015, xref = "x", xanchor = "center",
+         y = 75, yref = "y", yanchor = "middle"),
+    list(text = "2017 (January) -\nAssembly\nSuspension", showarrow = FALSE,
+         x = 2017, xref = "x", xanchor = "center",
+         y = 90, yref = "y", yanchor = "middle"),
+     list(text = "2020 (January) -\nAssembly\nReconvened/\nBrexit", showarrow = FALSE,
+         x = 2020, xref = "x", xanchor = "center",
+         y = 72, yref = "y", yanchor = "middle"),
+     list(text = "2020 -\nCOVID-19", showarrow = FALSE,
+         x = 2020, xref = "x", xanchor = "center",
+         y = 55, yref = "y", yanchor = "middle")),
+  shapes = list(
+    list(type = line,
+         x0 = 1994, x1 = 1994, y0 = 0, y1 = 95,
+         line = list(color = "#cecece", width = 1)),
+    list(type = line,
+         x0 = 1998, x1 = 1998, y0 = 0, y1 = 95,
+         line = list(color = "#cecece", width = 1)),
+    list(type = line,
+         x0 = 2001, x1 = 2001, y0 = 0, y1 = 95,
+    line = list(color = "#cecece", width = 1)),
+         list(type = line,
+         x0 = 2007, x1 = 2007, y0 = 0, y1 = 95,
+         line = list(color = "#cecece", width = 1)),
+    list(type = line,
+         x0 = 2012, x1 = 2012, y0 = 0, y1 = 95,
+    line = list(color = "#cecece", width = 1)),
+         list(type = line,
+         x0 = 2015, x1 = 2015, y0 = 0, y1 = 95,
+    line = list(color = "#cecece", width = 1)),
+         list(type = line,
+         x0 = 2017, x1 = 2017, y0 = 0, y1 = 95,
+          line = list(color = "#cecece", width = 1)),
+         list(type = line,
+         x0 = 2020, x1 = 2020, y0 = 0, y1 = 95,
+    line = list(color = "#cecece", width = 1))),
+  font = list(family = "Helvetica", size = 14)) %>%
+  config(displaylogo = FALSE)
+
+downloadButtons(fig = fig24,
+                indicator = "1.1a",
+                headers = c("Year", "Adults (%)", "Protestant (%)", "Catholic (%)", "16 year olds (%)"))
+
+```
+
+NB: Data points and event lines are shown at mid-year points, rather than exact dates when data collection and/or events happened.
+
+## Reader information
+
+```{r reader information}
+
+headings <- c("Purpose",
+              "Date of publication",
+              "Coverage",
+              "Frequency",
+              "Reporting period",
+              "Statistical quality",
+              "Target audience",
+              "Web page",
+              "Copyright",
+              "Feedback",
+              "Acknowledgement")
+
+information <- c("Data to monitor and report on Together: Building a United Community Strategy (2013) key priorities.",
+                 pubDate,
+                 "Northern Ireland",
+                 "Annual",
+                 paste0("Data are from late ", LTyear, "/early ", LTyear + 1, " unless indicated otherwise."),
+                 "Information detailed in this report has been quality assured prior to release.",
+                 "The Executive Office (TEO), educational professionals, academics, media, members of good relations interest groups and the public.",
+                 "The Executive Office",
+                 "This publication is Crown copyright and may be reproduced free of charge in any format or medium. Acknowledgement should be given for any material used, and the title of the publication specified.",
+                 "Comments on this publication are welcome. Please fill in our",
+                 "Thanks are offered to all the individuals who took part in the surveys contributing to the findings presented in this report. Without their help this report would not have been possible.")
+
+for (i in 1:length(headings)) {
+  
+  if (i == 1) {
+    readerInfo <- ""
+  }
+  
+  
+  if (headings[i] == "Web page") {
+    
+      readerInfo <- paste0(readerInfo,
+                         
+      div(class = "row", style = "display: flex;",
+          div(class = "row-indent"),
+          div(class = "infoItem", style = "width: 20%", headings[i]),
+          div(class = "infoItem", style = "width: 80%", a(href = "https://www.executiveoffice-ni.gov.uk/topics/statistics-and-research/good-relations", information[i]))),
+      
+      "<br>")
+  
+  } else if (headings[i] == "Feedback") {
+        
+    
+    readerInfo <- paste0(readerInfo,
+                         
+      div(class = "row", style = "display: flex;",
+          div(class = "row-indent"),
+          div(class = "infoItem", style = "width: 20%", headings[i]),
+          div(class = "infoItem", style = "width: 80%", information[i], a(href = "https://consultations.nidirect.gov.uk/teo/good-relations-readership-survey/", "readership survey"), "or contact", a(href="mailto:teostatisticsresearch@executiveoffice-ni.gov.uk", "teostatisticsresearch@executiveoffice-ni.gov.uk"))),
+      
+      "<br>")
+    
+    
+  } else {
+  
+    readerInfo <- paste0(readerInfo,
+                         
+      div(class = "row", style = "display: flex;",
+          div(class = "row-indent"),
+          div(class = "infoItem", style = "width: 20%", headings[i]),
+          div(class = "infoItem", style = "width: 80%", information[i])),
+      
+    "<br>")
+  
+  }
+  
+}
+
+HTML(readerInfo)
+
+```
+
+## Contacts
+
+```{r contacts}
+div(class = "row", style = "display: flex;",
+          div(class = "row-indent"),
+          div(class = "infoItem", style = "width: 100%",
+              p(contact), 
+              p("Statistics and Research Branch"),
+              p("The Executive Office"),
+              p("Email: ", a(href = "mailto: teostatisticsresearch@executiveoffice-ni.gov.uk", "teostatisticsresearch@executiveoffice-ni.gov.uk"), br(),
+              "Telephone: (028) 90522280")))
+```
+
+## Background to the Good Relations Indicators
+
+**Why are good relations indicators needed?**
+
+Good Relations Indicators are needed to measure the progress of the 'Together: Building a United Community (T:BUC) Strategy'.
+
+**What is the Together: Building a United Community Strategy?**
+
+The T:BUC Strategy was published by the Northern Ireland Executive in May 2013. The strategy reflects the Executive's commitment to improving community relations and continuing the journey towards a more united and shared society. This strategy represents a major change in the way that good relations will be delivered across government.
+
+The **vision** of the strategy is:
+
+"a united community, based on equality of opportunity, the desirability of good relations and reconciliation - one which is strengthened by its diversity, where cultural expression is celebrated and embraced and where everyone can live, learn, work and socialise together, free from prejudice, hate and intolerance."
+
+The strategy sets out a range of actions and commitments for government departments, communities and individuals who will work together to build a united community and achieve change against four key strategic priorities:
+
+-   Our Children and Young People
+-   Our Shared Community
+-   Our Safe Community
+-   Our Cultural Expression
+
+Each of these key priorities is supported by the following shared aims:
+
+-   **Our Children and Young People:** to continue to improve attitudes amongst our young people and to build a community where they can play a full and active role in building good relations.
+-   **Our Shared Community:** to create a community where division does not restrict the life opportunities of individuals and where all areas are open and accessible to everyone.
+-   **Our Safe Community:** to create a community where everyone feels safe in moving around and where life choices are not inhibited by fears around safety.
+-   **Our Cultural Expression:** to create a community, which promotes mutual respect and understanding, is strengthened by its diversity and where cultural expression is celebrated and embraced.
+
+**How were the indicators decided?**
+
+The good relations indicators were developed by [NISRA](http://www.nisra.gov.uk) statisticians with input from an expert advisory group. Based on the T:BUC vision and four key strategic priorities, a set of outcomes that would be expected if the strategy is successful were outlined;
+
+-   **Our Children and Young People**
+    -   Improved attitudes between young people from different backgrounds
+    -   Young people engaged in bringing the community together
+-   **Our Shared Community**
+    -   Increased use of shared space and services (e.g. leisure centres, parks, libraries, shopping centres, education, housing)
+    -   Shared space is accessible to all
+-   **Our Safe Community**
+    -   Reduction in the prevalence of hate crime and intimidation
+    -   A community where places and spaces are safe for all
+-   **Our Cultural Expression**
+    -   Increased sense of community belonging
+    -   Cultural diversity is celebrated
+
+More information about how the outcomes and indicators were chosen can be found in the [technical notes](#technical-notes).
+
+**Are the indicators monitored?**
+
+The indicators are monitored on an annual basis using a range of robust data sources. More information about these data sources can be found in the technical notes at the back of this document, or within the associated data files available on The Executive Office [website](https://www.executiveoffice-ni.gov.uk/topics/statistics-and-research/good-relations).
+
+More information about how the outcomes and indicators were chosen can be found in the [technical notes](#technical-notes).
+
+**What are the strengths of the indicators?**
+
+The T:BUC strategy and Good Relations indicators have been developed and agreed through consultation with a wide range of stakeholders. The data sources used to monitor progress are robust and known to collect data in accordance with best practice.
+
+## Technical Notes {#technical-notes}
+
+### Statistics
+
+When reporting differences in the report, the data are tested to see if they are statistically significant at the 5% level. A reported increase or decrease means there is at least a 95% probability that there is a genuine difference between results and the difference is not simply explained by random chance or sample error.
+
+Please note that, due to rounding, percentages in both this report and the relevant data tables may not always sum to 100.
+
+In some cases, where answer categories have been combined, figures presented in the graphs may not sum to the same total as figures presented in the relevant commentary, due to rounding.
+
+Due to COVID-19, some questions in the Northern Ireland Life and Times Survey were reworded in 2020, and these changes were maintained in 2021. These changes affect the following Indicators: 2.2a, 3.2a, 3.2b. Please see the notes in the relevant indicators for more details.
+
+Prior to 2019, the Good Relations Indicators Report was produced as a PDF document, with all calculations performed in SPSS Statistics. Since 2019, the report has been produced in HTML format, with all calculations performed in R. Due to minor differences in how the two programs make calculations, there can sometimes be small differences between the results produced. These differences are never more than 1%.
+
+### Good Relations Indicators Criteria
+
+The criteria for selecting the indicators as agreed by an expert advisory group (comprised of key stakeholders from departments, District Councils and the community and voluntary sector) are that indicators should be:
+
+-   Outcome focussed, rather than process focussed. In other words the indicator will give an indication that the outcome is being achieved;
+-   Relevant, that is, relevant to one or more of the high level priorities or aims of the Strategy;
+-   Available, that is, published regularly; and
+-   Robust, in other words the sample should be representative of the relevant population and collected using recognised best practice in surveys.
+
+A draft set of outcomes and indicators was agreed by the Advisory Group and consulted on more widely between 22nd January and 31st March 2014. Consultees were invited to provide comments on the indicators via an online survey on the OFMdFM website, or by hardcopy. OFMdFM is the precursor to The Executive Office; renamed as part of departmental restructure in May 2016.
+
+The indicators are measured using a range of data sources. The data from each source are not available at the same time, but those contained within this report are the most current at the time of this publication.
+
+### Data Sources
+
+#### Northern Ireland Life and Times Survey
+
+The Northern Ireland Life and Times Survey was launched in the autumn of 1998. Its mission is to monitor the attitudes and behaviour of people across Northern Ireland annually to provide a time-series and a public record of how our attitudes and behaviour develop on a wide range of social policy issues. The Northern Ireland Life and Times (NILT) Survey is a direct descendent of the Northern Ireland Social Attitudes Survey (NISA) which ran from 1989 to 1996.
+
+Until 2020, the NILT survey was conducted as a series of face-to-face household interviews. However, these were suspended as a result of the COVID-19 pandemic, and instead interviews were conducted by Computer Assisted Web Interviewing (CAWI) and Computer Assisted Telephone Interviewing (CATI). The move to remote interviewing resulted in a much lower response rate of 9%, compared to 56% in 2019. The new interview format was used again in 2021, with 98% of total interviews being completed using CAWI, and the remaining 2% being conducted using CATI, giving a response rate of 14%%.
+
+The 2021 Northern Ireland Life and Times Survey received ethical approval from the Ethics Committee in the School of Sociology, Social Policy and Social Work, Queen's University Belfast, where the survey coordinator is based. The survey involved 1,397 interviews with adults aged 18 years or over from a systematic random sample of 9,889 eligible addresses selected from the Postcode Address File database, resulting in a 14% response rate.
+
+All analyses of the adult data are weighted in order to allow for disproportionate household size. As only one individual is sampled at an address, this means that the probability of selection for the survey is inversely related to the size of the household. In other words individuals living in large household have a lower chance of being included in the sample than individuals living in small households. Before analysis the data are weighted in relation to the number of eligible adults at the address, derived from the details of the household structure recorded by interviewers on the questionnaire. This weighting process adjusts the results to those which would have been achieved if the sample had been drawn as a systematic random sample of adults rather than of addresses. ([ARK](https://www.ark.ac.uk/ARK/))
+
+#### Young Life and Times Survey
+
+From 1998 to 2000, the Young Life and Times (YLT) survey sought the views of all 12 to 17 year olds living in the same household as the respondent to the Northern Ireland Life and Times survey. However, in 2003, the aims and methodology of the survey were changed. From 2003 onwards, the Young Life and Times survey recorded the attitudes of 16 year olds only. The YLT sample is drawn from the Child Benefit Register and usually contains the names and addresses of all young people resident in Northern Ireland who celebrated their 16th birthday during February and March.
+
+Until 2018 YLT had been primarily a postal survey, but in 2019 the viability of conducting the survey online was tested. As this approach proved successful, the decision was taken that the YLT survey would move, primarily, to online completion, although participants would have the option to request paper or phone completion. As such, in conjunction with the Centre for Data Digitisation and Analysis (CDDA) at QUB, a customised online survey tool which complies with university and HMRC confidentiality and data security regulations was designed and utilised for the 2021 survey.
+
+As highlighted at the start of this report, the YLT survey did not run in 2020 due to the effects of the COVID-19 pandemic. Therefore, there is no YLT data for 2020 referenced in this report, and any analysis of change from the previous year of data is between 2019 and 2021. The YLT data used for the current year in this report is from a dataset called "YLT 2020-21". All fieldwork for this report was completed in 2021, and so it is referred to throughout this report as 2021 data. If you have any questions regarding this, please contact us at the email address listed in the Contacts section of this report, and a NISRA statistician working in The Executive Office will be happy to answer any queries you may have.
+
+In 2019, 4,999 names of eligible respondents were received, 4929 of which were contactable and 4913 of which were willing to complete the survey. 2,147 young people logged onto the survey platform with their ID. After removal of the most incomplete responses (i.e., responses where only very few or no questions were completed), 2,069 responses remained. This represents an overall response rate of 42.1%. The YLT data does not require weighting. ([ARK](https://www.ark.ac.uk/ARK/))
+
+#### School Omnibus Survey
+
+The School Omnibus Survey is a multi-purpose survey of all Principals in grant-aided schools, designed to collect a range of required information as determined by DE policy teams. The questions produced both quantitative and qualitative data, generally using yes/no and multiple response questions as well as open-ended response types. The survey was web-based, with the option to complete in either English or Irish, and each school received the link to the survey via email, along with a unique username and password to maximise security. The survey was issued in September 2018, with a four week period given for survey returns. A reminder was issued one week prior to the closing date of the survey period.
+
+The shared education section received 254 responses out of a total of 404 responses to the online survey. ([Dept. of Education](https://www.education-ni.gov.uk/))
+
+#### Northern Ireland House Condition Survey
+
+The 2016 Northern Ireland House Condition Survey (HCS) was based on a random sample of 3,000 dwellings completed in two stages.
+
+The first stage involved including all the full surveys completed as part of the 2011 HCS (resample: 1,434 surveys). Consideration had to be given to the location of addresses because the 2011 HCS eleven council areas were approximations only, based on the grouping of existing LGDs, as boundaries were not finalised at the time of the 2011 HCS sampling. Consequently, this meant there were some sample variations in the final totals by the eleven council areas in the 2016 HCS sample.
+
+The second stage was a fresh random sample of 1,566 properties selected by council area to ensure that each area total (fresh and resample) added to approximately 200. In Belfast Council Area, a total of 635 households were selected (150 in North, 151 in East, 171 in South and 163 in West Belfast). In addition the Causeway Coast Council area was divided into two areas to allow for more detailed information on holiday homes in Northern Ireland.
+
+The fresh sample frame, in 2016, was Pointer (see 'Sample frame'). This database (Pointer) contained a subset of the computerised records for domestic residential property maintained by the LPS and had been subject to extensive quality assurance and validation since 2011.
+
+Addresses were selected at random and no substitution of addresses was allowed. In instances where surveyors encountered a multi-dwelling address and there was no sub-number on their contact sheet, there were processes in place to ensure the correct address was selected. In the case of a fresh sample address a kish grid was used to randomly select the sub-number. In the case of a resample address the statistics team looked up the details of the previous survey in order to identify which sub number had been surveyed, and the same sub-number was surveyed in 2016. If the address was a single-dwelling address in the previous survey, but had subsequently changed to a mutli-dweling address, a kish grid was used to randomly select the sub-number. ([NIHE](https://touch.nihe.gov.uk/index/corporate/housing_research/house_condition_survey.htm))
+
+#### School Census
+
+Information on pupil enrolments is collected annually from schools, as part of what is commonly known as the schools census. This data collection exercise is an annual snapshot of pupil and school level data for each pre-school centre, nursery, special, primary, post-primary, hospital and independent school in Northern Ireland. As well as data relating to school enrolments and numbers, information in relation to attendance is collected as part of the overall school return. ([Dept. of Education](https://www.education-ni.gov.uk/))
+
+#### Integrated Education
+
+Data on numbers of first preference applicants admitted to post-primary schools is collated each year at the end of the annual admissions process by the regional offices of the Education Authority. The figures for integrated post-primary schools have been extracted from this. ([Dept. of Education](https://www.education-ni.gov.uk/))
+
+#### PSNI Hate Crime Statistics
+
+Unlike the Northern Ireland Crime Survey (NICS), police recorded crime figures do not include crimes that have not been reported to the police or those that the police decide not to record, but they do cover crimes against those aged under 16, organisations such as businesses, and crimes 'against the state' i.e. with no immediate victim (e.g. possession of drugs). Like any administrative data, police recorded crime statistics are affected by the rules governing the recording of data, systems in place and operational decisions in respect of the allocation of resources. More proactive policing in a given area could lead to an increase in crimes recorded without any real change in underlying crime trends. These issues need to be taken into account when using these data. (PSNI)
+
+#### Northern Ireland Housing Executive Homeless Presentation Figures
+
+Statistics on Homelessness are sourced from the Northern Ireland Housing Executive (NIHE). They are published in the DfC's annual Housing Statistics report. The figures reported for each reason for presentation from 2011-12 onwards are not fully comparable with other published figures. Data migration issues and coding variations following the introduction of a new operational Housing Management System (HMS) in July 2011 meant that no data on reason for presentation was recorded for 3,731 cases in 2011-12 and 835 cases during April-June 2012. (NIHE)
+
+### Definitions
+
+```{r pdf download, results = FALSE}
+# URL of pdf to link to
+hateCrimeDefs <- "https://www.psni.police.uk/sites/default/files/2022-08/hate-motivations-definitions.pdf"
+
+# # Download file
+# GET(hateCrimeDefs, write_disk(pdfDL <- "hateCrimeDefs.pdf"), overwrite = TRUE)
+# 
+# # Look at its file size
+# pdfSize <- paste0(round2(file.size(pdfDL) / 1000), "kB")
+# 
+# # Delete file
+# unlink(pdfDL)
+
+pdfSize <- "111kB"
+```
+
+```{r definitions}
+div(
+  div(class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "definitions", style = "font-weight: bold; width: 20%", "NILT"),
+    div(class = "definitions", style = "width: 80%;", "Northern Ireland Life and Times Survey"), 
+    div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "definitions", style = "font-weight: bold; width: 20%", "YLT"),
+    div(class = "definitions", style = "width: 80%;", "Young Life and Times Survey"),
+    div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "definitions", style = "font-weight: bold; width: 20%", "Young People"),
+    div(class = "definitions", style = "width: 80%;", "The YLT sample is drawn from the Child Benefit Register and typically contains the names and addresses of all young people resident in Northern Ireland who celebrated their 16th birthday during January, February or March"), div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "definitions", style = "font-weight: bold; width: 20%", "Community"),
+    div(class = "definitions", style = "width: 80%;", "We describe communities as either religious, Minority Ethnic or both depending on the indicator. This is made clear by the interviewer in the case of NILT and YLT"),
+    div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "definitions", style = "font-weight: bold; width: 20%", "Regularly"),
+    div(class = "definitions", style = "width: 80%;", 'Those who said "very often" or "sometimes" in response to the question "How often do you socialise or play sport with people from a different religious community to yourself?"'),
+    div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "definitions", style = "font-weight: bold; width: 20%", "Shared Space"),
+    div(class = "definitions", style = "width: 80%;", "Shared Space is defined as a place where you feel you can be open about your own cultural identity"), div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "definitions", style = "font-weight: bold; width: 20%", "Cultural Identity"),
+    div(class = "definitions", style = "width: 80%;", "Cultural Identity is defined as things like your ethnicity, nationality, religious, or political background"),
+    div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+  div(class = "row-indent"),
+  div(class = "definitions", style = "font-weight: bold; width: 20%", "Shared Education"),
+  div(class = "definitions", style = "width: 80%;", "Shared education means the organisation and delivery of education so that it:",
+    HTML("<ul><li>meets the needs of, and provides for the education together of learners from all Section 75 categories and socio-economic status;</li>
+      <li>involves schools and other education providers of differing ownership, sectoral identity and ethos, management type or governance arrangements; and</li>
+      <li>delivers educational benefits to learners, promotes the efficient and effective use of resources, and promotes equality of opportunity, good relations, equality of identity, respect for diversity and community cohesion.</li></ul>")),
+      div(class = "row-indent")),
+  div(class = "row", style = "display: flex;",
+      div(class = "row-indent"),
+      div(class = "definitions", style = "font-weight: bold; width: 20%", "Entitlement Framework"),
+      div(class = "definitions", style = "width: 80%;", "Entitlement Framework sets out the minimum number and range of courses a school should offer at Key Stage 4 and Post-16. These courses should be economically relevant and individually engaging with clear progression pathways.",
+          a(href = "https://www.education-ni.gov.uk/articles/entitlement-framework",
+            "The Entitlement framework on the Department of Education website.")),
+      div(class = "row-indent")),
+  br(),
+  div(class = "row", style = "display: flex;",
+      div(class = "row-indent"),
+      div(class = "definitions", style = "font-weight: bold; width: 20%", "Hate Crimes"),
+      div(class = "definitions", style = "width: 80%;",
+          a(href = hateCrimeDefs, "Definitions of hate motivation incidents are defined by the PSNI and can be found here"), "(.pdf file, size:", pdfSize, ")."),
+      div(class = "row-indent")),
+  br())
+```
+
+<!--html_preserve-->
+<script>
+
+// Function to add tabbing to table of contents
+
+function tabOrder() {
+
+  var headings = document.getElementsByClassName('tocify-item list-group-item');
+  
+  for (var i=0; i<headings.length; i++) {
+    headings[i].innerHTML = "<a href='#'>" + headings[i].innerHTML +  "</a>";
+  }
+  
+};
+
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-72688332-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-72688332-4');
+</script>
+<!--/html_preserve-->

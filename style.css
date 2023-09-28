@@ -1,0 +1,186 @@
+/* Font size 12 */
+p, li, .infoItem, .download, .definitions {
+  font-size: 12pt;
+}
+
+/*  Change headings to dark blue */
+h2, h3, h4 {
+  color: #002469;
+}
+
+/* Has the title element from YAML only appear in the metadata */
+.title {
+  display: none;
+}
+
+/* Formatting for title */
+.middle p {
+  color: #ffffff !important;
+  font-size: 30pt;
+  line-height: 30pt;
+}
+
+/* Sets dimensions for logos in title area */
+.left, .right {
+  width: 22%;
+  padding-top: 25px;
+  background-color: #08215a !important;
+  justify-content: center;
+}
+
+/* Indents logo from left */
+.left {
+  padding-left: 25px;
+
+}
+
+/* Indents logo from right */
+.right {
+  padding-right: 25px;
+}
+
+/* Sets dimensions for title space */
+.middle {
+  width: 56%;
+  text-align: center;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #08215a !important;
+}
+
+/* Sets dimensions for decorative elements */
+.border {
+  width: 50%;
+  height: 9px;
+}
+
+/* Sets dimensions for subtitle */
+.findings {
+  background-color: #08215a !important;
+  font-size:18pt;
+  color: #ffffff !important;
+  text-align: right;
+  vertical-align: text-top;
+  width: 100%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.csv-button {
+  height: 35px;
+  width: 160px;
+  background-color: #08215a !important;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.csv-button a:link {
+  color: #ffffff !important;
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.xl-button {
+  height: 35px;
+  width: 160px;
+  background-color: #7eb0d3 !important;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.xl-button a:link {
+  color: #08215a !important;
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.row-indent {
+  width: 15px;
+}
+
+/* Change hyperlink colour */
+	a:link {
+	color: #2574a9;
+}
+
+/* Change visited link colour */
+	a:visited {
+	color: #765ab0;
+}
+
+#pre-release {
+	text-align: center;
+}
+
+/* Fixes hyperlink print issue */
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+}
+
+.table-pad {
+  width: 5px;
+  border-left: solid #000000 1px;
+  border-top: solid #000000 1px;
+  border-bottom: solid #000000 1px;
+}
+
+.ind-no {
+  width: 10%;
+  border-top: solid #000000 1px;
+  border-bottom: solid #000000 1px;
+  border-right: solid #000000 1px;
+}
+
+.ind {
+  width: 90%;
+  border-top: solid #000000 1px; 
+  border-bottom: solid #000000 1px; 
+  border-right: solid #000000 2px;
+}
+
+/* Reset styles for toc */
+.tocify-item.list-group-item a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.tocify-item.list-group-item.active a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+li .tocify-item.list-group-item {
+  font-size: 12pt;
+}
+
+.tocify-item.list-group-item.active, .tocify-item.list-group-item {
+  text-indent: -0.33em;
+  padding-left: 1em;
+}
+
+.tocify-subheader.list-group .tocify-item.list-group-item.active{
+  text-indent: 1em;
+}
+
+.tocify-subheader.list-group .tocify-item.list-group-item{
+  text-indent: 1em;
+}
+
+/* Avoid page breaks inside plots */
+.plot-container.plotly {
+  page-break-inside: avoid;
+}
+
+/* Each chapter starts on new page when printing */
+h2 {
+  page-break-before: always;
+}
+
