@@ -166,19 +166,19 @@ adultCathNORNeighSig <- significanceTest(p1 = cathNeigh,
                                          n2 = unweighted_n(NILT$UBELNGH[NILT$RELIGCAT == "No religion"]))
 
 youngProtCathNeighSig <- significanceTest(p1 = youngProtNeigh,
-                                          n1 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == toupper("Protestant")]),
+                                          n1 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == "Protestant"]),
                                           p2 = youngCathNeigh,
-                                          n2 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == toupper("Catholic")]))
+                                          n2 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == "Catholic"]))
 
 youngProtNORNeighSig <- significanceTest(p1 = youngProtNeigh,
-                                         n1 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == toupper("Protestant")]),
+                                         n1 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == "Protestant"]),
                                          p2 = youngNoNeigh,
-                                         n2 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == toupper("No religion")]))
+                                         n2 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == "No religion"]))
 
 youngCathNORNeighSig <- significanceTest(p1 = youngCathNeigh,
-                                         n1 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == toupper("Catholic")]),
+                                         n1 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == "Catholic"]),
                                          p2 = youngNoNeigh,
-                                         n2 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == toupper("No religion")]))
+                                         n2 = unweighted_n(YLT$BELONGNG[YLT$RELIGCAT == "No religion"]))
 
 adultProtCathNISig <- significanceTest(p1 = protNI,
                                        n1 = unweighted_n(NILT$UBELNI[NILT$RELIGCAT == "Protestant"]),
@@ -196,19 +196,19 @@ adultCathNORNISig <- significanceTest(p1 = cathNI,
                                       n2 = unweighted_n(NILT$UBELNI[NILT$RELIGCAT == "No religion"]))
 
 youngProtCathNISig <- significanceTest(p1 = youngProtNI,
-                                       n1 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == toupper("Protestant")]),
+                                       n1 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == "Protestant"]),
                                        p2 = youngCathNI,
-                                       n2 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == toupper("Catholic")]))
+                                       n2 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == "Catholic"]))
 
 youngProtNORNISig <- significanceTest(p1 = youngProtNI,
-                                      n1 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == toupper("Protestant")]),
+                                      n1 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == "Protestant"]),
                                       p2 = youngNoNI,
-                                      n2 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == toupper("No religion")]))
+                                      n2 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == "No religion"]))
 
 youngCathNORNISig <- significanceTest(p1 = youngCathNI,
-                                      n1 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == toupper("Catholic")]),
+                                      n1 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == "Catholic"]),
                                       p2 = youngNoNI,
-                                      n2 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == toupper("No religion")]))
+                                      n2 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == "No religion"]))
 
 adultneighreligionsentence <- if (adultProtCathNeighSig != FALSE & adultProtNORNeighSig == adultProtCathNeighSig) {
   paste0("Among adults, significantly ", if (adultProtCathNeighSig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNeigh, "%) than either Catholic respondents (", cathNeigh, "%) or respondents with no religion (", noNeigh, "%) said they felt a sense of belonging to their neighbourhood.")

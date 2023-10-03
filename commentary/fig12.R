@@ -23,9 +23,9 @@ f12cysentence1 <- if (nghworkSig != FALSE & nghschoolSig != FALSE & workschoolSi
          "%). A significantly ", if (nghschoolSig == "significant increase") {"lower"} else {"higher"}, " proportion of all survey respondents would prefer to send their children to a mixed religion school (", school, "%) than work in a mixed religion workplace or live in a mixed religion neighbourhood.")
 }
 
-noSchool <- round2(colPct(NILT, OWNMXSCH, "Mixed religion school", religion = "No religion"))
-cathSchool <- round2(colPct(NILT, OWNMXSCH, "Mixed religion school", religion = "Catholic"))
-protSchool <- round2(colPct(NILT, OWNMXSCH, "Mixed religion school", religion = "Protestant"))
+noSchool <- round2(colPct(NILT, OWNMXSCH, "A mixed religion school", religion = "No religion"))
+cathSchool <- round2(colPct(NILT, OWNMXSCH, "A mixed religion school", religion = "Catholic"))
+protSchool <- round2(colPct(NILT, OWNMXSCH, "A mixed religion school", religion = "Protestant"))
 
 protcathschoolSig <- significanceTest(p1 = cathSchool,
                                       n1 = unweighted_n(NILT$OWNMXSCH[NILT$RELIGCAT == "Catholic"]),

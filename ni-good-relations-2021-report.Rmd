@@ -54,15 +54,9 @@ for (file in list.files(path = "functions", pattern = "*.R")) {
 # If no figures for YLT 2020 then set NILTyear to 2020 and leave Yltyear at 2019.
 
 # Year NILT data refer to
-NILTyear <- 2021
+NILTyear <- 2022
 # Year YLT data refer to. 
-YLTyear <- 2021
-# Solving for year of missing YLT data in 2021 report
-lastYLTyear <- if(YLTyear == 2021) {
-  YLTyear - 2
-} else {
-  YLTyear - 1
-}
+YLTyear <- 2022
 # Year to refer to joint figures
 LTyear <- max(NILTyear, YLTyear)
 # Year PSNI Hate Crime Statistics refer to
@@ -80,8 +74,8 @@ pubDate <- "xxxx"
 contact <- "Daniel Nelson-Donaghy"
 
 # Read in spss data
-NILT <- read.spss("data/NILT 2021.sav", to.data.frame = TRUE)
-YLT <- read.spss("data/YLT 2020-21.sav", to.data.frame = TRUE)
+NILT <- read.spss("data/NILT 2022.sav", to.data.frame = TRUE)
+YLT <- read.spss("data/YLT 2022.sav", to.data.frame = TRUE)
 
 # Location of PSNI tables on hate crimes
 psniTables <- "https://www.psni.police.uk/globalassets/inside-the-psni/our-statistics/hate-motivation-statistics/2020-21/q4/hate-motivations-tables-mar-_21.xls"
@@ -145,9 +139,9 @@ niltNew <- data.frame(year = NILTyear,
                       f8_pct = colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably")),
                       f11_workplace = colPct(NILT, WORKCULT2, c("Yes, definitely", "Yes, probably")),
                       f11_neighbourhood = colPct(NILT, NGHCULT2, c("Yes, definitely", "Yes, probably")),
-                      f12_neighbourhood = colPct(NILT, MXRLGNGH, "Mixed religion neighbourhood"),
-                      f12_workplace = colPct(NILT, MXRLGWRK, "Mixed religion workplace"),
-                      f12_school = colPct(NILT, OWNMXSCH, "Mixed religion school"),
+                      f12_neighbourhood = colPct(NILT, MXRLGNGH, "A mixed religion neighbourhood"),
+                      f12_workplace = colPct(NILT, MXRLGWRK, "A mixed religion workplace"),
+                      f12_school = colPct(NILT, OWNMXSCH, "A mixed religion school"),
                       f16_aR = colPct(NILT, REPMUR2, "Yes"),
                       f16_iR = colPct(NILT, REPMURAL, "Yes"),
                       f16_aL = colPct(NILT, LOYMUR2, "Yes"),
@@ -220,17 +214,17 @@ yltNew <- data.frame(year = YLTyear,
                      f20_youngNI = colPct(YLT, BELONGNI, c("Yes, definitely", "Yes, probably")),
                      f21a_neighbourhood = colPct(YLT, INFLHERE, c("Yes, probably", "Yes, definitely")),
                      f21a_NI = colPct(YLT, INFLUNI, c("Yes, probably", "Yes, definitely")),
-                     RLRELAGO_YnCath = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == toupper("Catholic")]),
-                     RLRELAGO_YnProt = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == toupper("Protestant")]),
-                     RLRELAGO_YnNoR = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == toupper("No religion")]),
+                     RLRELAGO_YnCath = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == "Catholic"]),
+                     RLRELAGO_YnProt = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == "Protestant"]),
+                     RLRELAGO_YnNoR = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == "No religion"]),
                      RLRELAGO_Yn = unweighted_n(YLT$RLRELAGO),
                      RLRELFUT_Yn = unweighted_n(YLT$RLRELFUT),
                      FEELCATH_Yn = unweighted_n(YLT$FEELCATH),
                      FEELPROT_Yn = unweighted_n(YLT$FEELPROT),
                      FEELMEC_Yn = unweighted_n(YLT$FEELMEC),
                      SOCDIFF_Yn = unweighted_n(YLT$SOCDIFF),
-                     SOCDIFF_YnCath = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Catholic")]),
-                     SOCDIFF_YnProt = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Protestant")]),
+                     SOCDIFF_YnCath = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "Catholic"]),
+                     SOCDIFF_YnProt = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "Protestant"]),
                      SOCDIFF_YnMale = unweighted_n(YLT$SOCDIFF[YLT$RSEX == "Male"]),
                      SOCDIFF_YnFemale = unweighted_n(YLT$SOCDIFF[YLT$RSEX == "Female"]),
                      BELONGNG_Yn = unweighted_n(YLT$BELONGNG),

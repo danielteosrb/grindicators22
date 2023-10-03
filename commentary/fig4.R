@@ -1,17 +1,17 @@
 cathprotSig <- significanceTest(p1 = fig4b$often[grepl("Catholic", fig4b$religion)],
-                                n1 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Catholic")]),
+                                n1 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "Catholic"]),
                                 p2 = fig4b$often[grepl("Protestant", fig4b$religion)],
-                                n2 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Protestant")]))
+                                n2 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "Protestant"]))
 
 cathnorSig <- significanceTest(p1 = fig4b$often[grepl("Catholic", fig4b$religion)],
-                                n1 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Catholic")]),
+                                n1 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "Catholic"]),
                                 p2 = fig4b$often[grepl("No religion", fig4b$religion)],
-                                n2 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("No religion")]))
+                                n2 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "No religion"]))
 
 protnorSig <- significanceTest(p1 = fig4b$often[grepl("Protestant", fig4b$religion)],
-                               n1 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("Protestant")]),
+                               n1 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "Protestant"]),
                                p2 = fig4b$often[grepl("No religion", fig4b$religion)],
-                               n2 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == toupper("No religion")]))
+                               n2 = unweighted_n(YLT$SOCDIFF[YLT$RELIGCAT == "No religion"]))
 
 religionSigsentence <- if (cathprotSig != FALSE & cathnorSig == cathprotSig) {
   paste0("A significantly ", if (cathprotSig == "significant increase") {"higher"} else {"lower"}, " proportion of Catholic young people report this (", fig4b$often[grepl("Catholic", fig4b$religion)], "%) than Protestant young people (", fig4b$often[grepl("Protestant", fig4b$religion)], "%) or young people with no religion (", fig4b$often[grepl("No religion", fig4b$religion)], "%).")
