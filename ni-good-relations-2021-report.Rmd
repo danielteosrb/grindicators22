@@ -1180,7 +1180,8 @@ downloadButtons(fig = fig9,
 
 Source: School Omnibus Survey `r omniYear`
 
-Note: Following the 2016 School Omnibus Survey a decision was taken to move the School Omnibus Survey from an annual survey to a biennial survey.
+Note: Following the 2016 School Omnibus Survey a decision was taken to move the School Omnibus Survey from an annual survey to a biennial survey. The 2020
+survey was cancelled due to the effects of the COVID-19 pandemic.
 
 ```{r how 9}
 
@@ -2128,7 +2129,9 @@ In 2019, 4,999 names of eligible respondents were received, 4929 of which were c
 
 #### School Omnibus Survey
 
-The School Omnibus Survey is a multi-purpose survey of all Principals in grant-aided schools, designed to collect a range of required information as determined by DE policy teams. The questions produced both quantitative and qualitative data, generally using yes/no and multiple response questions as well as open-ended response types. The survey was web-based, with the option to complete in either English or Irish, and each school received the link to the survey via email, along with a unique username and password to maximise security. The survey was issued in September 2018, with a four week period given for survey returns. A reminder was issued one week prior to the closing date of the survey period.
+The School Omnibus Survey is a multi-purpose survey of all Principals in grant-aided schools, designed to collect a range of required information as determined by DE policy teams. Having previously been conducted annually, in 2016 the decision was taken to conduct the survey biennially effective from 2018. The 2020 survey was cancelled due to the effects of the COVID-19 pandemic.
+
+The questions produced both quantitative and qualitative data, generally using yes/no and multiple response questions as well as open-ended response types. The survey was web-based, with the option to complete in either English or Irish, and each school received the link to the survey via email, along with a unique username and password to maximise security. The survey was issued in September 2018, with a four week period given for survey returns. A reminder was issued one week prior to the closing date of the survey period.
 
 The shared education section received 254 responses out of a total of 404 responses to the online survey. ([Dept. of Education](https://www.education-ni.gov.uk/))
 
