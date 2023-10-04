@@ -62,7 +62,7 @@ LTyear <- max(NILTyear, YLTyear)
 # Year PSNI Hate Crime Statistics refer to
 psniYear <- "2021/22"
 # Year NIHE homeless due to intimidation statistics refer to
-niheYear <- "2021/22"
+niheYear <- "2022/23"
 # Most recent school Omnibus Survey
 omniYear <- 2018
 # Last year of integrated schools admission data to use
@@ -313,24 +313,29 @@ homelessTable <-  docx_extract_tbl(homelessDoc, tbl_number = 1) %>%
 # Rename columns to overcome merged cells along top and mark unnecessary ones for deletion
 names(homelessTable) <- c("year", "ASB", "delete", "Disability", "delete", "Paramilitary", "delete", "Racial", "delete", "Sectarian", "delete", "Orientation", "delete", "Total", "delete")
 
-# Create new line of nihe data by 
-niheNew <- homelessTable[!grepl("delete", names(homelessTable))] %>%
-  filter(year == niheYear) %>%
-  mutate(ASB = case_when(ASB == "-" ~ as.numeric(NA),
-                            TRUE ~ as.numeric(ASB)),
-         Disability = case_when(Disability == "-" ~ as.numeric(NA),
-                            TRUE ~ as.numeric(Disability)),
-         Paramilitary = as.numeric(Paramilitary),
-         Racial = case_when(Racial == "-" ~ as.numeric(NA),
-                            TRUE ~ as.numeric(Racial)),
-         Sectarian = as.numeric(Sectarian),
-         Orientation = case_when(Orientation == "-" ~ as.numeric(NA),
-                            TRUE ~ as.numeric(Orientation)),
-         Total = as.numeric(Total),
-         Other = Total - sum(Paramilitary, Racial, Sectarian, na.rm = TRUE),
-         Other2 = Total - sum(Paramilitary, ASB, Sectarian, na.rm = TRUE))
+homelessTable <- homelessTable %>% select(year, ASB, Disability, Paramilitary, Racial, Sectarian, Orientation, Total)
 
-niheNewbind <- niheNew %>%  select(year, Paramilitary, Sectarian, Racial, Other)
+homelessTable <- homelessTable[-1, ]
+
+niheNew <- homelessTable[-c(1:6), ]
+
+# Create new line of nihe data by 
+# niheNew <- homelessTable[!grepl("delete", names(homelessTable))] %>%
+#   filter(year == niheYear) %>%
+#   mutate(ASB = case_when(ASB == "-" ~ as.numeric(NA),
+#                             TRUE ~ as.numeric(ASB)),
+#          Disability = case_when(Disability == "-" ~ as.numeric(NA),
+#                             TRUE ~ as.numeric(Disability)),
+#          Paramilitary = as.numeric(Paramilitary),
+#          Racial = case_when(Racial == "-" ~ as.numeric(NA),
+#                             TRUE ~ as.numeric(Racial)),
+#          Sectarian = as.numeric(Sectarian),
+#          Orientation = case_when(Orientation == "-" ~ as.numeric(NA),
+#                             TRUE ~ as.numeric(Orientation)),
+#          Total = as.numeric(Total),
+#          Other = Total - sum(Paramilitary, ASB, Sectarian, na.rm = TRUE))
+# 
+# niheNewbind <- niheNew %>%  select(year, Paramilitary, Sectarian, Racial, Other)
  
 
 # niheNewb <- homelessTable[!grepl("delete", names(homelessTable))] %>%
@@ -468,40 +473,45 @@ rownames(fig14) <- 1:nrow(fig14)
 
 saveRDS(fig14, psniSave)
 
+fig15b <- homelessTable %>% mutate_at(c("ASB", "Disability", "Paramilitary", "Racial", "Sectarian", "Orientation", "Total"), as.numeric)
+
 # Fig 15b made by combining new and historic
-fig15b <- rbind(nihe, niheNewbind)
-
-fig15b <- full_join(fig15b, niheNew)
-
-fig15b <- fig15b %>% mutate(Other2 = NULL)
-
-fig15b <- fig15b[-c(1:3),]
-
-fig15b <- fig15b %>% select("year", "Paramilitary", "Sectarian", "ASB", "Racial", "Other", "Total")
-
-fig15b["Other"][fig15b["Other"] == 24] <- 7
-
-fig15b["Other"][fig15b["Other"] == 111] <- 113
-
-fig15byear <- fig15b$year
-
-fig15b2 <- fig15b %>% mutate(year = NULL, Total = NULL)
-
-fig15b$Total = rowSums(fig15b2, na.rm = TRUE)
-
-fig15b <- fig15b %>% mutate(year = fig15byear, Racial = NULL)
-
-saveRDS(fig15b, homelessSave)
+# fig15b <- rbind(nihe, niheNewbind)
+# 
+# fig15b <- full_join(fig15b, niheNew)
+# 
+# fig15b <- fig15b %>% mutate(Other2 = NULL)
+# 
+# fig15b <- fig15b[-c(1:3),]
+# 
+# fig15b <- fig15b %>% select("year", "Paramilitary", "Sectarian", "ASB", "Racial", "Other", "Total")
+# 
+# fig15b["Other"][fig15b["Other"] == 24] <- 7
+# 
+# fig15b["Other"][fig15b["Other"] == 111] <- 113
+# 
+# fig15byear <- fig15b$year
+# 
+# fig15b2 <- fig15b %>% mutate(year = NULL, Total = NULL)
+# 
+# fig15b$Total = rowSums(fig15b2, na.rm = TRUE)
+# 
+# fig15b <- fig15b %>% mutate(year = fig15byear, Racial = NULL)
+# 
+# saveRDS(fig15b, homelessSave)
 
 # Fig15a calculated as reshape of niheNew data frame
 fig15a <- data.frame(option = names(niheNew)[names(niheNew) != "year"],
                      num = unlist(niheNew[names(niheNew) != "year"], use.names = FALSE))
 
-fig15a <- fig15a[-c(2, 4, 6, 7, 8), ]
-                
-fig15a["option"][fig15a["option"] == "Other2"] <- "Other"
+fig15a$num = as.numeric(as.character(fig15a$num)) 
 
-fig15a <- fig15a[c(2,1,3,4),]
+# 
+# fig15a <- fig15a[-c(2, 4, 6, 7, 8), ]
+#                 
+# fig15a["option"][fig15a["option"] == "Other2"] <- "Other"
+# 
+# fig15a <- fig15a[c(2,1,3,4),]
 
 # Extract Figure 16 values from data, drop f16 from variable names
 fig16 <- extractFig("f16")
@@ -1422,17 +1432,17 @@ div(class = "row",
     div(class = "col-sm-4", plot15a),
     div(class = "col-sm-8", plot15b))
 
-fig15 <- fig15b[-c(6), ]
-
-fig15c <- fig15b[-c(1:5), ]
-
-fig15 <- fig15 %>% mutate(Paramilitary = NA, Sectarian = NA, ASB = NA, Other = NA)
-
-fig15 <- rbind(fig15, fig15c)
-
-downloadButtons(fig = fig15,
-                indicator = "3.1b",
-                headers = c("Year", "Paramilitary", "Sectarian", "ASB", "Other", "Total"))
+# fig15 <- fig15b[-c(6), ]
+# 
+# fig15c <- fig15b[-c(1:5), ]
+# 
+# fig15 <- fig15 %>% mutate(Paramilitary = NA, Sectarian = NA, ASB = NA, Other = NA)
+# 
+# fig15 <- rbind(fig15, fig15c)
+# 
+# downloadButtons(fig = fig15,
+#                 indicator = "3.1b",
+#                 headers = c("Year", "Paramilitary", "Sectarian", "ASB", "Other", "Total"))
 
 ```
 
