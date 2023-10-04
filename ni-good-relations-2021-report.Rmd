@@ -60,13 +60,13 @@ YLTyear <- 2022
 # Year to refer to joint figures
 LTyear <- max(NILTyear, YLTyear)
 # Year PSNI Hate Crime Statistics refer to
-psniYear <- "2021/22"
+psniYear <- "2022/23"
 # Year NIHE homeless due to intimidation statistics refer to
 niheYear <- "2022/23"
 # Most recent school Omnibus Survey
-omniYear <- 2018
+omniYear <- 2022
 # Last year of integrated schools admission data to use
-intYear <- "2021/22"
+intYear <- "2022/23"
 
 # Original Publication date
 pubDate <- "xxxx"
@@ -254,7 +254,11 @@ saveRDS(data, file = paste0("data/dataTo", LTyear, ".RDS"))
 
 # SCHOOL OMNIBUS SURVEY FIGURES
 # Import School Omnibus Survey Data
-omniData <- readRDS(paste0("data/omniTo", omniYear, ".RDS"))
+omniData <- readRDS(paste0("data/omniTo2018.RDS"))
+
+omniDataNew <- c("2022", 56, 44, 14, 8, 5, 27, 9, 16, 9, 6, 7)
+
+omniData <- rbind(omniData, omniDataNew) %>% mutate(across(!year, as.numeric))
 
 # PSNI HATE CRIME FIGURES
 # Generate file names for historic and new PSNI data series
@@ -441,7 +445,7 @@ fig9 <- tail(omniData, 3) %>%
   select(activity, 1:3) %>%
   remove_rownames() %>%
   bind_rows(slice(., 1)) %>% 
-  slice(-1)
+  slice(-1)  %>% mutate(across(!activity, as.numeric))
 
 
 # Manual input of Figure 10
@@ -458,16 +462,16 @@ fig11 <- extractFig("f11") %>%
 # Extract Figure 12 values from data, drop f12 from variable names
 fig12 <- extractFig("f12")
 
-fig13 <- data.frame(year = c("2013/14", "2014/15", "2015/16", "2016/17", "2017/18", "2018/19", "2019/20", "2020/21", "2021/22"),
-                    pct = c(10, 18, 19, 15, 18, 21, 20, 24, 16)) %>%
+fig13 <- data.frame(year = c("2013/14", "2014/15", "2015/16", "2016/17", "2017/18", "2018/19", "2019/20", "2020/21", "2021/22", "2022/23"),
+                    pct = c(10, 18, 19, 15, 18, 21, 20, 24, 16, 21)) %>%
   filter(year <= intYear)
 
-intEnroll <- 7.7
+intEnroll <- 8.1
 
 # Note - fig13_n2 here is calculated from integer percentage - may need reviewed.
 
-fig13_n1 <- 2151
-fig13_n2 <- 2525
+fig13_n1 <- 2610
+fig13_n2 <- 2151
 
 # Add new data to historic
 fig14 <- rbind(psni, psniNew)
@@ -478,7 +482,7 @@ saveRDS(fig14, psniSave)
 
 # New way of calculating fig15b - old way is commented out below.
 
-fig15b <- homelessTable %>% mutate_at(c("ASB", "Disability", "Paramilitary", "Racial", "Sectarian", "Orientation", "Total"), as.numeric)
+fig15b <- homelessTable %>% mutate(across(!year, as.numeric))
 
 # Fig 15b made by combining new and historic
 # fig15b <- rbind(nihe, niheNew)
@@ -1147,9 +1151,9 @@ chartTitle(9, "% whose school has been involved in shared education with another
 
 clusteredBar(data = fig9,
              x = "activity",
-             y1 = "2015",
-             y2 = "2016",
-             y3 = "2018",
+             y1 = "2016",
+             y2 = "2018",
+             y3 = "2022",
              legend = "bottom")
 
 downloadButtons(fig = fig9,
