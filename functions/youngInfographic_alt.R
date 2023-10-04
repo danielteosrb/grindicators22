@@ -15,7 +15,7 @@ youngInfographic_alt <- function() {
     adultCap <- paste0(adultDiff, "% higher than in ", NILTyear - 1)
   } else {
     adultArrow <- "images/ArrowSideways.png"
-    adultCap <- paste0("No change since ", NILTyear - 1)
+    adultCap <- paste0("No significant change since ", NILTyear - 1)
   }
   
   youngDiff <- round2(dataNew$f1_young - dataOld$f1_young)
@@ -33,7 +33,7 @@ youngInfographic_alt <- function() {
     youngCap <- paste0(youngDiff, "% higher than in ", NILTyear - 1)
   } else {
     youngArrow <- "images/ArrowSideways.png"
-    youngCap <- paste0("No change since ", NILTyear - 1)
+    youngCap <- paste0("No significant change since ", NILTyear - 1)
   }
   
   plot_ly(fig1,
@@ -107,9 +107,9 @@ youngInfographic_alt <- function() {
       
       images = list(
         list(source = dataURI(file = adultArrow),
-             x = 0.13, y = 0.56, sizex = 0.05, sizey = 0.05),
+             x = 0.09, y = 0.56, sizex = 0.05, sizey = 0.05),
         list(source = dataURI(file = youngArrow),
-             x = 0.13, y = 0.06, sizex = 0.05, sizey = 0.05),
+             x = 0.09, y = 0.06, sizex = 0.05, sizey = 0.05),
         list(source = dataURI(file = "images/book.png"),
              x = 0.6, y = 0.85, sizex = 0.16, sizey = 0.16, xanchor = "center", yanchor = "middle"),
         list(source = dataURI(file = "images/school.png"),

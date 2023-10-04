@@ -23,17 +23,17 @@ culturalInfographic <- function() {
   # Depending on significance create a caption and select an arrow for the direction of change
   if (nghSig == "significant decrease") {
     
-    nghCap <- paste0(abs(round2(nghDiff)), "% lower in\n", NILTyear, " than in ", NILTyear - 1)
+    nghCap <- paste0(abs(round2(nghDiff)), "% lower than in ", NILTyear - 1)
     nghArrow <- "images/downArrow.png"
     
   } else if (nghSig == "significant increase") {
     
-    nghCap <- paste0(round2(nghDiff), "% higher in\n", NILTyear, " than in ", NILTyear - 1)
+    nghCap <- paste0(round2(nghDiff), "% higher than in ", NILTyear - 1)
     nghArrow <- "images/upArrow.png"
     
   } else {
     
-    nghCap <- paste0("No change\nfrom", NILTyear - 1, " to ", NILTyear)
+    nghCap <- paste0("No significant change\nsince ", NILTyear - 1)
     nghArrow <- "images/ArrowSideways.png"
     
   }
@@ -69,7 +69,7 @@ culturalInfographic <- function() {
     
   } else {
     
-    NICap <- paste0("No significant change\nbetween ", NILTyear, " and ", NILTyear - 1)
+    NICap <- paste0("No significant change\nsince ", NILTyear - 1)
     NIArrow <- "images/ArrowSideways.png"
     
   }
@@ -83,8 +83,8 @@ culturalInfographic <- function() {
   
   # Plotting the infographic:
   # Plots the first donut chart in top right hand corner
-  plot_ly(fig21b, # A data fraame
-          domain = list(x = c(0.82, 0.97), y = c(0.52, 0.98)),  # Position of donut chart on plot
+  plot_ly(fig21b, # A data frame
+          domain = list(x = c(0.83, 0.98), y = c(0.52, 0.98)),  # Position of donut chart on plot
           values = nghDonutOld,  # The vector of values for the donut
           name = paste(NILTyear, "influence on decisions in their neighbourhood"),
           labels = c("Definitely or probably", "Do not agree"),  # Section labels 
@@ -97,18 +97,18 @@ culturalInfographic <- function() {
           showlegend = FALSE) %>%  # Remove legend
     
     # Add second donut, changing position and values
-    add_trace(domain = list(x = c(0.53, 0.68), y = c(0.52, 0.98)),
+    add_trace(domain = list(x = c(0.52, 0.67), y = c(0.52, 0.98)),
               name = paste(NILTyear - 1, "influence on decisions in their neighbourhood"),
               values = nghDonut) %>%
     
     # Add third donut, changing position, values and colours
-    add_trace(domain = list(x = c(0.82, 0.97), y = c(0.02, 0.48)),
+    add_trace(domain = list(x = c(0.83, 0.98), y = c(0.02, 0.48)),
               values = NIdonutOld,
               name = paste(NILTyear, "influence on Northern Ireland"),
               marker = list(colors = c("#85afd6", "#e5e5e5"))) %>%
     
     # Add fourth donut, changing position, values and colours
-    add_trace(domain = list(x = c(0.53, 0.68), y = c(0.02, 0.48)),
+    add_trace(domain = list(x = c(0.52, 0.67), y = c(0.02, 0.48)),
               values = NIdonut,
               name = paste(NILTyear - 1, "influence on Northern Ireland"),
               marker = list(colors = c("#85afd6", "#e5e5e5"))) %>%
@@ -174,17 +174,17 @@ culturalInfographic <- function() {
              sizex = 0.13, sizey = 0.15),
         # Local decisions image
         list(source = dataURI(file = "images/local.png"),
-             x = 0.605, y = 0.75, xanchor = "center", yanchor = "middle",
+             x = 0.595, y = 0.75, xanchor = "center", yanchor = "middle",
              sizex = 0.1, sizey = 0.1),
         list(source = dataURI(file = "images/local.png"),
-             x = 0.895, y = 0.75, xanchor = "center", yanchor = "middle",
+             x = 0.905, y = 0.75, xanchor = "center", yanchor = "middle",
              sizex = 0.1, sizey = 0.1),
         # NI image
         list(source = dataURI(file = "images/NI.png"),
-             x = 0.605, y = 0.25, xanchor = "center", yanchor = "middle",
+             x = 0.595, y = 0.25, xanchor = "center", yanchor = "middle",
              sizex = 0.1, sizey = 0.1),
         list(source = dataURI(file = "images/NI.png"),
-             x = 0.895, y = 0.25, xanchor = "center", yanchor = "middle",
+             x = 0.905, y = 0.25, xanchor = "center", yanchor = "middle",
              sizex = 0.1, sizey = 0.1),
         list(source = dataURI(file = NIArrow),
              x = 0.75, y = 0.24, xanchor = "center", yanchor = "middle",
@@ -232,7 +232,7 @@ culturalInfographic <- function() {
              align = "left"),
         list(text = paste0(round2(dataNew$f21b_neighbourhood), "%"),
              showarrow = FALSE,
-             x = 0.605, y = 0.84,
+             x = 0.595, y = 0.84,
              xref = "paper", yref = "paper",
              xanchor = "left", yanchor = "middle",
              font = list(color = "#ffffff", size = 12)),
@@ -243,40 +243,40 @@ culturalInfographic <- function() {
              xanchor = "center", yanchor = "top"),
         list(text = paste0(round2(dataOld$f21b_neighbourhood), "%"),
              showarrow = FALSE,
-             x = 0.895, y = 0.84,
+             x = 0.905, y = 0.84,
              xref = "paper", yref = "paper",
              xanchor = "left", yanchor = "middle",
              font = list(color = "#ffffff", size = 12)),
         list(text = paste0(round2(dataNew$f21b_NI), "%"),
              showarrow = FALSE,
-             x = 0.605, y = 0.34,
+             x = 0.595, y = 0.34,
              xref = "paper", yref = "paper",
              xanchor = "left", yanchor = "middle",
              font = list(color = "#ffffff", size = 12)),
         list(text = paste0(round2(dataOld$f21b_NI), "%"),
              showarrow = FALSE,
-             x = 0.895, y = 0.34,
+             x = 0.905, y = 0.34,
              xref = "paper", yref = "paper",
              xanchor = "left", yanchor = "middle",
              font = list(color = "#ffffff", size = 12)),
         list(text = paste0("<b>", NILTyear, "</b>"),
              showarrow = FALSE,
-             x = 0.605, y = 0.13,
+             x = 0.595, y = 0.13,
              xref = "paper", yref = "paper",
              xanchor = "center", yanchor = "top"),
         list(text = paste0("<b>", NILTyear - 1, "</b>"),
              showarrow = FALSE,
-             x = 0.895, y = 0.13,
+             x = 0.905, y = 0.13,
              xref = "paper", yref = "paper",
              xanchor = "center", yanchor = "top"),
         list(text = paste0("<b>", NILTyear, "</b>"),
              showarrow = FALSE,
-             x = 0.605, y = 0.63,
+             x = 0.595, y = 0.63,
              xref = "paper", yref = "paper",
              xanchor = "center", yanchor = "top"),
         list(text = paste0("<b>", NILTyear - 1, "</b>"),
              showarrow = FALSE,
-             x = 0.895, y = 0.63,
+             x = 0.905, y = 0.63,
              xref = "paper", yref = "paper",
              xanchor = "center", yanchor = "top"),
         list(text = "<b>Adults who feel they have an influence\non decisions in their neighbourhood</b>",

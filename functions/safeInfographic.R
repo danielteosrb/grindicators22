@@ -23,7 +23,7 @@ safeInfographic <- function() {
     
   } else {
     
-    cap <- paste0("No change from ", NILTyear - 1)
+    cap <- paste0("No significant change from ", NILTyear - 1)
     arrow <- "images/sideArrow.png"
     
   }
