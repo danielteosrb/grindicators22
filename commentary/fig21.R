@@ -99,15 +99,22 @@ protnorNISig <- significanceTest(p1 = colPct(NILT, INFLNI, c("Yes, probably", "Y
 
 
 religionneighSentence <- if(cathprotNeighSig == FALSE & cathnorNeighSig == cathprotNeighSig & protnorNeighSig == cathprotNeighSig) {
-  "There were no significant differences in feelings of influence over decisions taken in their neighbourhood based on the religion of respondents."
+  "There are no significant differences in feelings of influence over decisions taken in their neighbourhood based on the religion of respondents."
+  # Cath/prot sig, cath/nor same and prot/nor false
 } else if (cathprotNeighSig != FALSE & cathnorNeighSig == cathprotNeighSig & protnorNeighSig == FALSE) {
-  paste0("Catholic respondents (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "Catholic"), "%) were significantly more likely than either Protestant respondents (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) or respondents with no religion (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel they had an influence on decisions made in their neighbourhood.")
+  paste0("Catholic respondents (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "Catholic"), "%) are significantly more likely than either Protestant respondents (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) or respondents with no religion (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel they have an influence on decisions made in their neighbourhood.")
+  # Cath/nor and prot/nor sig and same, cath/prot not sig
+} else if (cathprotNeighSig == FALSE & cathnorNeighSig != FALSE & protnorNeighSig == cathnorNeighSig) {
+  paste0("Catholic (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "Catholic"), "%) and Protestant (", 
+         colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) respondents are both more likely than respondents with no religion (", colPct(NILT, INFLLOCL, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel they have an influence on decisions made in their neighbourhood. However, there is no significant difference between the proportion of Catholic and Protestant respondents who report this.")
 }
-
+  
 religionNISentence <- if(cathprotNISig == FALSE & cathnorNISig == cathprotNISig & protnorNISig == cathprotNISig) {
-  "There were no significant differences in feelings of influence over decisions taken in Northern Ireland based on the religion of respondents."
+  "There are no significant differences in feelings of influence over decisions taken in Northern Ireland based on the religion of respondents."
 } else if (cathprotNISig != FALSE & cathnorNISig == cathprotNISig & protnorNISig == FALSE) {
-  paste0("Catholic respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Catholic"), "%) were significantly more likely than either Protestant respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) or respondents with no religion (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel they had an influence on decisions made in Northern Ireland.")
+  paste0("Catholic respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Catholic"), "%) are significantly more likely than either Protestant respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) or respondents with no religion (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel they have an influence on decisions made in Northern Ireland.")
+} else if (cathprotNISig == FALSE & cathnorNISig == cathprotNISig & protnorNISig != FALSE) {
+  paste0("Protestant respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) are significantly more likely than respondents with no religion (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel to feel they have an influence on decisions made in Northern Ireland, however, there were no other significant differences based on religion.")
 }
 
 neighSig <- significanceTest(p1 = dataNew$f21b_neighbourhood,
