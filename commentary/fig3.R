@@ -51,7 +51,7 @@ f3para1 <-
     paste0("Young people's attitudes towards people from Catholic (", YLTyear , ": ", round2(dataNew$f3a_young), "%; ", YLTyear - 1, ": ", round2(dataOld$f3a_young), "%), Protestant (", YLTyear , ": ", round2(dataNew$f3b_young), "%; ", YLTyear - 1, ": ", round2(dataOld$f3b_young), "%), and Minority  (", YLTyear , ": ", round2(dataNew$f3c_young), "%; ", YLTyear - 1, ": ", round2(dataOld$f3c_young), "%) communities have shown a ", CathSig, " since ", YLTyear - 1, ".")
     # No significant change in all three
   } else if (CathSig == FALSE & ProtSig == FALSE & MESig == FALSE) {
-    paste0("There has been no significant change in young people's attitudes towards people from Catholic , Protestant, and Minority Ethnic communities since ", YLTyear - 1, ".")
+    paste0("There has been no significant change in young people's attitudes towards people from Catholic, Protestant, and Minority Ethnic communities since ", YLTyear - 1, ".")
     # Only Catholic not significant while Protestant and Minority Ethnic the same
   } else if (CathSig == FALSE & ProtSig != FALSE & ProtSig == MESig) {
     paste0("Young people's attitudes towards people from Protestant (", YLTyear , ": ", round2(dataNew$f3b_young), "%; ", YLTyear - 1, ": ", round2(dataOld$f3b_young), "%), and Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_young), "%; ", YLTyear - 1, ": ", round2(dataOld$f3c_young), "%) have shown a ", ProtSig, " since ", YLTyear - 1, ", while there was no significant change in young people's attitudes towards Catholic Communities.")
