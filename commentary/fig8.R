@@ -29,12 +29,18 @@ f8Siggen <- significanceTest(p1 = colPct(NILT, SCHLCULT2, c("Yes, definitely", "
 
 f8religionsentence <- if (f8SigCP == FALSE & f8SigCNR == f8SigCP & f8SigPNR == f8SigCP) {
   pasteo("There are no differences in responses when analysed by religion.")
+  # Cath/NoRel significant, Prot/NoRel same, Cath/Prot not sig
 } else if (f8SigCNR != FALSE & f8SigPNR == f8SigCNR & f8SigCP == FALSE) {
   paste0("Respondents with no religion ", if (f8SigCNR == "significant increase") {"less"} else {"more"}, " often report that their child's school is somewhere their children can be open about their cultural identity than either Catholic or Protestant respondents. However, there is no significant difference between the proportion of Catholic and Protestant respondents who report this.")
+  # All sig and same
+} else if (f8SigCP != FALSE & f8SigCNR == f8SigCP & f8SigPNR == f8SigCP) {
+  paste0("Catholic respondents (", colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), religion = "Catholic"), "%) are significantly ", if (f8SigCNR == "significant increase") {"more"} else {"less"}, " likely than either Protestant respondents (",
+         colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), religion = "Protestant"), "%) or respondents with no religion (",
+         colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), religion = "No religion"), "%) to report that their child's school is somewhere their children can be open about their cultural identity. Protestant respondents were signficantly ", if (f8SigPNR == "significant increase") {"more"} else {"less"}, " likely than respondents with no religion to report this.")
 }
 
 f8gendersentence <- if (f8Siggen != FALSE) {
-  paste0("Women are significantly ", if (f8Siggen == "significant decrease") {"more"} else {"less"}, " likely than men to report that their child's school is somewhere their children can be open about their cultural identity.")
+  paste0("Women (", colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) are significantly ", if (f8Siggen == "significant decrease") {"more"} else {"less"}, " likely than men (", colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) to report that their child's school is somewhere their children can be open about their cultural identity.")
 } else {
   paste0("There are ", if (f8SigCP == FALSE & f8SigCNR == f8SigCP & f8SigPNR == f8SigCP) {"also "}, "no differences in responses when analysed by gender.")
 }
