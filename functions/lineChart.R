@@ -50,7 +50,7 @@ lineChart <- function(data, x,
       # Add dashed line to same graph:
       add_trace(y = data[["dash1"]],   # y axis variable, no need to add new x axis
                 name = y2Name,   # legend label
-                hovertext = "",
+                hoverinfo = "none",
                 line = list(color = "#8A9B08",
                             dash = "dash"),
                 showlegend = FALSE)  # Change colour, line width will be same as above

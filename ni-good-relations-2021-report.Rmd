@@ -761,7 +761,7 @@ In `r LTyear`, `r dataNew$f1_adults`% of adults and `r dataNew$f1_young`% of you
 
 chartTitle(1, "% who think that relations between Protestants and Catholics are <i>better now</i> than they were five years ago")
 
-lineChart21(data = fig1,
+lineChart(data = fig1,
           x = "year",
           y1 = "adults",
           y2 = "young",
@@ -801,7 +801,7 @@ In `r LTyear`, `r round2(dataNew$f2_adults)`% of adults and `r round2(dataNew$f2
 
 chartTitle(2, "% who think that relations between Protestants and Catholics <i>will be better</i> in five years' time")
 
-lineChart21(data = fig2,
+lineChart(data = fig2,
           x = "year",
           y1 = "adults",
           y2 = "young",
@@ -847,7 +847,7 @@ source("commentary/fig3.R")
 
 chartTitle(3, "% who feel favourable towards people from: Catholic communities, Protestant communities, Minority Ethnic communities")
 
-plot3a <- lineChart21(data = fig3a,
+plot3a <- lineChart(data = fig3a,
                     x = "year",
                     y1 = "adults",
                     y2 = "young",
@@ -855,7 +855,7 @@ plot3a <- lineChart21(data = fig3a,
                     y2Name = "Young People",
                     title = "Catholic communities")
 
-plot3b <- lineChart21(data = fig3b,
+plot3b <- lineChart(data = fig3b,
                     x = "year",
                     y1 = "adults",
                     y2 = "young",
@@ -863,7 +863,7 @@ plot3b <- lineChart21(data = fig3b,
                     y2Name = "Young People",
                     title = "Protestant communities")
 
-plot3c <- lineChart21(data = fig3c,
+plot3c <- lineChart(data = fig3c,
                     x = "year",
                     y1 = "adults",
                     y2 = "young",
