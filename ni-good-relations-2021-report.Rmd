@@ -776,7 +776,7 @@ downloadButtons(fig = fig1,
 
 Source: NILT/YLT
 
-Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+Note: The YLT survey did not run in 2020. 
 
 ```{r how 1}
 
@@ -816,7 +816,7 @@ downloadButtons(fig = fig2,
 
 Source: NILT/YLT
 
-Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+Note: The YLT survey did not run in 2020. 
 
 ```{r how 2}
 
@@ -900,7 +900,7 @@ downloadButtons(fig = fig3,
 
 Source: NILT/YLT
 
-Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+Note: The YLT survey did not run in 2020. 
 
 ```{r how 3}
 
@@ -954,7 +954,7 @@ downloadButtons(fig = fig4,
 
 Source: YLT
 
-Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+Note: The YLT survey did not run in 2020. 
 
 ```{r how 4}
 
@@ -1690,7 +1690,7 @@ downloadButtons(fig = fig21,
 
 Source: NILT/YLT
 
-Note: The YLT survey did not run in 2020. Any 2020 data included in graphs is from 2019.
+Note: The YLT survey did not run in 2020. 
 
 ```{r how 21}
 
