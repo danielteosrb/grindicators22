@@ -660,13 +660,15 @@ The [Together: Building a United Community Strategy (2013)](https://www.executiv
 
 This publication monitors indicators for the four key priorities of the T:BUC Strategy: our children and young people; our shared community; our safe community; and our cultural expression.
 
-```{r techNotes}
+<!-- commenting in the below chunk will allow a blue box at the start of the report to be populated with information that needs to be clearly presented to the reader, for e.g. regarding issues with the data or comparability. The text can be populated by editing fig0.R. -->
 
-source("commentary/fig0.R")
+<!-- ```{r techNotes} -->
 
-techNotes(f0para1, f0para2)
+<!-- source("commentary/fig0.R") -->
 
-```
+<!-- techNotes(f0para1, f0para2) -->
+
+<!-- ``` -->
 
 ```{r Guidance}
 
