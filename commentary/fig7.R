@@ -449,10 +449,16 @@ shopGenderSig <- significanceTest(p1 = colPct(NILT, SHCNOPEN, c("Yes, definitely
 
 genderSentence <- if (leisureGenderSig == FALSE & parkGenderSig == FALSE & libraryGenderSig == FALSE & shopGenderSig == FALSE) {
   "There were no significant differences based on the gender of the respondent."
+  # Libraries significant, all else not
 } else if (leisureGenderSig == FALSE & parkGenderSig == FALSE & libraryGenderSig != FALSE & shopGenderSig == FALSE) {
   paste0("There were no significant differences based on gender in the proportion of respondents who believe that leisure centres, parks or shopping centres are shared and open, however, male respondents (", colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) were significantly ",
   if (libraryGenderSig == "significant increase") {"more"} else {"less"}, " likely than female respondents (", colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) to say that libraries are shared and open.")
-} else { "There were some significant differencs based on the gender of the respondent."
+  # Leisure centres significant, all else not
+} else if (leisureGenderSig != FALSE & parkGenderSig == FALSE & libraryGenderSig == FALSE & shopGenderSig == FALSE) {
+  paste0("There were no significant differences based on gender in the proportion of respondents who believe that libraries, parks or shopping centres are shared and open, however, male respondents (",
+         colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) were significantly ", if (leisureGenderSig == "significant increase") {"more"} else {"less"}, " likely than female respondents (",
+         colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) to say that leisure centres are shared and open.")
+} else { "There were some significant differences based on the gender of the respondent."
 }
 
 # How we got here.
@@ -490,10 +496,10 @@ f7para1 <-
     paste0("Since ", NILTyear - 1, ", there have been no significant changes in the proportion of respondents who think leisure centres,
            parks and shopping centres in their area are 'shared and open' to both Protestant and Catholics.")
     # Only leisure centres significant
-  } else if (leisureSiglast != FALSE & parkSiglast == FALSE & shopSiglast == FALSE) {
+  } else if (leisureSiglast != FALSE & parkSiglast == FALSE & shopSiglast == FALSE & librarySiglast == FALSE) {
     paste0("Since ", NILTyear - 1, ", there has been a ", leisureSiglast, " in the proportion of respondents who think leisure centres (",
            NILTyear, ": ", round2(dataNew$f7_LC), "%; ", NILTyear - 1, ": ", round2(dataOld$f7_LC),
-           "%) in their area are 'shared and open' to both Protestant and Catholics. However, there were no significant changes in these proportions for parks or shopping centres.")
+           "%) in their area are 'shared and open' to both Protestant and Catholics. However, there were no significant changes in these proportions for parks, libraries or shopping centres.")
     # Only parks significant
   } else if (leisureSiglast == FALSE & parkSiglast != FALSE & shopSiglast == FALSE) {
     paste0("Since ", NILTyear - 1, ", there has been a ", parkSiglast, " in the proportion of respondents who think parks (",
@@ -618,11 +624,13 @@ f7para2 <-
     paste0("Since 2013, there has been a ", shopSig, " in the proportion of respondents who think shopping centres (",
            NILTyear, ": ", round2(dataNew$f7_SHCN), "%; 2013: ", round2(data$f7_SHCN[data$year == 2013]),
            "%) in their area are 'shared and open' to both Protestant and Catholics. However, there were no significant changes in these proportions for leisure centres, parks or libraries.")
-    # Shopping centres not Significant and other two the same
-  } else if (leisureSig != FALSE & leisureSig == parkSig & shopSig == FALSE) {
+    # Shopping centres not Significant and other three the same
+  } else if (leisureSig != FALSE & leisureSig == parkSig & shopSig == FALSE & librarySig == leisureSig) {
     paste0("Since 2013, there have been ", leisureSig, "s in the proportion of respondents who think leisure centres (",
            NILTyear, ": ", round2(dataNew$f7_LC), "%; 2013: ", round2(data$f7_LC[data$year == 2013]),
-           "%) and parks (", NILTyear, ": ", round2(dataNew$f7_park), "%; 2013: ", round2(data$f7_park[data$year == 2013]),
+           "%), parks (", NILTyear, ": ", round2(dataNew$f7_park), "%; 2013: ", round2(data$f7_park[data$year == 2013]),
+           "%) and libraries (",
+           NILTyear, ": ", round2(dataNew$f7_lib), "%; 2013: ", round2(data$f7_lib[data$year == 2013]),
            "%) in their area are 'shared and open' to both Protestant and Catholics. However, there was no significant change in this proportion for shopping centres.")
     # Parks not Significant and other two the same
   } else if (leisureSig != FALSE & leisureSig == shopSig & parkSig == FALSE) {
@@ -681,4 +689,10 @@ f7para2 <-
            " in this proportion who think this about shopping centres in their area (",
            NILTyear, ": ", round2(dataNew$f7_SHCN), "%; 2013: ", round2(data$f7_SHCN[data$year == 2013]),
            "%). However, there was no significant change in this proportion for leisure centres.")
+    # Parks and leisure centres significant and same, other two not significant
+  } else if (leisureSig != FALSE & parkSig == leisureSig & librarySig == FALSE & shopSig == FALSE) {
+    paste0("Since 2013, there has been a ", parkSig, " in the proportion of respondents who think both parks (",
+           NILTyear, ": ", round2(dataNew$f7_park), "%; 2013: ", round2(data$f7_park[data$year == 2013]),
+           "%) and leisure centres (", NILTyear, ": ", round2(dataNew$f7_LC), "%; 2013: ", round2(data$f7_LC[data$year == 2013]),
+           "%) are 'shared and open' to both Protestants and Catholics. However, there was no significant change in these proprtions for libraries or shopping centres.")
   }
