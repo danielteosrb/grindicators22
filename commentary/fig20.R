@@ -212,6 +212,8 @@ youngCathNORNISig <- significanceTest(p1 = youngCathNI,
 
 adultneighreligionsentence <- if (adultProtCathNeighSig != FALSE & adultProtNORNeighSig == adultProtCathNeighSig) {
   paste0("Among adults, significantly ", if (adultProtCathNeighSig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNeigh, "%) than either Catholic respondents (", cathNeigh, "%) or respondents with no religion (", noNeigh, "%) said they felt a sense of belonging to their neighbourhood.")
+} else if (adultProtCathNeighSig == FALSE & adultProtNORNeighSig != FALSE & adultCathNORNeighSig == adultProtNORNeighSig) {
+  paste0("Among adults, respondents with no religion (", noNeigh, "%) were significantly ", if (adultProtNORNeighSig == "significant increase") {"less"} else {"more"}, " likely than either Catholic (", cathNeigh, "%) or Protestant respondents (", protNeigh, "%) to feel a sense of belonging to their neighbourhood. There were no significant differences in feelings of belonging to their neighbourhood between Catholic and Protestant respondents.")
 } else if (adultProtCathNeighSig == FALSE & adultProtNORNeighSig == adultProtCathNeighSig & adultCathNORNeighSig == adultProtCathNeighSig) {
   paste0("Among adults, there were no significant differences in feelings of belonging to their neighbourhood based on religion.")
 }
