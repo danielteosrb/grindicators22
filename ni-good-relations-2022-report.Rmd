@@ -710,9 +710,9 @@ source("commentary/execSum2.R")
 
 ```
 
--   `r leisure`% of adults think that leisure centres in their area are 'shared and open' to both Catholics and Protestants; `r park`% think this about parks; `r library`% think this about libraries and `r shopping`% think this about shopping centres.
+-   `r leisure`% of adults in `r NILTyear` think that leisure centres in their area are 'shared and open' to both Catholics and Protestants; `r park`% think this about parks; `r library`% think this about libraries and `r shopping`% think this about shopping centres.
 
--   `r workplace`% of respondents said they would prefer a mixed religion workplace; `r neighbourhood`% a mixed religion neighbourhood; and `r school`% mixed religion schools.
+-   `r workplace`% of adult respondents said they would prefer a mixed religion workplace; `r neighbourhood`% a mixed religion neighbourhood; and `r school`% mixed religion schools.
 
 ```{r safe infogrpahic, out.width = "830px", out.height =  "575px"}
 
@@ -724,7 +724,7 @@ source("commentary/execSum3.R")
 
 ```
 
--   `r safeTown`% of respondents said that they see town centres as safe and welcoming places for people of all walks of life. `r sigStatement`
+-   `r safeTown`% of adult respondents said that they see town centres as safe and welcoming places for people of all walks of life. `r sigStatement`
 
 -   `r safeProtestant`% of respondents say they feel 'very' or 'quite' safe going to events held in a Protestant secondary school; `r safeCatholic`% to events held in a Catholic secondary school; `r safeGAA`% to events held in a GAA club; and `r safeOrange`% to events held in an Orange Hall.
 
@@ -738,7 +738,7 @@ source("commentary/execSum4.R")
 
 ```
 
--   `r protAgree`% of respondents think that the culture and traditions of Protestant communities add to the richness and diversity of Northern Ireland society; `r cathAgree`% think this about Catholic communities; and `r minorityAgree`% think this about Minority Ethnic communities.
+-   `r protAgree`% of respondents in `r NILTyear` think that the culture and traditions of Protestant communities add to the richness and diversity of Northern Ireland society; `r cathAgree`% think this about Catholic communities; and `r minorityAgree`% think this about Minority Ethnic communities.
 
 -   `r sigStatement`
 
