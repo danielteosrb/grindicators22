@@ -978,7 +978,7 @@ source("commentary/fig5.R")
 
 **Current Year (`r YLTyear`):**
 
-`r f5_projects`% of young people have 'done projects' with pupils from other schools, while `r f5_classes`% have 'shared classes', and `r f5_equipment`% 'shared sports facilities or equipment'.
+`r f5_all`% of young people have been involved in shared education with another school. Of thise who have been involved in shared education, `r f5_projects`% have 'done projects' with pupils from other schools, while `r f5_classes`% have 'shared classes', and `r f5_equipment`% 'shared sports facilities or equipment'.
 
 ```{r figure 5}
 
@@ -995,7 +995,7 @@ downloadButtons(fig = fig5,
 
 Source: YLT
 
-Note: % of young people refers to those who took part in shared education.
+Note: % of young people refers to those who took part in shared education. Respondents were able to select multiple categories.
 
 ```{r how 5}
 
