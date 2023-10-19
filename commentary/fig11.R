@@ -46,7 +46,7 @@ f11para1 <-
            "%). There has been no significant change in those who say the same of their neighbourhood since ", NILTyear - 1, ".")
     # Only neighbourhood significant
   } else if (workSiglast == FALSE & nghSiglast != FALSE) {
-    paste0("Since ", NILTyear - 1, ", the proportion who define their neighbourhood as a shared space has seen a ", nghSiglast, " of ", abs(nghDifflast), " percentage points since ", NILTyear - 1,
+    paste0("The proportion who define their neighbourhood as a shared space has seen a ", nghSiglast, " of ", abs(nghDifflast), " percentage points since ", NILTyear - 1,
            " (", NILTyear, ": ", neighbourhood, "%; ", NILTyear - 1, ": ", round2(dataOld$f11_neighbourhood),
            "%). There has been no significant change in those who say the same about their workplace since ", NILTyear - 1, ".")
     # Neither significant
@@ -72,9 +72,7 @@ f11para2 <-
   if (workSig != FALSE & nghSig != FALSE) {
     paste0("Since this question was first asked, in 2014, the proportion who define their workplace as a shared space has seen a ",
            workSig," of ", abs(workDiff)," percentage points (", NILTyear, ": ", workplace, "%; 2014: ", round2(data$f11_workplace[data$year == 2014]),
-           "%). Those who say the same of their neighbourhood is consistently ",
-           if (nghSig == "significant increase") {"higher"} else {"lower"},
-           " and has seen a ", abs(nghDiff), " percentage point ",
+           "%). Those who say the same of their neighbourhood is consistently higher and has seen a ", abs(nghDiff), " percentage point ",
            sub("significant ", "", nghSig, fixed = TRUE), " (", NILTyear, ": ", neighbourhood, "%; 2014: ", round2(data$f11_neighbourhood[data$year == 2014]),
            "%).")
     # Only workplace significant
@@ -84,9 +82,7 @@ f11para2 <-
            "%). There has been no significant change in those who say the same of their neighbourhood since 2014.")
    # Only neighbourhood significant
   } else if (workSig == FALSE & nghSig != FALSE) {
-    paste0("Since this question was first asked, in 2014, the proportion who define their neighbourhood as a shared space is consistently ",
-           if (nghSig == "significant increase") {"higher"} else {"lower"},
-           " and has seen a ", abs(nghDiff), " percentage point ",
+    paste0("Since this question was first asked, in 2014, the proportion who define their neighbourhood as a shared space is consistently higher and has seen a ", abs(nghDiff), " percentage point ",
            sub("significant ", "", nghSig, fixed = TRUE), " (", NILTyear, ": ", neighbourhood, "%; 2014: ", round2(data$f11_neighbourhood[data$year == 2014]),
            "%). There has been no significant change in those who say the same about their workplace since 2014.")
     # Neither significant
