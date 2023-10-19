@@ -5,6 +5,12 @@ youngRank <- if (dataNew$f1_young == min(data$f1_young)) {
   paste0(ordinal(rank(data$f1_young)[data$year == LTyear]), " lowest")
 }
 
+adultRank <- if (dataNew$f1_adult == min(data$f1_adult)) {
+  "lowest"
+} else {
+  paste0(ordinal(rank(data$f1_adult)[data$year == LTyear]), " lowest")
+}
+
 # First sentence of second paragraph:
 adultProtSig <- significanceTest(p1 = dataNew$f1a_Prot,
                                  n1 = dataNew$RLRELAGO_nProt,
@@ -51,21 +57,21 @@ youngNoRSig <- significanceTest(p1 = dataNew$f1y_NoR,
 noRSig <-
   # Both significant and the same
   if(adultNoRSig != FALSE & adultNoRSig == youngNoRSig) {
-    paste0("There were ", adultNoRSig, "s in the proportions of both adults and young people who identify as neither Protestant nor Catholic (",
+    paste0("There were ", adultNoRSig, "s in the proportions of both adults and young people with no religion (",
            abs(dataNew$f1a_NoR - dataOld$f1a_NoR), " percentage points (", NILTyear, ": ", dataNew$f1a_NoR, "%; ", NILTyear - 1, ": ", dataOld$f1a_NoR, "%) and ",
            abs(dataNew$f1y_NoR - dataOld$f1y_NoR), " percentage points (", YLTyear, ": ", dataNew$f1y_NoR, "%; ", YLTyear - 1, ": ", dataOld$f1y_NoR, "%) respectively) who think relations between Protestants and Catholics are better now than they were five years ago.")
     # Adult not significant and young people significant change
   } else if (adultNoRSig == FALSE & youngNoRSig != FALSE) {
-    paste0("There was no significant change among adult respondents identifying as neither Protestant nor Catholic who think relations between Protestants and Catholics are better now than they were five years ago. There was a ", youngNoRSig, " (", abs(dataNew$f1y_NoR - dataOld$f1y_NoR), " percentage points) among young people identifying as neither Protestant nor Catholic who think relations between Protestants and Catholics are better now than they were five years ago (", YLTyear, ": ", dataNew$f1y_NoR, "%; ", YLTyear - 1, ": ", dataOld$f1y_NoR, "%).")
+    paste0("There was no significant change among adult respondents with no religion who think relations between Protestants and Catholics are better now than they were five years ago. There was a ", youngNoRSig, " (", abs(dataNew$f1y_NoR - dataOld$f1y_NoR), " percentage points) among young people with no religion who think relations between Protestants and Catholics are better now than they were five years ago (", YLTyear, ": ", dataNew$f1y_NoR, "%; ", YLTyear - 1, ": ", dataOld$f1y_NoR, "%).")
     # Adult significant and young people not significant
   } else if (adultNoRSig != FALSE & youngNoRSig == FALSE) {
-    paste0("Adult respondents identifying as neither Protestant nor Catholic who think relations between Protestants and Catholics are better now than they were five years ago has ", sub("significant", "significantly", adultNoRSig), "d (", round2(abs(dataNew$f1a_NoR - dataOld$f1a_NoR))," percentage points) (", NILTyear, ": ", dataNew$f1a_NoR, "%; ", NILTyear - 1, ": ", dataOld$f1a_NoR, "%). There was no significant change among young people identifying as neither Protestant nor Catholic who think relations between Protestants and Catholics are better now than they were five years ago.")
+    paste0("Adult respondents with no religion who think relations between Protestants and Catholics are better now than they were five years ago has ", sub("significant", "significantly", adultNoRSig), "d (", round2(abs(dataNew$f1a_NoR - dataOld$f1a_NoR))," percentage points) (", NILTyear, ": ", dataNew$f1a_NoR, "%; ", NILTyear - 1, ": ", dataOld$f1a_NoR, "%). There was no significant change among young people with no religion who think relations between Protestants and Catholics are better now than they were five years ago.")
     # Neither significant
   } else if (adultNoRSig == FALSE & youngNoRSig == FALSE) {
-    paste0("There was no significant change in the proportion of either adults or young people who identify as neither Protestant nor Catholic who think relations between Protestants and Catholics are better now than they were five years ago.")
+    paste0("There was no significant change in the proportion of either adults or young people with no religion who think relations between Protestants and Catholics are better now than they were five years ago.")
     # Both significant but change in different directions
   } else if(adultNoRSig != FALSE & youngNoRSig != FALSE & adultNoRSig != youngNoRSig) {
-    paste0("Adult respondents identifying as neither Protestant nor Catholic who think relations between Protestants and Catholics are better now than they were five years ago has ", adultNoRSig, "d (", abs(dataNew$f1a_NoR - dataOld$f1a_NoR)," percentage points) (", NILTyear, ": ", dataNew$f1a_NoR, "%; ", NILTyear - 1, ": ", dataOld$f1a_NoR, "%). However, there was a ", youngNoRSig, " (", abs(dataNew$f1y_NoR - dataOld$f1y_NoR), " percentage points) among young people identifying as neither Protestant nor Catholic who think relations between Protestants and Catholics are better now than they were five years ago (", YLTyear, ": ", dataNew$f1y_NoR, "%; ", YLTyear - 1, ": ", dataOld$f1y_NoR, "%).")
+    paste0("Adult respondents with no religion who think relations between Protestants and Catholics are better now than they were five years ago has ", adultNoRSig, "d (", abs(dataNew$f1a_NoR - dataOld$f1a_NoR)," percentage points) (", NILTyear, ": ", dataNew$f1a_NoR, "%; ", NILTyear - 1, ": ", dataOld$f1a_NoR, "%). However, there was a ", youngNoRSig, " (", abs(dataNew$f1y_NoR - dataOld$f1y_NoR), " percentage points) among young people with no religion who think relations between Protestants and Catholics are better now than they were five years ago (", YLTyear, ": ", dataNew$f1y_NoR, "%; ", YLTyear - 1, ": ", dataOld$f1y_NoR, "%).")
   }
 
 adultCathSig <- significanceTest(p1 = dataNew$f1a_Cath,
@@ -103,6 +109,6 @@ f1para1 <- paste0("Since ", LTyear - 1, ", there has been ", if (adultSig==FALSE
                   "%) in the proportion of adult respondents who think relations between Protestants and Catholics are better now than they were five years ago", " (", if (adultSig != FALSE){paste0(LTyear , ": ", round2(dataNew$f1_adults), "%; ", LTyear - 1, ": ", round2(dataOld$f1_adults), "%)")}, ". The proportion of young people who think relations between Protestants and Catholics are better now than they were five years ago has ",
                   if(adultSig == youngSig) {"also "}, if(youngSig != FALSE){paste0(sub("significant ", "", youngSig), "d")} else {"not undergone any significant change"},
                   " since ", LTyear - 1, if(youngSig != FALSE) {paste0(" (", YLTyear, ": ", dataNew$f1_young, "%; ", YLTyear - 1, ": ", dataOld$f1_young, "%)")},". This is the ",
-                  youngRank, " proportion for young people since the launch of the T:BUC strategy in 2013.")
+                  youngRank, " proportion for ", if (adultRank == youngRank) {"adults and"}, " young people since the launch of the T:BUC strategy in 2013.")
 
 f1para2 <- paste(protSig, noRSig, cathSig)
