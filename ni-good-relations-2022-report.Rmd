@@ -1067,7 +1067,7 @@ source("commentary/fig7.R")
 
 **Current Year (`r NILTyear`):**
 
-Considering which public spaces in their area, the vast majority of respondents report that leisure centres (`r f7_LC`%), parks (`r f7_park`%), libraries (`r f7_lib`%) and shopping centres (`r f7_shop`%) are 'shared and open' to both Protestants and Catholics. `r leisureSentence` `r parkSentence` `r librarySentence` `r shopSentence` `r genderSentence`
+Considering public spaces in their area, the vast majority of respondents report that leisure centres (`r f7_LC`%), parks (`r f7_park`%), libraries (`r f7_lib`%) and shopping centres (`r f7_shop`%) are 'shared and open' to both Protestants and Catholics. `r leisureSentence` `r parkSentence` `r librarySentence` `r shopSentence` `r genderSentence`
 
 ```{r figure 7}
 
