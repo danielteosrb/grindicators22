@@ -61,7 +61,7 @@ f14sentence1 <-
          rsFewer," hate crimes.")
   } else {
     paste0("Like last year, the number of ", rsGreater, " hate crimes has surpassed that of ",
-           rsFewer," hate crimes. This is the ", ordinal(length(rsSequence[rsSequence == TRUE])), " year in which this has happened since 2013.")
+           rsFewer," hate crimes. This is the ", ordinal(length(rsSequence[rsSequence == TRUE])), " year in which this has happened since 2013/14.")
   }
 
 # How has racially motivated changed on last year
