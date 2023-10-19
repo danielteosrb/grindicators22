@@ -738,7 +738,7 @@ source("commentary/execSum4.R")
 
 ```
 
--   `r protAgree`% of respondents in `r NILTyear` think that the culture and traditions of Protestant communities add to the richness and diversity of Northern Ireland society; `r cathAgree`% think this about Catholic communities; and `r minorityAgree`% think this about Minority Ethnic communities.
+-   `r protAgree`% of adult respondents in `r NILTyear` think that the culture and traditions of Protestant communities add to the richness and diversity of Northern Ireland society; `r cathAgree`% think this about Catholic communities; and `r minorityAgree`% think this about Minority Ethnic communities.
 
 -   `r sigStatement`
 
