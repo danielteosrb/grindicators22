@@ -1169,7 +1169,7 @@ downloadButtons(fig = fig9,
 Source: School Omnibus Survey `r omniYear`
 
 Note: Following the 2016 School Omnibus Survey a decision was taken to move the School Omnibus Survey from an annual survey to a biennial survey. The 2020
-survey was cancelled due to the effects of the COVID-19 pandemic.
+survey was cancelled due to the effects of the COVID-19 pandemic. Data from the 2013 survey cannot be presented here due to changes to question and response wordings.
 
 ```{r how 9}
 
