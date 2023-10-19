@@ -61,13 +61,13 @@ lastDecrease <- fig4Trend %>%
 
 trendStatement <-
   if (fig4Trend$consecutive[fig4Trend$year == YLTyear] == 1 & fig4Trend$change[fig4Trend$year == YLTyear] == "increase") {
-    paste0("The proportion of young people who regularly socialise or play sport with young people from a different religious background has increased for the first time since ", lastIncrease, ".")
+    paste0("Between ", YLTyear - 1, " and ", YLTyear, ", the proportion of young people who regularly socialise or play sport with young people from a different religious background has increased for the first time since ", lastIncrease, ".")
   } else if (fig4Trend$consecutive[fig4Trend$year == YLTyear] == 1 & fig4Trend$change[fig4Trend$year == YLTyear] == "decrease") {
-    paste0("The proportion of young people who regularly socialise or play sport with young people from a different religious background has reduced for the first time since ", lastDecrease, ".")
+    paste0("Between ", YLTyear - 1, " and ", YLTyear, ", the proportion of young people who regularly socialise or play sport with young people from a different religious background has reduced for the first time since ", lastDecrease, ".")
   } else if (fig4Trend$consecutive[fig4Trend$year == YLTyear] != 1 & fig4Trend$change[fig4Trend$year == YLTyear] == "increase") {
-    paste0("The proportion of young people who regularly socialise or play sport with young people from a different religious background has shown an increase every year since ", lastDecrease, ".")
+    paste0("Between ", YLTyear - 1, " and ", YLTyear, ", the proportion of young people who regularly socialise or play sport with young people from a different religious background has shown an increase every year since ", lastDecrease, ".")
   } else if (fig4Trend$consecutive[fig4Trend$year == YLTyear] != 1 & fig4Trend$change[fig4Trend$year == YLTyear] == "decrease") {
-    paste0("The proportion of young people who regularly socialise or play sport with young people from a different religious background has shown a reduction every year since ", lastIncrease, ".")
+    paste0("Between ", YLTyear - 1, " and ", YLTyear, ", the proportion of young people who regularly socialise or play sport with young people from a different religious background has shown a reduction every year since ", lastIncrease, ".")
   }
 
 fig4Sig <- significanceTest(p1 = dataNew$f4a_overall,
