@@ -1535,10 +1535,10 @@ In `r NILTyear`, `r GAAsafe`% of respondents say they feel 'very' or 'quite' saf
 chartTitle(18, "% of people feeling safe going to events held in: a GAA club, an Orange Hall, a Protestant secondary school, a Catholic secondary school")
 
 horizontalBar(fig18,
-              x1 = "Catholic",
+              x1 = "no",
+              x1Name = "No religion",
               x2 = "Protestant",
-              x3 = "no",
-              x3Name = "No religion",
+              x3 = "Catholic",
               x4 = "All",
               y = "location")
 
