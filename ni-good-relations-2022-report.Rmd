@@ -696,7 +696,7 @@ youngInfographic()
 
 -   `r adults`% of adults and `r young`% of young people think that relations between Protestants and Catholics are better now than they were five years ago. `r sigStatement`
 
--   `r projects`% of young people have 'done projects' with pupils from other schools; `r classes`% have 'shared classes'; and `r equipment`% 'shared sports facilities or equipment' where the pupils are from a different religious background.
+-   In `r `NILTyear`, `r projects`% of young people have 'done projects' with pupils from other schools; `r classes`% have 'shared classes'; and `r equipment`% 'shared sports facilities or equipment' where the pupils are from a different religious background.
 
 ### Our Shared Community
 
@@ -726,7 +726,7 @@ source("commentary/execSum3.R")
 
 -   `r safeTown`% of adult respondents said that they see town centres as safe and welcoming places for people of all walks of life. `r sigStatement`
 
--   `r safeProtestant`% of respondents say they feel 'very' or 'quite' safe going to events held in a Protestant secondary school; `r safeCatholic`% to events held in a Catholic secondary school; `r safeGAA`% to events held in a GAA club; and `r safeOrange`% to events held in an Orange Hall.
+-   In `r NILTyear`, `r safeProtestant`% of respondents say they feel 'very' or 'quite' safe going to events held in a Protestant secondary school; `r safeCatholic`% to events held in a Catholic secondary school; `r safeGAA`% to events held in a GAA club; and `r safeOrange`% to events held in an Orange Hall.
 
 ### Our Cultural Expression
 
