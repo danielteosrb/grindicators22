@@ -96,7 +96,7 @@ colPct <- function(data, col, value, gender = NULL, religion = NULL, resident = 
   }
   
   # Calculate weighted (default for NILT) or unweighted value (default for YLT)
-  if(weighted == FALSE | deparse(substitute(data)) == "YLT" | deparse(substitute(data)) == "YLT21") {
+  if(weighted == FALSE | deparse(substitute(data)) == "YLT" | deparse(substitute(data)) == "YLTlast") {
     
     # If only one value entered calculate rounded percentage
     if (length(value) == 1) {
