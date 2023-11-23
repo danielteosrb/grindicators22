@@ -206,6 +206,9 @@ yltOld <- data.frame(year = YLTyear - 1,
                      f1y_Prot = colPct(YLTlast, RLRELAGO, "Better", religion = "Protestant"),
                      f1y_NoR = colPct(YLTlast, RLRELAGO, "Better", religion = "No religion"),
                      f2_young =  colPct(YLTlast, RLRELFUT, "Better"),
+                     f2y_Cath = colPct(YLTlast, RLRELFUT, "Better", religion = "Catholic"),
+                     f2y_Prot = colPct(YLTlast, RLRELFUT, "Better", religion = "Protestant"),
+                     f2y_NoR = colPct(YLTlast, RLRELFUT, "Better", religion = "No religion"),
                      f3a_young = colPct(YLTlast, FEELCATH, c("Very favourable", "Quite favourable")),
                      f3b_young = colPct(YLTlast, FEELPROT, c("Very favourable", "Quite favourable")),
                      f3c_young = colPct(YLTlast, FEELMEC, c("Very favourable", "Quite favourable")),
@@ -223,6 +226,9 @@ yltOld <- data.frame(year = YLTyear - 1,
                      RLRELAGO_YnProt = unweighted_n(YLTlast$RLRELAGO[YLTlast$RELIGCAT == toupper("Protestant")]),
                      RLRELAGO_YnNoR = unweighted_n(YLTlast$RLRELAGO[YLTlast$RELIGCAT == toupper("No religion")]),
                      RLRELAGO_Yn = unweighted_n(YLTlast$RLRELAGO),
+                     RLRELFUT_YnCath = unweighted_n(YLTlast$RLRELFUT[YLTlast$RELIGCAT == toupper("Catholic")]),
+                     RLRELFUT_YnProt = unweighted_n(YLTlast$RLRELFUT[YLTlast$RELIGCAT == toupper("Protestant")]),
+                     RLRELFUT_YnNoR = unweighted_n(YLTlast$RLRELFUT[YLTlast$RELIGCAT == toupper("No religion")]),
                      RLRELFUT_Yn = unweighted_n(YLTlast$RLRELFUT),
                      FEELCATH_Yn = unweighted_n(YLTlast$FEELCATH),
                      FEELPROT_Yn = unweighted_n(YLTlast$FEELPROT),
@@ -340,6 +346,9 @@ yltNew <- data.frame(year = YLTyear,
                      f1y_Prot = colPct(YLT, RLRELAGO, "Better", religion = "Protestant"),
                      f1y_NoR = colPct(YLT, RLRELAGO, "Better", religion = "No religion"),
                      f2_young =  colPct(YLT, RLRELFUT, "Better"),
+                     f2y_Cath = colPct(YLT, RLRELFUT, "Better", religion = "Catholic"),
+                     f2y_Prot = colPct(YLT, RLRELFUT, "Better", religion = "Protestant"),
+                     f2y_NoR = colPct(YLT, RLRELFUT, "Better", religion = "No religion"),
                      f3a_young = colPct(YLT, FEELCATH, c("Very favourable", "Quite favourable")),
                      f3b_young = colPct(YLT, FEELPROT, c("Very favourable", "Quite favourable")),
                      f3c_young = colPct(YLT, FEELMEC, c("Very favourable", "Quite favourable")),
@@ -357,6 +366,9 @@ yltNew <- data.frame(year = YLTyear,
                      RLRELAGO_YnProt = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == "Protestant"]),
                      RLRELAGO_YnNoR = unweighted_n(YLT$RLRELAGO[YLT$RELIGCAT == "No religion"]),
                      RLRELAGO_Yn = unweighted_n(YLT$RLRELAGO),
+                     RLRELFUT_YnCath = unweighted_n(YLT$RLRELFUT[YLT$RELIGCAT == "Catholic"]),
+                     RLRELFUT_YnProt = unweighted_n(YLT$RLRELFUT[YLT$RELIGCAT == "Protestant"]),
+                     RLRELFUT_YnNoR = unweighted_n(YLT$RLRELFUT[YLT$RELIGCAT == "No religion"]),
                      RLRELFUT_Yn = unweighted_n(YLT$RLRELFUT),
                      FEELCATH_Yn = unweighted_n(YLT$FEELCATH),
                      FEELPROT_Yn = unweighted_n(YLT$FEELPROT),
@@ -390,9 +402,15 @@ if (NILTyear %in% data$year) {
 new_variables <- data.frame(f2a_Cath = NA,
                             f2a_Prot = NA,
                             f2a_NoR = NA,
+                            f2y_Cath = NA,
+                            f2y_Prot = NA,
+                            f2y_NoR = NA,
                             RLRELFUT_nCath = NA,
                             RLRELFUT_nProt = NA,
                             RLRELFUT_nNoR = NA,
+                            RLRELFUT_YnCath = NA,
+                            RLRELFUT_YnProt = NA,
+                            RLRELFUT_YnNoR = NA,
                             f8_Prot = NA,
                             f8_Cath = NA,
                             f8_NoR = NA,
@@ -985,7 +1003,7 @@ Note: The YLT survey did not run in 2020.
 source("commentary/fig2.R")
 
 # The paragraph of text generated above is output in a "How we got here" style box
-howWeGotHere(f2para1)
+howWeGotHere(f2para1, f2para2)
 
 ```
 
@@ -1288,7 +1306,7 @@ Source: NILT
 
 ```{r how 8}
 
-howWeGotHere(f8para1)
+howWeGotHere(f8para1, f8para2)
 
 ```
 
