@@ -1912,7 +1912,7 @@ Source: NILT
 
 ```{r how 22}
 
-howWeGotHere(f22para1)
+howWeGotHere(f22para1, f22para2)
 
 ```
 
@@ -1951,7 +1951,7 @@ Source: NILT
 
 ```{r how 23}
 
-howWeGotHere(f23para1)
+howWeGotHere(f23para1, f23para2)
 
 ```
 

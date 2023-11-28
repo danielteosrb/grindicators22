@@ -41,7 +41,20 @@ f23para1 <- if (respectSig == FALSE) {
          ", there has been no significant change in the proportion of those who feel their own cultural identity is respected by society.")
 } else if (respectSig != FALSE ) {
   paste0("Since ", NILTyear - 1,
-         ", there has been ", respectSig,
+         ", there has been a ", respectSig,
          " in the proportion of those who feel their own cultural identity is respected by society (",
          NILTyear, ": ", dataNew$f23_compare, "%; ", NILTyear - 1, ": ", dataOld$f23_compare, "%).")
+}
+
+respectSig13 <- significanceTest(p1 = dataNew$f23_compare,
+                               n1 = dataNew$CULTRESP_n,
+                               p2 = data$f23_compare[data$year == 2014],
+                               n2 = data$CULTRESP_n[data$year == 2014])
+
+f23para2 <- if (respectSig13 == FALSE) {
+  paste0("Since 2014, there has been no significant change in the proportion of those who feel their own cultural identity is respected by society.")
+} else if (respectSig13 != FALSE ) {
+  paste0("Since 2014, there has been a ", respectSig13,
+         " in the proportion of those who feel their own cultural identity is respected by society (",
+         NILTyear, ": ", dataNew$f23_compare, "%; 2014: ", data$f23_compare[data$year == 2014], "%).")
 }

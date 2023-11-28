@@ -188,7 +188,7 @@ f22para1 <- if (cathSig == FALSE & protSig == FALSE & meSig != FALSE) {
          NILTyear, ": ", dataNew$f22_prot, "%; ", NILTyear - 1, ": ", dataOld$f22_prot, "%). The proportion who think this in relation to Minority Ethnic communities has ",
          sub("t", "tly", meSig),"d by ", round2(abs(dataNew$f22_me - dataOld$f22_me)),
          " percentage points (",
-         NILTyear, ": ", dataNew$f22_me, "%; ", NILTyear - 1, ": ", dataOld$f22_me, "%).")
+         NILTyear, ": ", dataNew$f22_me, "%; ", NILTyear - 1, ":  ", dataOld$f22_me, "%).")
   
 } else if (cathSig != FALSE & protSig == FALSE & meSig == FALSE) {
   
@@ -227,5 +227,110 @@ f22para1 <- if (cathSig == FALSE & protSig == FALSE & meSig != FALSE) {
          sub("t", "tly", meSig),"d by ", round2(abs(dataNew$f22_me - dataOld$f22_me)),
          " percentage points (",
          NILTyear, ": ", dataNew$f22_me, "%; ", NILTyear - 1, ": ", dataOld$f22_me, "%).")
+  
+}
+
+cathSig14 <- significanceTest(p1 = dataNew$f22_cath,
+                              n1 = dataNew$CTHCRICH_n,
+                              p2 = data$f22_cath[data$year == 2014],
+                              n2 = data$CTHCRICH_n[data$year == 2014])
+
+protSig14 <- significanceTest(p1 = dataNew$f22_prot,
+                              n1 = dataNew$PRCRICH_n,
+                              p2 = data$f22_prot[data$year == 2014],
+                              n2 = data$PRCRICH_n[data$year == 2014])
+
+meSig14 <- significanceTest(p1 = dataNew$f22_me,
+                            n1 = dataNew$EMCRICH_n,
+                            p2 = data$f22_me[data$year == 2014],
+                            n2 = data$EMCRICH_n[data$year == 2014])
+
+f22para2 <- if (cathSig14 == FALSE & protSig14 == FALSE & meSig14 != FALSE) {
+  
+  paste0("There was no Sig14nificant change in proportion of respondents who think the culture and traditions of Catholic and Protestant communities add to the richness and diversity of Northern Ireland society since 2014. There was a ", meSig14,
+         " in the proportion who think this in relation to Minority Ethnic communities (",
+         NILTyear, ": ", dataNew$f22_me, "%; 2014: ", data$f22_me[data$year == 2014], "%).")
+  
+} else if (cathSig14 != FALSE & protSig14 == cathSig14 & meSig14 == FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Catholic and Protestant communities add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", cathSig14), "d since 2014 (by ", round2(abs(dataNew$f22_cath - data$f22_cath[data$year == 2014]))," percentage points (",
+         NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) and ",
+         round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) respectively). There has been no Sig14nificant change in the proportion who think this in relation to Minority Ethnic communities.")
+  
+} else if (cathSig14 != FALSE & protSig14 == cathSig14 & meSig14 != FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Catholic and Protestant communities add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", cathSig14), "d since 2014 (by ", round2(abs(dataNew$f22_cath - data$f22_cath[data$year == 2014]))," percentage points (",
+         NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) and ",
+         round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) respectively). The proportion who think this in relation to Minority Ethnic communities has ",
+         sub("t", "tly", meSig14),"d by ", round2(abs(dataNew$f22_me - data$f22_me[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_me, "%; 2014: ", data$f22_me[data$year == 2014], "%).")
+  
+} else if (cathSig14 == FALSE & protSig14 == FALSE & meSig14 == FALSE) {
+  
+  paste0("There was no Sig14nificant change in proportion of respondents who think the culture and traditions of Catholic, Protestant and Minority Ethnic communities add to the richness and diversity of Northern Ireland society since 2014.")
+  
+} else if (cathSig14 != FALSE & protSig14 != cathSig14 & protSig14 != FALSE & meSig14 == FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Catholic communites add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", cathSig14),"d by ", round2(abs(dataNew$f22_cath - data$f22_cath[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) while the proportion who think this about Protestant communities has ",
+         sub("t", "tly", protSig14), "d by ", round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) since 2014. There has been no Sig14nificant change in the proportion who think this in relation to Minority Ethnic communities.")
+  
+} else if (cathSig14 != FALSE & protSig14 != cathSig14 & protSig14 != FALSE & meSig14 != FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Catholic communites add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", cathSig14),"d by ", round2(abs(dataNew$f22_cath - data$f22_cath[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) while the proportion who think this about Protestant communities has ",
+         sub("t", "tly", protSig14), "d by ", round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
+         " percentage points since 2014 (",
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%). The proportion who think this in relation to Minority Ethnic communities has ",
+         sub("t", "tly", meSig14),"d by ", round2(abs(dataNew$f22_me - data$f22_me[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_me, "%; 2014:  ", data$f22_me[data$year == 2014], "%).")
+  
+} else if (cathSig14 != FALSE & protSig14 == FALSE & meSig14 == FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Catholic communites add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", cathSig14),"d by ", round2(abs(dataNew$f22_cath - data$f22_cath[data$year == 2014])),
+         " percentage points since 2014 (",
+         NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) but there has been no Sig14nificant change in the proportion who think this about Protestant communities. There has also been no Sig14nificant change in the proportion who think this in relation to Minority Ethnic communities.")
+  
+} else if (cathSig14 != FALSE & protSig14 == FALSE & meSig14 != FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Catholic communites add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", cathSig14),"d by ", round2(abs(dataNew$f22_cath - data$f22_cath[data$year == 2014])),
+         " percentage points since 2014 (",
+         NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) but there has been no Sig14nificant change in the proportion who think this about Protestant communities. The proportion who think this in relation to Minority Ethnic communities has ",
+         sub("t", "tly", meSig14),"d by ", round2(abs(dataNew$f22_me - data$f22_me[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_me, "%; 2014: ", data$f22_me[data$year == 2014], "%).")
+  
+} else if (cathSig14 == FALSE & protSig14 != FALSE & meSig14 == FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Protestant communites add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", protSig14),"d by ", round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
+         " percentage points since 2014 (",
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) but there has been no Sig14nificant change in the proportion who think this about Catholic communities. There has also been no Sig14nificant change in the proportion who think this in relation to Minority Ethnic communities.")
+  
+} else if (cathSig14 == FALSE & protSig14 != FALSE & meSig14 != FALSE) {
+  
+  paste0("The proportion of respondents who think the culture and traditions of Protestant communites add to the richness and diversity of Northern Ireland society has ",
+         sub("t", "tly", protSig14),"d by ", round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
+         " percentage points since 2014 (",
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) but there has been no Sig14nificant change in the proportion who think this about Catholic communities. The proportion who think this in relation to Minority Ethnic communities has ",
+         sub("t", "tly", meSig14),"d by ", round2(abs(dataNew$f22_me - data$f22_me[data$year == 2014])),
+         " percentage points (",
+         NILTyear, ": ", dataNew$f22_me, "%; 2014: ", data$f22_me[data$year == 2014], "%).")
   
 }
