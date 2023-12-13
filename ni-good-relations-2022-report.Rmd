@@ -94,6 +94,7 @@ banner(leftImage = "NISRA-full-name-stacked-white.png",
        rightAlt = "Executive Office logo")
 
 tbucDiagram()
+
 ```
 
 ```{r analysis, results = FALSE}
