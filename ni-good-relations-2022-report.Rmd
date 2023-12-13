@@ -576,6 +576,11 @@ fig5 <- data.frame(activity = c("Projects", "Classes", "Facilities/\nEquipment")
                              colPct(YLT, DONEWHAT1, "Ticked"),
                              colPct(YLT, DONEWHAT3, "Ticked")))
 
+fig5last <- data.frame(activity = c("Projects", "Classes", "Facilities/\nEquipment"),
+                  young = c(colPct(YLTlast, DONEWHAT2, "Ticked"),
+                             colPct(YLTlast, DONEWHAT1, "Ticked"),
+                             colPct(YLTlast, DONEWHAT3, "Ticked")))
+
 # Figure 6a calculated directly from NILT data
 fig6a <- NILT %>%  # NILT data
   filter(!is.na(COMDIV)) %>% # Filter out any NA's in column
@@ -1176,7 +1181,7 @@ Note: % of young people refers to those who took part in shared education. Respo
 
 ```{r how 5}
 
-howWeGotHere("A shared education model is included in alternating 'Young Life and Times' surveys. Data from previous years are not directly comparable due to changes in the wording and ordering of questions.")
+howWeGotHere(f5_sentence)
 
 ```
 

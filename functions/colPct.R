@@ -56,9 +56,9 @@ colPct <- function(data, col, value, gender = NULL, religion = NULL, resident = 
     
     df <- data %>%
       # Filter out those who ticked "No"
-      filter(.[["DONEWHAT5"]] == "Not Ticked") %>%
+      filter(.[["DONEWHAT5"]] == "Not Ticked" | .[["DONEWHAT5"]] == "Not ticked") %>%
       # Additional filter needed for those who didn't tick any of the 5 options
-      filter(!(.[["DONEWHAT1"]] == "Not Ticked" & .[["DONEWHAT2"]] == "Not Ticked" & .[["DONEWHAT3"]] == "Not Ticked" & .[["DONEWHAT4"]] == "Not Ticked"))
+      filter(!((.[["DONEWHAT1"]] == "Not Ticked" |.[["DONEWHAT1"]] == "Not ticked") & (.[["DONEWHAT2"]] == "Not Ticked" |.[["DONEWHAT2"]] == "Not ticked") & (.[["DONEWHAT3"]] == "Not Ticked" |.[["DONEWHAT3"]] == "Not ticked") & (.[["DONEWHAT4"]] == "Not Ticked" |.[["DONEWHAT4"]] == "Not ticked")))
     
   } else if (column %in% c("LCOPEN", "PARKOPEN", "LIBOPEN", "SHCNOPEN")) {
     
