@@ -451,11 +451,11 @@ genderSentence <- if (leisureGenderSig == FALSE & parkGenderSig == FALSE & libra
   "There were no significant differences based on the gender of the respondent."
   # Libraries significant, all else not
 } else if (leisureGenderSig == FALSE & parkGenderSig == FALSE & libraryGenderSig != FALSE & shopGenderSig == FALSE) {
-  paste0("There were no significant differences based on gender in the proportion of respondents who believe that leisure centres, parks or shopping centres are shared and open, however, male respondents (", colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) were significantly ",
+  paste0("There were no significant differences based on gender in the proportion of respondents who believe that leisure centres, parks or shopping centres are shared and open, whilst male respondents (", colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) were significantly ",
   if (libraryGenderSig == "significant increase") {"more"} else {"less"}, " likely than female respondents (", colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) to say that libraries are shared and open.")
   # Leisure centres significant, all else not
 } else if (leisureGenderSig != FALSE & parkGenderSig == FALSE & libraryGenderSig == FALSE & shopGenderSig == FALSE) {
-  paste0("There were no significant differences based on gender in the proportion of respondents who believe that libraries, parks or shopping centres are shared and open, however, male respondents (",
+  paste0("There were no significant differences based on gender in the proportion of respondents who believe that libraries, parks or shopping centres are shared and open, whilst male respondents (",
          colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) were significantly ", if (leisureGenderSig == "significant increase") {"more"} else {"less"}, " likely than female respondents (",
          colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) to say that leisure centres are shared and open.")
 } else { "There were some significant differences based on the gender of the respondent."
