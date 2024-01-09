@@ -238,7 +238,7 @@ f18para2 <- if (sum(sigs == "FALSE") == 0) {
            abs(round2(dataNew$f18_gaa - data$f18_gaa[data$year == 2013])),
            " percentage points in GAA Clubs (", NILTyear, ": ", dataNew$f18_gaa, "%; 2013: ", round2(data$f18_gaa[data$year == 2013]), "%) and ", orangeSig, "d by ",
            abs(round2(dataNew$f18_orange - data$f18_orange[data$year == 2013])),
-           " percentage points in Orange Halls (", NILTyear, ": ", dataNew$f18_orange, "%; 2013: ", round2(data$f18_orange[data$year == 2013]), "%). However, there were no significant changes in feelings of safety in Catholic Secondary Schools or Protestant Secondary Schools.")
+           " percentage points in Orange Halls (", NILTyear, ": ", dataNew$f18_orange, "%; 2013: ", round2(data$f18_orange[data$year == 2013]), "%). However, there were no significant changes in feelings of safety in Protestant Secondary Schools or Catholic Secondary Schools.")
   } else if (protSig == "FALSE" & gaaSig == "FALSE") {
     paste0("Feelings of safety have ", orangeSig, "d since 2013 by ",
            abs(round2(dataNew$f18_orange - data$f18_orange[data$year == 2013])),
@@ -285,12 +285,12 @@ f18para2 <- if (sum(sigs == "FALSE") == 0) {
   } else if (gaaSig != "FALSE") {
     paste0("Feelings of safety have ", gaaSig, "d since 2013 by ",
            abs(round2(dataNew$f18_gaa - data$f18_gaa[data$year == 2013])),
-           " percentage points in GAA Clubs (", NILTyear, ": ", dataNew$f18_gaa, "%; 2013: ", round2(data$f18_gaa[data$year == 2013]), "%). However, there were no significant changes in feelings of safety in Orange Halls, Catholic Secondary Schools or Protestant Secondary Schools.")
+           " percentage points in GAA Clubs (", NILTyear, ": ", dataNew$f18_gaa, "%; 2013: ", round2(data$f18_gaa[data$year == 2013]), "%). However, there were no significant changes in feelings of safety in Orange Halls, Protestant Secondary Schools or Catholic Secondary Schools.")
   } else if (orangeSig != "FALSE") {
     paste0("Feelings of safety have ", orangeSig, "d since 2013 by ",
            abs(round2(dataNew$f18_orange - data$f18_orange[data$year == 2013])),
-           " percentage points in Orange Halls (", NILTyear, ": ", dataNew$f18_orange, "%; 2013: ", round2(data$f18_orange[data$year == 2013]), "%). However, there were no significant changes in feelings of safety in GAA Clubs, Catholic Secondary Schools or Protestant Secondary Schools.")
+           " percentage points in Orange Halls (", NILTyear, ": ", dataNew$f18_orange, "%; 2013: ", round2(data$f18_orange[data$year == 2013]), "%). However, there were no significant changes in feelings of safety in GAA Clubs, Protestant Secondary Schools or Catholic Secondary Schools.")
   }
 } else if (sum(sigs == "FALSE") == 4) {
-  "Since 2013, there have been no significant changes in feelings of safety in GAA Clubs, Orange Halls, Catholic Secondary Schools or Protestant Secondary Schools."
+  "Since 2013, there have been no significant changes in feelings of safety in GAA Clubs, Orange Halls, Protestant Secondary Schools or Catholic Secondary Schools."
 }
