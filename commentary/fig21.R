@@ -50,20 +50,20 @@ genderNISig <- significanceTest(p1 = maleNI,
 
 genderSentence <- if (genderNeighSig != FALSE & genderNISig != FALSE) {
   paste0("Among adults, males (", maleNeigh,
-  "%) were significantly ", if (genderNeighSig == "significant increase") {"more"} else {"less"}, " likely than females (", femaleNeigh,
+  "%) are significantly ", if (genderNeighSig == "significant increase") {"more"} else {"less"}, " likely than females (", femaleNeigh,
   "%) to feel they had an influence on decisions in their neighbourhood. ", if (genderNISig == genderNeighSig) {"Similarly, a"} else {"A"}, " significantly ", if (genderNISig == "significant increase") {"higher"} else {"lower"}, " proportion of male adults (",
   maleNI, "%) than female adults (", femaleNI,
   "%) feel they have an influence on decisions made in Northern Ireland.")
 } else if (genderNeighSig != FALSE & genderNISig == FALSE) {
-  paste0("Among adults, males (", maleNeigh,"%) were significantly ", if (genderNeighSig == "significant increase") {"more"} else {"less"}, " likely than females (", femaleNeigh,
-         "%) to feel they had an influence on decisions in their neighbourhood. There were no significant differences in the proportions of male adults and female adults who feel they have an influence on decisions made in Northern Ireland.")
+  paste0("Among adults, males (", maleNeigh,"%) are significantly ", if (genderNeighSig == "significant increase") {"more"} else {"less"}, " likely than females (", femaleNeigh,
+         "%) to feel they had an influence on decisions in their neighbourhood. There are no significant differences in the proportions of male adults and female adults who feel they have an influence on decisions made in Northern Ireland.")
 } else if (genderNeighSig == FALSE & genderNISig != FALSE) {
-  paste0("Among adults, males (", maleNeigh,"%) were significantly ", if (genderNISig == "significant increase") {"more"} else {"less"}, " likely than females (", femaleNeigh,
-         "%) to feel they had an influence on decisions in Northern Ireland. There were no significant differences in the proportions of male adults and female adults who feel they have an influence on decisions made in their neighbourhood.")
+  paste0("Among adults, males (", maleNeigh,"%) are significantly ", if (genderNISig == "significant increase") {"more"} else {"less"}, " likely than females (", femaleNeigh,
+         "%) to feel they had an influence on decisions in Northern Ireland. There are no significant differences in the proportions of male adults and female adults who feel they have an influence on decisions made in their neighbourhood.")
 } else if (genderNeighSig == FALSE & genderNISig == FALSE) {
-  paste0("Among adults, there was no significant difference in the proportions of males (",
+  paste0("Among adults, there is no significant difference in the proportions of males (",
          maleNeigh, "%) and females (", femaleNeigh,
-         "%) who felt they had an influence on decisions in their neighbourhood. Similarly, there was no significant difference in the proportions of male adults (",
+         "%) who felt they had an influence on decisions in their neighbourhood. Similarly, there is no significant difference in the proportions of male adults (",
          maleNI, "%) and female adults (", femaleNI, "%) who feel they have an influence on decisions made in Northern Ireland.")
 }
 
@@ -114,7 +114,7 @@ religionNISentence <- if(cathprotNISig == FALSE & cathnorNISig == cathprotNISig 
 } else if (cathprotNISig != FALSE & cathnorNISig == cathprotNISig & protnorNISig == FALSE) {
   paste0("Catholic respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Catholic"), "%) are significantly more likely than either Protestant respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) or respondents with no religion (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel they have an influence on decisions made in Northern Ireland.")
 } else if (cathprotNISig == FALSE & cathnorNISig == cathprotNISig & protnorNISig != FALSE) {
-  paste0("Protestant respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) are significantly more likely than respondents with no religion (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel to feel they have an influence on decisions made in Northern Ireland. There were no other significant differences based on religion.")
+  paste0("Protestant respondents (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "Protestant"), "%) are significantly more likely than respondents with no religion (", colPct(NILT, INFLNI, c("Yes, probably", "Yes, definitely"), religion = "No religion"), "%) to feel to feel they have an influence on decisions made in Northern Ireland. There are no other significant differences based on religion.")
 }
 
 neighSig <- significanceTest(p1 = dataNew$f21b_neighbourhood,
@@ -205,12 +205,12 @@ adultyoungNIsig <-significanceTest(p1 = dataNew$f21b_NI,
                                    n2 = dataNew$INFLHERE_Yn)
 
 adultneighNIsentence <- if (adultneighNIsig != FALSE) { 
-  paste0(adultApprox, " adults responded that they feel they have an influence on decisions made in their neighbourhood (", adultNeigh, "%), with a ", if (adultneighNIsig == "significant increase") {"smaller"} else {"larger"}, " proportion of adults (", adultNI, "%) feeling they have an influence on decisions made in Northern Ireland.")
-  } else {paste0("There were no significant differences in the proportion of adults who feel they have an influence on decisions made in Northern Ireland when compared with decisions made in their neighbourhood.")
+  paste0(adultApprox, " adults feel they have an influence on decisions made in their neighbourhood (", adultNeigh, "%), with a ", if (adultneighNIsig == "significant increase") {"smaller"} else {"larger"}, " proportion of adults (", adultNI, "%) feeling they have an influence on decisions made in Northern Ireland.")
+  } else {paste0("There are no significant differences in the proportion of adults who feel they have an influence on decisions made in Northern Ireland when compared with decisions made in their neighbourhood.")
   }
 
 adultyoungsentence <- if (adultyoungneighsig != FALSE & adultyoungNIsig == adultyoungneighsig) {
   paste0("The proportion of young people who think this is significantly ", if (adultyoungneighsig == "significant increase") {"lower"} else {"higher"}, " - ", youngNeigh, "% feel like they have an influence on decisions made in their neighbourhood, and ", youngNI, "% on decisions made in Northern Ireland.")
 } else if (adultyoungneighsig == FALSE & adultyoungNIsig == adultyoungneighsig) {
-  paste0("There were no significant differences in the proportions of adults and young people who feel they have an influence on decisions made in either their neighbourhood or Northern Ireland.")
+  paste0("There are no significant differences in the proportions of adults and young people who feel they have an influence on decisions made in either their neighbourhood or Northern Ireland.")
 }

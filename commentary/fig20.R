@@ -45,12 +45,12 @@ adultNeighSiglast <- significanceTest(p1 = belongNeigh,
 f20para1 <- if (youngNISiglast == FALSE & youngNeighSiglast == FALSE & adultNISiglast == FALSE & adultNeighSiglast == FALSE) {
   paste0("Since ", NILTyear - 1, ", the proportion of adults and young people who feel a sense of belonging to their neighbourhood and to Northern Ireland has not changed significantly.")
 } else if (youngNISiglast == FALSE & youngNeighSiglast == FALSE & adultNISiglast != FALSE & adultNeighSiglast == adultNISiglast) {
-  paste0("Since ", NILTyear - 1, ", the proportions of adults who feel who feel a sense of belonging to their neighbourhood (",
+  paste0("Since ", NILTyear - 1, ", the proportions of adults who feel a sense of belonging to their neighbourhood (",
          NILTyear, ": ", belongNeigh, "%; ", NILTyear - 1, ": ", round2(dataOld$f20_adultNeigh), "%) and to Northern Ireland (",
          NILTyear, ": ", belongNI, "%; ", NILTyear - 1, ": ", round2(dataOld$f20_adultNI), "%) has ",
          if (adultNISiglast == "significant increase") {"increased"} else {"decreased"}, " significantly. However, there is no significant change in these proportions for young people.")
 } else if (youngNISiglast != FALSE & youngNeighSiglast == youngNISiglast & adultNISiglast == FALSE & adultNeighSiglast == FALSE) {
-  paste0("Since ", NILTyear - 1, ", the proportions of young people who feel who feel a sense of belonging to their neighbourhood (",
+  paste0("Since ", NILTyear - 1, ", the proportions of young people who feel a sense of belonging to their neighbourhood (",
          NILTyear, ": ", youngNeigh, "%; ", NILTyear - 1, ": ", round2(dataOld$f20_youngNeigh), "%) and to Northern Ireland (",
          NILTyear, ": ", youngNI, "%; ", NILTyear - 1, ": ", round2(dataOld$f20_youngNI), "%) has ",
          if (youngNISiglast == "significant increase") {"increased"} else {"decreased"}, " significantly. However, there is no significant change in these proportions for adults.")
@@ -98,12 +98,12 @@ adultNeighSig <- significanceTest(p1 = belongNeigh,
 f20para2 <- if (youngNISig == FALSE & youngNeighSig == FALSE & adultNISig == FALSE & adultNeighSig == FALSE) {
   "Since 2013, the proportion of adults and young people who feel a sense of belonging to their neighbourhood and to Northern Ireland has not changed significantly."
 } else if (youngNISig == FALSE & youngNeighSig == FALSE & adultNISig != FALSE & adultNeighSig == adultNISig) {
-  paste0("Since 2013, the proportions of adults who feel who feel a sense of belonging to their neighbourhood (",
+  paste0("Since 2013, the proportions of adults who feel a sense of belonging to their neighbourhood (",
          NILTyear, ": ", belongNeigh, "%; 2013: ", round2(data$f20_adultNeigh[data$year == 2013]), "%) and to Northern Ireland (",
          NILTyear, ": ", belongNI, "%; 2013: ", round2(data$f20_adultNI[data$year == 2013]), "%) has ",
          if (adultNISig == "significant increase") {"increased"} else {"decreased"}, " significantly. However, there is no significant change in these proportions for young people.")
 } else if (youngNISig != FALSE & youngNeighSig == youngNISig & adultNISig == FALSE & adultNeighSig == FALSE) {
-  paste0("Since 2013, the proportions of young people who feel who feel a sense of belonging to their neighbourhood (",
+  paste0("Since 2013, the proportions of young people who feel a sense of belonging to their neighbourhood (",
          NILTyear, ": ", youngNeigh, "%; 2013: ", round2(data$f20_youngNeigh[data$year == 2013]), "%) and to Northern Ireland (",
          NILTyear, ": ", youngNI, "%; 2013: ", round2(data$f20_youngNI[data$year == 2013]), "%) has ",
          if (youngNISig == "significant increase") {"increased"} else {"decreased"}, " significantly. However, there is no significant change in these proportions for adults.")
@@ -211,27 +211,27 @@ youngCathNORNISig <- significanceTest(p1 = youngCathNI,
                                       n2 = unweighted_n(YLT$BELONGNI[YLT$RELIGCAT == "No religion"]))
 
 adultneighreligionsentence <- if (adultProtCathNeighSig != FALSE & adultProtNORNeighSig == adultProtCathNeighSig) {
-  paste0("Among adults, significantly ", if (adultProtCathNeighSig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNeigh, "%) than either Catholic respondents (", cathNeigh, "%) or respondents with no religion (", noNeigh, "%) said they felt a sense of belonging to their neighbourhood.")
+  paste0("Among adults, significantly ", if (adultProtCathNeighSig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNeigh, "%) than either Catholic respondents (", cathNeigh, "%) or respondents with no religion (", noNeigh, "%) felt a sense of belonging to their neighbourhood.")
 } else if (adultProtCathNeighSig == FALSE & adultProtNORNeighSig != FALSE & adultCathNORNeighSig == adultProtNORNeighSig) {
-  paste0("Among adults, respondents with no religion (", noNeigh, "%) were significantly ", if (adultProtNORNeighSig == "significant increase") {"less"} else {"more"}, " likely than either Catholic (", cathNeigh, "%) or Protestant respondents (", protNeigh, "%) to feel a sense of belonging to their neighbourhood. There were no significant differences in feelings of belonging to their neighbourhood between Catholic and Protestant respondents.")
+  paste0("Among adults, respondents with no religion (", noNeigh, "%) are significantly ", if (adultProtNORNeighSig == "significant increase") {"less"} else {"more"}, " likely than either Catholic (", cathNeigh, "%) or Protestant respondents (", protNeigh, "%) to feel a sense of belonging to their neighbourhood. There are no significant differences in feelings of belonging to their neighbourhood between Catholic and Protestant respondents.")
 } else if (adultProtCathNeighSig == FALSE & adultProtNORNeighSig == adultProtCathNeighSig & adultCathNORNeighSig == adultProtCathNeighSig) {
-  paste0("Among adults, there were no significant differences in feelings of belonging to their neighbourhood based on religion.")
+  paste0("Among adults, there are no significant differences in feelings of belonging to their neighbourhood based on religion.")
 }
 
 youngneighreligionsentence <- if (youngProtNORNeighSig != FALSE & youngCathNORNeighSig == youngProtNORNeighSig) {
   paste0("For young people, significantly ", if (youngProtNORNeighSig == "significant increase") {"more"} else {"fewer"}, " Protestant (", youngProtNeigh, "%) and Catholic (", youngCathNeigh, "%) respondents than respondents with no religion (", youngNoNeigh, "%) felt a sense of belonging to their neighbourhood.")
 } else if (youngProtNORNeighSig == FALSE & youngCathNORNeighSig == youngProtNORNeighSig) {
-  paste0("Among young people, there were ", if (c(adultProtCathNeighSig, adultProtNORNeighSig, adultCathNORNeighSig) == FALSE) {"also "}, "no significant differences in feelings of belonging to their neighbourhood based on religion.")
+  paste0("Among young people, there are ", if (c(adultProtCathNeighSig, adultProtNORNeighSig, adultCathNORNeighSig) == FALSE) {"also "}, "no significant differences in feelings of belonging to their neighbourhood based on religion.")
 }
 
 adultNIreligionsentence <- if (adultProtCathNISig != FALSE & adultProtNORNISig == adultProtCathNISig) {
-  paste0("Again among adults, significantly ", if (adultProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNI, "%) than either Catholic respondents (", cathNI, "%) or respondents with no religion (", noNI, "%) said they felt a sense of belonging to Northern Ireland.")
+  paste0("Again among adults, significantly ", if (adultProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNI, "%) than either Catholic respondents (", cathNI, "%) or respondents with no religion (", noNI, "%) felt a sense of belonging to Northern Ireland.")
 } else if (adultProtCathNISig == FALSE & adultProtNORNISig == adultProtCathNISig & adultCathNORNISig == adultProtCathNISig) {
-  paste0("Again among adults, there were no significant differences in feelings of belonging to Northern Ireland based on religion.")
+  paste0("Again among adults, there are no significant differences in feelings of belonging to Northern Ireland based on religion.")
 }
 
 youngNIreligionsentence <- if (youngProtCathNISig != FALSE & youngProtNORNISig == youngProtCathNISig) {
-  paste0("Again among young people, significantly ", if (youngProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", youngProtNI, "%) than either Catholic respondents (", youngCathNI, "%) or respondents with no religion (", youngNoNI, "%) said they felt a sense of belonging to Northern Ireland.")
+  paste0("Again among young people, significantly ", if (youngProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", youngProtNI, "%) than either Catholic respondents (", youngCathNI, "%) or respondents with no religion (", youngNoNI, "%) felt a sense of belonging to Northern Ireland.")
 } else if (youngProtCathNISig == FALSE & youngProtNORNISig == youngProtCathNISig & youngCathNORNISig == youngProtCathNISig) {
-  paste0("Again among young people, there were no significant differences in feelings of belonging to Northern Ireland based on religion.")
+  paste0("Again among young people, there are no significant differences in feelings of belonging to Northern Ireland based on religion.")
 }

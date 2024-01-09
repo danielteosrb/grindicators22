@@ -32,10 +32,10 @@ f19Sig <- significanceTest(p1 = dataNew$f19_resident,
 
 f19para1 <- if (f19Sig == FALSE) {
   paste0("In ", NILTyear, ", ", approxResidents," (", residents,
-         "%) of residents said they want the peace lines to come down now or in the future, this does not represent a significant change from ",
+         "%) of residents want the peace lines to come down now or in the future, this does not represent a significant change from ",
          NILTyear - 1, " (", round2(dataOld$f19_resident), "%).")
 } else {
   paste0("In ", NILTyear, ", ", approxResidents, " (", residents,
-         "%) of residents said they want the peace lines to come down now or in the future, this represents a ",
+         "%) of residents want the peace lines to come down now or in the future, this represents a ",
          f19Sig," from ", NILTyear - 1, " (", round2(dataOld$f19_resident), "%).")
 }

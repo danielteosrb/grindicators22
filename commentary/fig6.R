@@ -50,7 +50,7 @@ if (cath == max(c(cath, prot, noR))) {
   relStatement1 <- if (relSigProt == "significant increase") {
     paste0("A significantly higher proportion of Catholic respondents (", cath, "%) think that this happens 'a little' or 'a lot' compared to Protestant respondents (", prot, "%)")
   } else {
-    paste0("There was no significant difference in the proportion of Catholic respondents (", cath, "%) who think that this happens 'a little' or 'a lot' compared to Protestant respondents (", prot, "%)")
+    paste0("There is no significant difference in the proportion of Catholic respondents (", cath, "%) who think that this happens 'a little' or 'a lot' compared to Protestant respondents (", prot, "%)")
   }
   
   relSigNo <- significanceTest(p1 = cath,
@@ -61,9 +61,9 @@ if (cath == max(c(cath, prot, noR))) {
   relStatement2 <- if (relSigProt == relSigNo) {
     paste0(" or those with no religion (", noR, "%).")
   } else if (relSigNo == FALSE) {
-    paste0(" but there was no significant difference between Catholic respondents and those with no religion (", noR, "%).")
+    paste0(" but there is no significant difference between Catholic respondents and those with no religion (", noR, "%).")
   } else {
-    paste0(" but there was a significantly higher proportion of Catholic respondents who thought this than those with no religion (", noR, "%).")
+    paste0(" but there is a significantly higher proportion of Catholic respondents who thought this than those with no religion (", noR, "%).")
   }
   
   relStatement <- paste0(relStatement1, relStatement2)
@@ -78,7 +78,7 @@ if (cath == max(c(cath, prot, noR))) {
   relStatement1 <- if (relSigCath != FALSE) {
     paste0("A significantly ", if (relSigCath == "significant increase") {"higher"} else {"lower"}, " proportion of Protestant respondents (", prot, "%) think that this happens 'a little' or 'a lot' compared to Catholic respondents (", cath, "%).")
   } else if (relSigCath == FALSE) {
-    paste0("There was no significant difference in the proportion of Protestant respondents (", prot, "%) who think that this happens 'a little' or 'a lot' compared to Catholic respondents (", cath, "%)")
+    paste0("There is no significant difference in the proportion of Protestant respondents (", prot, "%) who think that this happens 'a little' or 'a lot' compared to Catholic respondents (", cath, "%)")
   }
   
   relSigNo <- significanceTest(p1 = prot,
@@ -89,9 +89,9 @@ if (cath == max(c(cath, prot, noR))) {
   relStatement2 <- if (relSigCath == relSigNo) {
     paste0(" or those with no religion (", noR, "%).")
   } else if (relSigNo == FALSE) {
-    paste0(" but there was no significant difference between Protestant respondents and those with no religion (", noR, "%).")
+    paste0(" but there is no significant difference between Protestant respondents and those with no religion (", noR, "%).")
   } else {
-    paste0(" but there was a significantly ", if (relSigNo == "significant decrease") {"lower"} else {"higher"}, " proportion of Protestant respondents who thought this than those with no religion (", noR, "%).")
+    paste0(" but there is a significantly ", if (relSigNo == "significant decrease") {"lower"} else {"higher"}, " proportion of Protestant respondents who thought this than those with no religion (", noR, "%).")
   }
 
   relStatement <- paste0(relStatement1, relStatement2)
@@ -106,7 +106,7 @@ if (cath == max(c(cath, prot, noR))) {
   relStatement1 <- if (relSigCath != FALSE) {
     paste0("A ", if (relSigCath == "significant increase") {"higher"} else {"lower"}, " proportion of respondents with no religion (", noR, "%) think that this happens 'a little' or 'a lot' compared to Catholic respondents (", cath, "%)")
   } else {
-    paste0("There was no significant difference in the proportion of respondents with no religion (", noR, "%) who think that this happens 'a little' or 'a lot' compared to Catholic respondents (", cath, "%)")
+    paste0("There is no significant difference in the proportion of respondents with no religion (", noR, "%) who think that this happens 'a little' or 'a lot' compared to Catholic respondents (", cath, "%)")
   }
   
   relSigProt <- significanceTest(p1 = noR,
@@ -117,9 +117,9 @@ if (cath == max(c(cath, prot, noR))) {
   relStatement2 <- if (relSigCath == relSigNo) {
     paste0(" or Protestant respondents (", prot, "%).")
   } else if (relSigNo == FALSE) {
-    paste0(" but there was no significant difference between Protestant respondents and those with no religion (", noR, "%).")
+    paste0(" but there is no significant difference between Protestant respondents and those with no religion (", noR, "%).")
   } else {
-    paste0(" but there was a significantly higher proportion of respondents with no religion who thought this than Protestant respondents (", prot, "%).")
+    paste0(" but there is a significantly higher proportion of respondents with no religion who thought this than Protestant respondents (", prot, "%).")
   }
   
   relStatement <- paste0(relStatement1, relStatement2)
@@ -133,7 +133,7 @@ genderSig <- significanceTest(p1 = male,
 
 genderStatement <-
   if (genderSig == FALSE) {
-    "There was no significant difference between male and female respondents who think that this happens 'a little or a lot'."
+    "There is no significant difference between male and female respondents who think that this happens 'a little or a lot'."
   } else if (genderSig != FALSE) {
     paste0("A ", if (genderSig == "significant increase") {"higher"} else {"lower"}, " proportion of male respondents (", male, "%) think that this happens 'a little' or 'a lot' compared to female respondents (", female, "%).")
   }

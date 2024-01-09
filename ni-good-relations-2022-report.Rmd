@@ -878,7 +878,7 @@ youngInfographic()
 
 -   `r adults`% of adults and `r young`% of young people think that relations between Protestants and Catholics are better now than they were five years ago. `r sigStatement`
 
--   In `r `NILTyear`, `r projects`% of young people have 'done projects' with pupils from other schools; `r classes`% have 'shared classes'; and `r equipment`% 'shared sports facilities or equipment' where the pupils are from a different religious background.
+-   In `r NILTyear`, `r projects`% of young people have 'done projects' with pupils from other schools; `r classes`% have 'shared classes'; and `r equipment`% 'shared sports facilities or equipment' where the pupils are from a different religious background.
 
 ### Our Shared Community
 
@@ -894,7 +894,7 @@ source("commentary/execSum2.R")
 
 -   `r leisure`% of adults in `r NILTyear` think that leisure centres in their area are 'shared and open' to both Catholics and Protestants; `r park`% think this about parks; `r library`% think this about libraries and `r shopping`% think this about shopping centres.
 
--   `r workplace`% of adult respondents said they would prefer a mixed religion workplace; `r neighbourhood`% a mixed religion neighbourhood; and `r school`% mixed religion schools.
+-   `r workplace`% of adult respondents prefer a mixed religion workplace; `r neighbourhood`% a mixed religion neighbourhood; and `r school`% mixed religion schools.
 
 ```{r safe infogrpahic, out.width = "830px", out.height =  "575px"}
 
@@ -906,9 +906,9 @@ source("commentary/execSum3.R")
 
 ```
 
--   `r safeTown`% of adult respondents said that they see town centres as safe and welcoming places for people of all walks of life. `r sigStatement`
+-   `r safeTown`% of adult respondents see town centres as safe and welcoming places for people of all walks of life. `r sigStatement`
 
--   In `r NILTyear`, `r safeProtestant`% of respondents say they feel 'very' or 'quite' safe going to events held in a Protestant secondary school; `r safeCatholic`% to events held in a Catholic secondary school; `r safeGAA`% to events held in a GAA club; and `r safeOrange`% to events held in an Orange Hall.
+-   In `r NILTyear`, `r safeGAA`% of respondents feel 'very' or 'quite' safe going to events held in a GAA club; `r safeOrange`% to events held in an Orange Hall; `r safeProtestant`% to events held in a Protestant Secondary School; and `r safeCatholic`% to events held in a Catholic Secondary School.
 
 ### Our Cultural Expression
 
@@ -1025,7 +1025,7 @@ source("commentary/fig3.R")
 
 **Current Year (`r LTyear`):**
 
-`r round2(dataNew$f3a_young)`% of young people responded that they feel favourable towards people from Catholic communities; `r round2(dataNew$f3b_young)`% towards people from Protestant communities; and `r round2(dataNew$f3c_young)`% towards people from Minority Ethnic communities. This `r adultYoungSig` the proportion of adults who feel favourable towards people from: Catholic communities, `r round2(dataNew$f3a_adults)`%; Protestant communities, `r round2(dataNew$f3b_adults)`%; and Minority Ethnic communities, `r round2(dataNew$f3c_adults)`%.
+`r round2(dataNew$f3a_young)`% of young people feel favourable towards people from Catholic communities; `r round2(dataNew$f3b_young)`% towards people from Protestant communities; and `r round2(dataNew$f3c_young)`% towards people from Minority Ethnic communities. This `r adultYoungSig` the proportion of adults who feel favourable towards people from: Catholic communities, `r round2(dataNew$f3a_adults)`%; Protestant communities, `r round2(dataNew$f3b_adults)`%; and Minority Ethnic communities, `r round2(dataNew$f3c_adults)`%.
 
 ```{r figure 3}
 
@@ -1628,7 +1628,7 @@ source("commentary/fig16.R")
 
 **Current Year (`r NILTyear`):**
 
-`r annoyedR`% of respondents said that they had been annoyed by republican murals, kerb-paintings or flags in the last year; with `r intimidatedR`% feeling intimidated by them. `r f16Sig` respondents said they had been annoyed by loyalist murals, kerb-paintings or flags in the last year (`r annoyedL`%); with `r intimidatedL`% intimidated by them.
+`r annoyedR`% of respondents had been annoyed by republican murals, kerb-paintings or flags in the last year; with `r intimidatedR`% feeling intimidated by them. `r f16Sig` respondents had been annoyed by loyalist murals, kerb-paintings or flags in the last year (`r annoyedL`%); with `r intimidatedL`% intimidated by them.
 
 ```{r figure 16}
 
@@ -1710,7 +1710,7 @@ source("commentary/fig18.R")
 
 **Current Year (`r NILTyear`):**
 
-In `r NILTyear`, `r GAAsafe`% of respondents say they feel 'very' or 'quite' safe going to events held in a GAA club; `r orangeSafe`% to events held in an Orange Hall; `r protSafe`% to events held in a Protestant secondary school; and `r cathSafe`% to events held in a Catholic secondary school.
+In `r NILTyear`, `r GAAsafe`% of respondents feel 'very' or 'quite' safe going to events held in a GAA club; `r orangeSafe`% to events held in an Orange Hall; `r protSafe`% to events held in a Protestant secondary school; and `r cathSafe`% to events held in a Catholic secondary school.
 
 ```{r figure 18}
 
@@ -1798,7 +1798,7 @@ source("commentary/fig20.R")
 
 **Current Year (`r LTyear`):**
 
-`r belongNeigh`% of adults say they feel a sense of belonging towards their neighbourhood, while `r belongNI`% say they feel a sense of belonging to Northern Ireland. `r adultyoungSentence`
+`r belongNeigh`% of adults feel a sense of belonging towards their neighbourhood, while `r belongNI`% feel a sense of belonging to Northern Ireland. `r adultyoungSentence`
 
 `r adultneighreligionsentence` `r youngneighreligionsentence` `r adultNIreligionsentence` `r youngNIreligionsentence`
 

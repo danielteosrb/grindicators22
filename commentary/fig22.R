@@ -56,7 +56,7 @@ f22Statement <- if (highest == "Protestant") {
   }
 
 f22insig <- if (protcathsig22 == FALSE & protMEsig22 == protcathsig22 & cathMEsig22 == protcathsig22) {
-  "There were no significant differences in these proportions."
+  "There are no significant differences in these proportions."
 }
 
 # the below code makes assumptions that it does not test, and therefore can potentially make incorrect statements in the report, as is the case in 2021. It has been rewritten in a much simpler form above, 
