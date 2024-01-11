@@ -38,7 +38,7 @@ f8religionsentence <- if (f8SigCP == FALSE & f8SigCNR == f8SigCP & f8SigPNR == f
          colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), religion = "Protestant"), "%) or respondents with no religion (",
          colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), religion = "No religion"), "%) to report that their child's school is somewhere their children can be open about their cultural identity. Protestant respondents were signficantly ", if (f8SigPNR == "significant increase") {"more"} else {"less"}, " likely than respondents with no religion to report this.")
 } else if (f8SigCNR != FALSE & f8SigPNR == f8SigCNR & f8SigCP != FALSE & f8SigCP != f8SigCNR) {
-  paste0("Respondents with no religion (", dataNew$f8_NoR, "%) are significantly ", if (f8SigCNR == "significant increase") {"less"} else {"more"}, " likely than either Catholic (", dataNew$f8_Cath, "%) or Protestant (", dataNew$f8_Prot, "%) respondents. Protestant respondents are significantly ", if (f8SigCP == "significant increase") {"less"} else {"more"}, " likely to report this than Catholic respondents.")
+  paste0("Respondents with no religion (", dataNew$f8_NoR, "%) are significantly ", if (f8SigCNR == "significant increase") {"less"} else {"more"}, " likely than either Catholic (", dataNew$f8_Cath, "%) or Protestant (", dataNew$f8_Prot, "%) respondents to report that their child's school is somewhere their children can be open about their cultural identity. Protestant respondents are significantly ", if (f8SigCP == "significant increase") {"less"} else {"more"}, " likely to report this than Catholic respondents.")
 }
 
 f8gendersentence <- if (f8Siggen != FALSE) {

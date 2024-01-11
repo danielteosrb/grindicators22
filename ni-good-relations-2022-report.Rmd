@@ -2250,7 +2250,7 @@ Please note that, due to rounding, percentages in both this report and the relev
 
 In some cases, where answer categories have been combined, figures presented in the graphs may not sum to the same total as figures presented in the relevant commentary, due to rounding.
 
-Due to COVID-19, some questions in the Northern Ireland Life and Times Survey were reworded in 2020, and these changes were maintained in 2021. These changes affect the following Indicators: 2.2a, 3.2a, 3.2b. Please see the notes in the relevant indicators for more details.
+Due to COVID-19, some questions in the Northern Ireland Life and Times Survey were reworded in 2020, and these changes were maintained in 2021, and reverted back to their original format in 2022. These changes affected the following Indicators: 2.2a, 3.2a, 3.2b.
 
 Prior to 2019, the Good Relations Indicators Report was produced as a PDF document, with all calculations performed in SPSS Statistics. Since 2019, the report has been produced in HTML format, with all calculations performed in R. Due to minor differences in how the two programs make calculations, there can sometimes be small differences between the results produced. These differences are never more than 1%.
 
@@ -2277,7 +2277,7 @@ Until 2020, the NILT survey was conducted as a series of face-to-face household 
 
 The 2022 Northern Ireland Life and Times Survey received ethical approval from the Ethics Committee in the School of Sociology, Social Policy and Social Work, Queen's University Belfast, where the survey coordinator is based. The survey involved 1405 interviews with adults aged 18 years or over from a systematic random sample of 9500 eligible addresses selected from the Postcode Address File database, resulting in a 15% response rate.
 
-All analyses of the adult data are weighted in order to allow for disproportionate household size. As only one individual is sampled at an address, this means that the probability of selection for the survey is inversely related to the size of the household. In other words individuals living in large household have a lower chance of being included in the sample than individuals living in small households. Before analysis the data are weighted in relation to the number of eligible adults at the address, derived from the details of the household structure recorded by interviewers on the questionnaire. This weighting process adjusts the results to those which would have been achieved if the sample had been drawn as a systematic random sample of adults rather than of addresses. ([ARK](https://www.ark.ac.uk/ARK/))
+All analyses of the adult data are weighted in order to ensure representation of the general population of Northern Ireland. In other words individuals living in large household have a lower chance of being included in the sample than individuals living in small households. Weighting is the process of correcting for sample differences by increasing the relative importance (or weight) of underrepresented groups and decreasing the importance of overrepresented groups (where over/under representation is determined by comparing to a target). Given the method of collection, a weighting variable to account for age, gender and location based on Northern Ireland Census data (2011) was added. Random Iterative Method (RIM) weighting was selected as the most appropriate technique as this is most commonly used to weight market research data to known demographics, without intrinsically altering the findings of the raw data. Northern Ireland Census targets were used, given that Census data are the most accurate counts of the population at a specific point in time. A RIM weighting factor was calculated by comparing the NILT data population proportions to the known population statistics for each variable (age, gender and location). This weighting factor was calculated using an advanced analytics tool which accounts for the differences in the survey population to the general population of Northern Ireland using a pre-calculated algorithm. When applied, the weighting factor will weight the data accordingly to ensure research findings are representative of the general population in Northern Ireland. ([ARK](https://www.ark.ac.uk/ARK/nilt))
 
 #### Young Life and Times Survey
 
@@ -2289,7 +2289,7 @@ The YLT survey did not run in 2020 due to the effects of the COVID-19 pandemic. 
 
 The high level of interest in the YLT survey in 2022 and the respective number of questions included meant that a split survey was required.
 
-In 2022, 5000 names of eligible respondents were received, 4909 of which were contactable and 4899 of which were willing to complete the survey. 2,136 young people logged onto the survey platform with their ID. After removal of the most incomplete responses (i.e., responses where only very few or no questions were completed), 2,073 responses remained. This represents an overall response rate of 42.3%. The YLT data does not require weighting. ([ARK](https://www.ark.ac.uk/ARK/))
+In 2022, 5000 names of eligible respondents were received, 4909 of which were contactable and 4899 of which were willing to complete the survey. 2,136 young people logged onto the survey platform with their ID. After removal of the most incomplete responses (i.e., responses where only very few or no questions were completed), 2,073 responses remained. This represents an overall response rate of 42.3%. The YLT data does not require weighting. ([ARK](https://www.ark.ac.uk/ARK/ylt))
 
 #### School Omnibus Survey
 
@@ -2299,7 +2299,7 @@ The questions produced both quantitative and qualitative data, generally using y
 
 The survey period in 2022 coincided with industrial action by the Northern Ireland teaching unions known as Actions Short of Strike (ASOS). As part of ASOS union members were advised not to comply with some data collections undertaken by DE. As a result, the response rate for the 2022 Omnibus (21.5% primary, post-primary, and special schools) was below the rate in 2018 (39%). Caution should therefore be used when making inferences about the analysis for schools in 2022 due to the lower-than-normal response rate. More information on the representativeness of the 2022 School Omnibus Survey is available in the [2022 School Omnibus Survey Report](https://www.education-ni.gov.uk/sites/default/files/publications/education/School%20Omnibus%20Survey%202022.pdf).
 
-The shared education section received 173 responses out of a total of 220 responses for primary, post-primary and special schools. ([Dept. of Education](https://www.education-ni.gov.uk/))
+The shared education section received 173 responses out of a total of 220 responses for primary, post-primary and special schools. ([Dept. of Education](https://www.education-ni.gov.uk/publications/school-omnibus-survey-2022))
 
 #### Northern Ireland House Condition Survey
 
@@ -2327,7 +2327,7 @@ Unlike the Northern Ireland Crime Survey (NICS), police recorded crime figures d
 
 #### Northern Ireland Housing Executive Homeless Presentation Figures
 
-Statistics on Homelessness are sourced from the Northern Ireland Housing Executive (NIHE). They are published in the DfC's annual Housing Statistics report. The figures reported for each reason for presentation from 2011-12 onwards are not fully comparable with other published figures. Data migration issues and coding variations following the introduction of a new operational Housing Management System (HMS) in July 2011 meant that no data on reason for presentation was recorded for 3,731 cases in 2011-12 and 835 cases during April-June 2012. (NIHE)
+Statistics on Homelessness are sourced from the Northern Ireland Housing Executive (NIHE). They are published in the DfC's annual Housing Statistics report. The figures reported for each reason for presentation from 2011-12 onwards are not fully comparable with other published figures. Data migration issues and coding variations following the introduction of a new operational Housing Management System (HMS) in July 2011 meant that no data on reason for presentation was recorded for 3,731 cases in 2011-12 and 835 cases during April-June 2012. ([DfC](https://www.communities-ni.gov.uk/publications/northern-ireland-housing-statistics-2022-23))
 
 ### Definitions
 
