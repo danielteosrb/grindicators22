@@ -97,6 +97,8 @@ f12sentence1 <- if (nghSig == FALSE & workSig == FALSE & schoolSig == FALSE) {
          "%; ", NILTyear - 1, ": ", round2(dataOld$f12_neighbourhood), "%), workplaces (", NILTyear, ": ", round2(dataNew$f12_workplace),
          "%; ", NILTyear - 1, ": ", round2(dataOld$f12_workplace), "%) and schools (", NILTyear, ": ", round2(dataNew$f12_school),
          "%; ", NILTyear - 1, ": ", round2(dataOld$f12_school), "%) since ", NILTyear - 1, ".")
+} else if (nghSig == FALSE & workSig != FALSE & schoolSig == nghSig) {
+  paste0("Since ", NILTyear - 1, " there has been a ", workSig, " in preference for mixed religion workplaces (", NILTyear, ": ", round2(dataNew$f12_workplace), "%; ", NILTyear - 1, ": ", round2(dataOld$f12_workplace), "%) but there has been no significant change in preference for mixed religion neighbourhoods or schools.")
 }
 
 f12para1 <- paste0(f12sentence1,  " Since 2013, preference for all three has increased significantly – preference for mixed religion neighbourhoods increasing ",
