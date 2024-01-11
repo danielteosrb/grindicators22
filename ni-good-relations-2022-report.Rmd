@@ -814,7 +814,7 @@ fig23 <- data.frame(community = c("All", "Catholic", "Protestant", "No religion"
 # Figure 24 ####
 historic <- readRDS(paste0("data/historicTo", LTyear - 1, ".RDS"))
 
-historicNew <- data.frame(year = 2021,
+historicNew <- data.frame(year = 2022,
                           adults = round2(dataNew$f1_adults),
                           protestant = round2(dataNew$f1a_Prot),
                           catholic = round2(dataNew$f1a_Cath),
@@ -1968,7 +1968,7 @@ indicatorsByOutcome()
 
 ## Timeline of Indicator 1.1a
 
-```{r figure 24, out.width = "900px"}
+```{r figure 24, out.width = "1000px"}
 
 chartTitle(24, "% who think that relations between Protestants and Catholics are better now than they were five years ago")
 
@@ -2026,9 +2026,9 @@ plot_ly(fig24p,
   annotations = list(
     # following lines commented out to remove "2021" marker on graph as it was squashed against 2020 - add back in to
     # include current year marker on graph x axis
-    # list(text = ~if(max(year) %% 5 == 0) {""} else {max(year)}, showarrow = FALSE,
-    #      x = ~max(year), xref = "x", xanchor = "center",
-    #      y = 0, yref = "paper", yanchor = "top"),
+    list(text = ~if(max(year) %% 5 == 0) {""} else {max(year)}, showarrow = FALSE,
+         x = ~max(year), xref = "x", xanchor = "center",
+         y = 0, yref = "paper", yanchor = "top"),
     list(text = "1994 -\nCeasefire", showarrow = FALSE,
          x = 1994, xref = "x", xanchor = "center",
          y = 70, yref = "y", yanchor = "middle"),
