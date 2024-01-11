@@ -73,6 +73,8 @@ f20para1 <- if (youngNISiglast == FALSE & youngNeighSiglast == FALSE & adultNISi
          "%) and young people (", NILTyear, ": ", youngNI, "%; ", NILTyear - 1, ": ", round2(dataOld$f20_youngNI),
          "%) who feel a sense of belonging to Northern Ireland has ", if (adultNISiglast == "significant increase") {"increased"} else {"decreased"}, " significantly. There is no
          significant change in the proportion of either adults or young people who feel a sense of belonging to their neighbourhood.")
+} else if (youngNISiglast != FALSE & youngNeighSiglast == FALSE & adultNISiglast == youngNeighSiglast & adultNeighSiglast == youngNISiglast) {
+  paste0("Since ", NILTyear - 1, " the proportion of young people who feel a sense of belonging to Northern Ireland has seen a ", youngNISiglast, " (", NILTyear, ": ", youngNI, "%; ", NILTyear - 1, ": ", round2(dataOld$f20_youngNI), "%), whilst there has been no significant change in feelings of belonging among their adult counterparts. The proportion of adult respondents who feel a sense of belonging to their neighbourhood has also seen a ", adultNeighSiglast, " since ", NILTyear - 1, " (", NILTyear, ": ", belongNeigh, "%; ", NILTyear - 1, ": ", round2(dataOld$f20_adultNeigh), "%), whilst there has been no significant change in the same measure for young people.")
 }
 
 youngNISig <- significanceTest(p1 = youngNI,

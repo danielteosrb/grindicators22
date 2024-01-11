@@ -145,7 +145,7 @@ f22para1 <- if (cathSig == FALSE & protSig == FALSE & meSig != FALSE) {
          NILTyear, ": ", dataNew$f22_cath, "%; ", NILTyear - 1, ": ", dataOld$f22_cath, "%) and ",
          round2(abs(dataNew$f22_prot - dataOld$f22_prot)),
          " percentage points (",
-         NILTyear, ": ", dataNew$f22_prot, "%; ", NILTyear - 1, ": ", dataOld$f22_prot, "%) respectively). There has been no significant change in the proportion who think this in relation to Minority Ethnic communities.")
+         NILTyear, ": ", dataNew$f22_prot, "%; ", NILTyear - 1, ": ", dataOld$f22_prot, "%) respectively. There has been no significant change in the proportion who think this in relation to Minority Ethnic communities.")
   
 } else if (cathSig != FALSE & protSig == cathSig & meSig != FALSE) {
   
@@ -155,7 +155,7 @@ f22para1 <- if (cathSig == FALSE & protSig == FALSE & meSig != FALSE) {
          NILTyear, ": ", dataNew$f22_cath, "%; ", NILTyear - 1, ": ", dataOld$f22_cath, "%) and ",
          round2(abs(dataNew$f22_prot - dataOld$f22_prot)),
          " percentage points (",
-         NILTyear, ": ", dataNew$f22_prot, "%; ", NILTyear - 1, ": ", dataOld$f22_prot, "%) respectively). The proportion who think this in relation to Minority Ethnic communities has ",
+         NILTyear, ": ", dataNew$f22_prot, "%; ", NILTyear - 1, ": ", dataOld$f22_prot, "%) respectively. The proportion who think this in relation to Minority Ethnic communities has ",
          sub("t", "tly", meSig),"d by ", round2(abs(dataNew$f22_me - dataOld$f22_me)),
          " percentage points (",
          NILTyear, ": ", dataNew$f22_me, "%; ", NILTyear - 1, ": ", dataOld$f22_me, "%).")
@@ -258,7 +258,7 @@ f22para2 <- if (cathSig14 == FALSE & protSig14 == FALSE & meSig14 != FALSE) {
          NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) and ",
          round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
          " percentage points (",
-         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) respectively). There has been no Sig14nificant change in the proportion who think this in relation to Minority Ethnic communities.")
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) respectively. There has been no Sig14nificant change in the proportion who think this in relation to Minority Ethnic communities.")
   
 } else if (cathSig14 != FALSE & protSig14 == cathSig14 & meSig14 != FALSE) {
   
@@ -267,7 +267,7 @@ f22para2 <- if (cathSig14 == FALSE & protSig14 == FALSE & meSig14 != FALSE) {
          NILTyear, ": ", dataNew$f22_cath, "%; 2014: ", data$f22_cath[data$year == 2014], "%) and ",
          round2(abs(dataNew$f22_prot - data$f22_prot[data$year == 2014])),
          " percentage points (",
-         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) respectively). The proportion who think this in relation to Minority Ethnic communities has ",
+         NILTyear, ": ", dataNew$f22_prot, "%; 2014: ", data$f22_prot[data$year == 2014], "%) respectively. The proportion who think this in relation to Minority Ethnic communities has ",
          sub("t", "tly", meSig14),"d by ", round2(abs(dataNew$f22_me - data$f22_me[data$year == 2014])),
          " percentage points (",
          NILTyear, ": ", dataNew$f22_me, "%; 2014: ", data$f22_me[data$year == 2014], "%).")
