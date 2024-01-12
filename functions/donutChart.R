@@ -35,7 +35,7 @@ donutChart <- function(data,
           hole = 0.5) %>%  # Convert piechart to donut chart
     layout(legend = list(x = 0.5,
                          xanchor = "center",
-                         y = -0.1,
+                         y = -0.15,
                          yanchor = "bottom",
                          orientation = "h"),   # Position of legend
            margin = list(b = 50),  # Add more white space to bottom of chart to accomodate legend

@@ -1583,6 +1583,10 @@ source("commentary/fig15.R")
 
 chartTitle(15, "Number of NIHE clients presenting as homeless due to intimidation")
 
+# below line reshapes data for 2022 specifically
+
+fig15a <- fig15a[-c(2, 6, 7), ]
+
 plot15a <- donutChart(data = fig15a,
                       values = "num",
                       sections = "option",
@@ -1595,18 +1599,23 @@ plot15b <- lineChart(data = fig15b,
                      yHeight = 700)
 
 div(class = "row",
-    div(class = "col-sm-4", plot15a),
+    div(class = "col-sm-4", style = "padding: 5px", plot15a),
     div(class = "col-sm-8", plot15b))
 
-# downloadButtons(fig = fig15,
-#                 indicator = "3.1b",
-#                 headers = c("Year", "Paramilitary", "Sectarian", "ASB", "Other", "Total"))
+fig15new <- fig15b[-c(1:6), ]
+fig15 <- fig15b %>% mutate(ASB = NA, Disability = NA, Paramilitary = NA, Racial = NA, Sectarian = NA, Orientation = NA)
+fig15 <- fig15[-c(7), ]
+fig15 <- rbind(fig15, fig15new)
+
+downloadButtons(fig = fig15,
+                indicator = "3.1b",
+                headers = c("Year", "ASB", "Disability", "Paramilitary", "Racial", "Sectarian", "Orientation", "Total"))
 
 ```
 
 Source: NIHE
 
-\*other includes racial, disability, and sexual orientation. In previous years, the "other" category included anti-social behaviour, disability and sexual orientation; however, the categories presented in this report were changed in 2021 to reflect changes in how NIHE present this data.
+\*please note that these data also contain categories pertaining to intimidation on grounds of disability and sexual orientation, however, no clients presented as homeless to NIHE on these grounds in 2022/23, so these categories have been excluded from the graph.
 
 ```{r how 15}
 
