@@ -823,12 +823,11 @@ historicNew <- data.frame(year = 2022,
 fig24 <- rbind(historic, historicNew)
 
 fig24p <- fig24 %>% mutate(dash1 = case_when(year == 2019 ~ sixteen,
-                           year == 2020 ~ lag(sixteen),
+                           year == 2020 ~ lag(sixteen), year == 2021 ~ sixteen,
                            TRUE ~ as.numeric(NA)),
          dash2 = case_when(year > 2019 ~ as.numeric(NA),
                            TRUE ~ sixteen),
-         dash3 = case_when(year == 2020 ~ lag(sixteen),
-                           year < 2020 ~ as.numeric(NA),
+         dash3 = case_when(year < 2021 ~ as.numeric(NA),
                            TRUE ~ sixteen),
          hover_text = case_when(is.na(sixteen) ~ "No YLT survey ran",
                                 TRUE ~ paste("16 year olds :", round2(sixteen))))
@@ -2014,7 +2013,7 @@ plot_ly(fig24p,
             showlegend = FALSE) %>%
   add_trace(y = ~dash1,
             name = "16 year olds",
-            hovertext = "",
+            hoverinfo= "none",
             line = list(color = "#979191",
                         dash = "dash"),
             showlegend = FALSE) %>%
