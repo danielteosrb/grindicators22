@@ -19,9 +19,11 @@ clusteredBar <- function(data,
                          y1,
                          y2,
                          y3 = NA,
+                         y4 = NA,
                          y1Name = y1,
                          y2Name = y2,
                          y3Name = y3,
+                         y4Name = y4,
                          title = NA,
                          legend = "top") {
   
@@ -58,6 +60,19 @@ clusteredBar <- function(data,
               hovertext = paste0(y3Name, ": ", data[[y3]], "%"))  # Text on bar set
 
   }
+  
+  if(!is.na(y4)) {
+    
+    cluster <- cluster %>%
+      add_trace(y = data[[y4]],  # Fourth cluster variable
+                name = y4Name,   # Legend entry for fourth  cluster
+                marker = list(color = "#9A9393"),  # Bar colour changed
+                text = paste0("<b>", round2(data[[y4]]), "</b>"),
+                textfont = list(color = "white"),
+                hovertext = paste0(y4Name, ": ", data[[y4]], "%"))  # Text on bar set
+    
+  }
+  
   
   # Layout options are set
   cluster <- cluster %>%  
