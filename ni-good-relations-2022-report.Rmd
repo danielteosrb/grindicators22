@@ -722,50 +722,51 @@ fig18 <- data.frame(location = c("GAA Club  ", "Orange Hall  ", "Protestant  \nS
                                  colPct(NILT, GOCSCHL, c("Very safe", "Quite safe"), religion = "Catholic")))
 
 # Figure 19 calculated directly from NILT data ####
-fig19 <- data.frame(resident = c("All", "Residents*", "Protestant\nresidents", "Catholic\nresidents", "Residents with\nno religion"),
+fig19 <- data.frame(resident = c("All", "Residents*"), 
+                  #  "Protestant\nresidents", "Catholic\nresidents", "Residents with\nno religion"),
                     now = c(colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now"),
                             colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
-                                   resident = TRUE),
-                            colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
-                                   resident = TRUE, religion = "Protestant"),
-                            colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
-                                   resident = TRUE, religion = "Catholic"),
-                            colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
-                                   resident = TRUE, religion = "No religion")),
+                                   resident = TRUE)),
+                            # colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
+                            #        resident = TRUE, religion = "Protestant"),
+                            # colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
+                            #        resident = TRUE, religion = "Catholic"),
+                            # colPct(NILT, PLINEREM, "I would like the Peace Lines to come down now",
+                            #        resident = TRUE, religion = "No religion")),
                     future = c(colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future"),
                                colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
-                                      resident = TRUE),
-                               colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
-                                      resident = TRUE, religion = "Protestant"),
-                               colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
-                                      resident = TRUE, religion = "Catholic"),
-                               colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
-                                      resident = TRUE, religion = "No religion")),
-                    nowOrFuture = c(colPct(NILT, PLINEREM,
-                                           c("I would like the Peace Lines to come down now",
-                                             "I would like the Peace Lines to come down in the future")),
-                                    colPct(NILT, PLINEREM,
-                                           c("I would like the Peace Lines to come down now",
-                                             "I would like the Peace Lines to come down in the future"),
-                                           resident = TRUE),
-                                    colPct(NILT, PLINEREM,
-                                           c("I would like the Peace Lines to come down now",
-                                             "I would like the Peace Lines to come down in the future"),
-                                           resident = TRUE, religion = "Protestant"),
-                                    colPct(NILT, PLINEREM, 
-                                           c("I would like the Peace Lines to come down now",
-                                             "I would like the Peace Lines to come down in the future"),
-                                           resident = TRUE, religion = "Catholic"),
-                                    colPct(NILT, PLINEREM,
-                                           c("I would like the Peace Lines to come down now",
-                                             "I would like the Peace Lines to come down in the future"),
-                                           resident = TRUE, religion = "No religion"))) %>%
+                                      resident = TRUE))) %>% 
+                               # colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
+                               #        resident = TRUE, religion = "Protestant"),
+                               # colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
+                               #        resident = TRUE, religion = "Catholic"),
+                               # colPct(NILT, PLINEREM, "I would like the Peace Lines to come down in the future",
+                               #        resident = TRUE, religion = "No religion")),
+                    # nowOrFuture = c(colPct(NILT, PLINEREM,
+                    #                        c("I would like the Peace Lines to come down now",
+                    #                          "I would like the Peace Lines to come down in the future")),
+                    #                 colPct(NILT, PLINEREM,
+                    #                        c("I would like the Peace Lines to come down now",
+                    #                          "I would like the Peace Lines to come down in the future"),
+                    #                        resident = TRUE),
+                    #                 colPct(NILT, PLINEREM,
+                    #                        c("I would like the Peace Lines to come down now",
+                    #                          "I would like the Peace Lines to come down in the future"),
+                    #                        resident = TRUE, religion = "Protestant"),
+                    #                 colPct(NILT, PLINEREM, 
+                    #                        c("I would like the Peace Lines to come down now",
+                    #                          "I would like the Peace Lines to come down in the future"),
+                    #                        resident = TRUE, religion = "Catholic"),
+                    #                 colPct(NILT, PLINEREM,
+                    #                        c("I would like the Peace Lines to come down now",
+                    #                          "I would like the Peace Lines to come down in the future"),
+                    #                        resident = TRUE, religion = "No religion"))) %>%
   mutate(now = if_else(resident %in% c("All", "Residents*"), now, NA),
          future = if_else(resident %in% c("All", "Residents*"), future, NA))
 
 # Version of data frame for generating plot
-fig19p <- fig19 %>%
-  mutate(nowOrFuture = if_else(!resident %in% c("All", "Residents*"), nowOrFuture, NA))
+# fig19p <- fig19 %>%
+#   mutate(nowOrFuture = if_else(!resident %in% c("All", "Residents*"), nowOrFuture, NA))
 
 # Figure 20a calculated directly from YLT data
 fig20a <- data.frame(belong = c("Neighbourhood", "Northern\nIreland"),
@@ -1785,21 +1786,23 @@ In `r NILTyear`, `r all`% of all respondents want the Peace Lines to come down n
 
 chartTitle(19, "% who would like to see peace lines come down now or in the near future")
 
-stackedBar(data = fig19p,
+stackedBar(data = fig19,
            x = "resident",
            y1 = "now",
            y1Name = "I would like the Peace Lines to come down now",
            y2 = "future",
-           y2Name = "I would like the Peace Lines to come down in the future",
-           y3 = "nowOrFuture",
-           y3Name = "I would like the Peace Lines to come down now or in the future")
+           y2Name = "I would like the Peace Lines to come down in the future")
+# 
+#            y3 = "nowOrFuture",
+#            y3Name = "I would like the Peace Lines to come down now or in the future")
 
 downloadButtons(fig = fig19,
                 indicator = "3.2c",
                 headers = c("Respondents",
                             "I would like the Peace Lines to come down now (%)",
-                            "I would like the Peace Lines to come down in the future (%)",
-                            "I would like the Peace Lines to come down now or in the future (%)"))
+                            "I would like the Peace Lines to come down in the future (%)"))
+
+#                            "I would like the Peace Lines to come down now or in the future (%)"))
 
 ```
 
