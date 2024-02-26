@@ -669,6 +669,8 @@ fig14 <- rbind(psni, psniNew)
 
 rownames(fig14) <- 1:nrow(fig14)
 
+names(fig14)[names(fig14) == 'Homophobic'] <- 'Sexual orientation'
+
 saveRDS(fig14, psniSave)
 
 # New way of calculating fig15b - old way is commented out below.
@@ -1562,18 +1564,20 @@ lineChart(data = fig14,
           y1 = "Racial",
           y2 = "Sectarian",
           y3 = "Transphobic",
-          y4 = "Homophobic",
+          y4 = "Sexual orientation",
           y5 = "Religion",
           y6 = "Disability",
           yHeight = 1200)
 
 downloadButtons(fig = fig14,
                 indicator = "3.1a",
-                headers = c("Year", "Racial", "Homophobic", "Sectarian", "Religion", "Disability", "Transphobic"))
+                headers = c("Year", "Racial", "Sexual orientation", "Sectarian", "Religion", "Disability", "Transphobic"))
 
 ```
 
 Source: PSNI
+
+*in previous years, the "Sexual orientation" category was labelled as "homophobic"; this has been changed to remain in line with how the PSNI present these data.
 
 ```{r how 14}
 
@@ -2131,6 +2135,7 @@ headings <- c("Purpose",
               "Web page",
               "Copyright",
               "Feedback",
+              "Official statistics",
               "Acknowledgement")
 
 information <- c("Data to monitor and report on Together: Building a United Community Strategy (2013) key priorities.",
@@ -2143,6 +2148,7 @@ information <- c("Data to monitor and report on Together: Building a United Comm
                  "The Executive Office",
                  "This publication is Crown copyright and may be reproduced free of charge in any format or medium. Acknowledgement should be given for any material used, and the title of the publication specified.",
                  "Comments on this publication are welcome. Please fill in our",
+                 "Our statistical practice is regulated by the Office for Statistics Regulation (OSR). OSR sets the standards of trustworthiness, quality and value in the Code of Practice for Statistics that all producers of official statistics should adhere to. You are welcome to contact us directly with any comments about how we meet these standards. Alternatively, you can contact OSR by emailing ",
                  "Thanks are offered to all the individuals who took part in the surveys contributing to the findings presented in this report. Without their help this report would not have been possible.")
 
 for (i in 1:length(headings)) {
@@ -2173,7 +2179,20 @@ for (i in 1:length(headings)) {
           div(class = "infoItem", style = "width: 20%", headings[i]),
           div(class = "infoItem", style = "width: 80%", information[i], a(href = "https://consultations.nidirect.gov.uk/teo/good-relations-readership-survey/", "readership survey"), "or contact", a(href="mailto:teostatisticsresearch@executiveoffice-ni.gov.uk", "teostatisticsresearch@executiveoffice-ni.gov.uk"))),
       
-      "<br>")
+  
+          "<br>")
+    
+  } else if (headings[i] == "Official statistics") {
+    
+        readerInfo <- paste0(readerInfo,
+                         
+      div(class = "row", style = "display: flex;",
+          div(class = "row-indent"),
+          div(class = "infoItem", style = "width: 20%", headings[i]),
+          div(class = "infoItem", style = "width: 80%", information[i], a(href="mailto:regulation@statistics.gov.uk", "regulation@statistics.gov.uk"), "or via the OSR website.")),
+      
+  
+          "<br>")
     
     
   } else {
