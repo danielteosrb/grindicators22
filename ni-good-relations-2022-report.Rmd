@@ -2130,6 +2130,7 @@ headings <- c("Purpose",
               "Target audience",
               "Web page",
               "Copyright",
+              "Feedback",
               "Acknowledgement")
 
 information <- c("Data to monitor and report on Together: Building a United Community Strategy (2013) key priorities.",
