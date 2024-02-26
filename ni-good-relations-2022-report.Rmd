@@ -68,7 +68,7 @@ omniYear <- 2022
 intYear <- "2022/23"
 
 # Original Publication date
-pubDate <- "xxxx"
+pubDate <- "14th March 2024"
 # Name of report contact
 contact <- "Daniel Nelson-Donaghy"
 
@@ -2130,7 +2130,6 @@ headings <- c("Purpose",
               "Target audience",
               "Web page",
               "Copyright",
-              "Feedback",
               "Acknowledgement")
 
 information <- c("Data to monitor and report on Together: Building a United Community Strategy (2013) key priorities.",
