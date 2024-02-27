@@ -694,5 +694,5 @@ f7para2 <-
     paste0("Since 2013, there has been a ", parkSig, " in the proportion of respondents who think both parks (",
            NILTyear, ": ", round2(dataNew$f7_park), "%; 2013: ", round2(data$f7_park[data$year == 2013]),
            "%) and leisure centres (", NILTyear, ": ", round2(dataNew$f7_LC), "%; 2013: ", round2(data$f7_LC[data$year == 2013]),
-           "%) are 'shared and open' to both Protestants and Catholics. However, there was no significant change in these proprtions for libraries or shopping centres.")
+           "%) are 'shared and open' to both Protestants and Catholics. However, there was no significant change in these proportions for libraries or shopping centres.")
   }
