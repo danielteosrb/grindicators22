@@ -103,10 +103,10 @@ cathSig <-
     paste0("Adult respondents identifying as Catholic who think relations between Protestants and Catholics are better now than they were five years ago has ", sub("significant", "significantly", adultCathSig), "d (", abs(dataNew$f1a_Cath - dataOld$f1a_Cath)," percentage points) (", NILTyear, ": ", dataNew$f1a_Cath, "%; ", NILTyear - 1, ": ", dataOld$f1a_Cath, "%). Among young people who identify as Catholic there was a ", youngCathSig, " of ", abs(dataNew$f1y_Cath - dataOld$f1y_Cath)," percentage points (", YLTyear, ": ", dataNew$f1y_Cath, "%; ", YLTyear - 1, ": ", dataOld$f1y_Cath, "%).")
   }
 
-f1para1 <- paste0("Since ", LTyear - 1, ", there has been ", if (adultSig==FALSE){"no significant change"} else{paste("a",adultSig)},
+f1para1 <- paste0("Since ", LTyear - 1, ", there has been ", if (adultSig==FALSE){"no significant change"} else{paste0("a ",adultSig,
                   " (of ", abs(dataNew$f1_adults - dataOld$f1_adults),
                   " percentage points to ", dataNew$f1_adults,
-                  "%) in the proportion of adult respondents who think relations between Protestants and Catholics are better now than they were five years ago",  if (adultSig != FALSE){paste0(" (",LTyear , ": ", round2(dataNew$f1_adults), "%; ", LTyear - 1, ": ", round2(dataOld$f1_adults), "%)")}, ". The proportion of young people who think relations between Protestants and Catholics are better now than they were five years ago has ",
+                  "%)")}," in the proportion of adult respondents who think relations between Protestants and Catholics are better now than they were five years ago",  if (adultSig != FALSE){paste0(" (",LTyear , ": ", round2(dataNew$f1_adults), "%; ", LTyear - 1, ": ", round2(dataOld$f1_adults), "%)")}, ". The proportion of young people who think relations between Protestants and Catholics are better now than they were five years ago has ",
                   if(adultSig == youngSig) {"also "}, if(youngSig != FALSE){paste0(sub("significant ", "", youngSig), "d")} else {"not undergone any significant change"},
                   " since ", LTyear - 1, if(youngSig != FALSE) {paste0(" (", YLTyear, ": ", dataNew$f1_young, "%; ", YLTyear - 1, ": ", dataOld$f1_young, "%)")},". This is the ",
                   youngRank, " proportion for ", if (adultRank == youngRank) {"adults and"}, " young people since the launch of the T:BUC strategy in 2013.")
