@@ -42,7 +42,7 @@ f8religionsentence <- if (f8SigCP == FALSE & f8SigCNR == f8SigCP & f8SigPNR == f
 }
 
 f8gendersentence <- if (f8Siggen != FALSE) {
-  paste0("Women (", colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) are significantly ", if (f8Siggen == "significant decrease") {"more"} else {"less"}, " likely than men (", colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) to report that their child's school is somewhere their children can be open about their cultural identity.")
+  paste0("Female respondents (", colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) are significantly ", if (f8Siggen == "significant decrease") {"more"} else {"less"}, " likely than male respondents (", colPct(NILT, SCHLCULT2, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) to report that their child's school is somewhere their children can be open about their cultural identity.")
 } else {
   paste0("There are ", if (f8SigCP == FALSE & f8SigCNR == f8SigCP & f8SigPNR == f8SigCP) {"also "}, "no differences in responses when analysed by gender.")
 }
