@@ -171,6 +171,9 @@ niltOld <- data.frame(year = NILTyear - 1,
                       SCHLCULT2_nCath = unweighted_n(NILTlast$SCHLCULT2[NILTlast$RELIGCAT == "Catholic"]),
                       SCHLCULT2_nProt = unweighted_n(NILTlast$SCHLCULT2[NILTlast$RELIGCAT == "Protestant"]),
                       SCHLCULT2_nNoR = unweighted_n(NILTlast$SCHLCULT2[NILTlast$RELIGCAT == "No religion"]),
+                      FEELCATH_n = unweighted_n(NILTlast$FEELCATH),
+                      FEELPROT_n = unweighted_n(NILTlast$FEELPROT),
+                      FEELMEC_n = unweighted_n(NILTlast$FEELMEG),
                       NISAFEWL_n = unweighted_n(NILTlast$NISAFEWL),
                       INFLLOCL_n = unweighted_n(NILTlast$INFLLOCL),
                       INFLNI_n = unweighted_n(NILTlast$INFLNI),
@@ -311,6 +314,9 @@ niltNew <- data.frame(year = NILTyear,
                       SCHLCULT2_nCath = unweighted_n(NILT$SCHLCULT2[NILT$RELIGCAT == "Catholic"]),
                       SCHLCULT2_nProt = unweighted_n(NILT$SCHLCULT2[NILT$RELIGCAT == "Protestant"]),
                       SCHLCULT2_nNoR = unweighted_n(NILT$SCHLCULT2[NILT$RELIGCAT == "No religion"]),
+                      FEELCATH_n = unweighted_n(NILT$FEELCATH),
+                      FEELPROT_n = unweighted_n(NILT$FEELPROT),
+                      FEELMEC_n = unweighted_n(NILT$FEELMEG),
                       NISAFEWL_n = unweighted_n(NILT$NISAFEWL),
                       INFLLOCL_n = unweighted_n(NILT$INFLLOCL),
                       INFLNI_n = unweighted_n(NILT$INFLNI),
@@ -383,6 +389,8 @@ yltNew <- data.frame(year = YLTyear,
                      INFLHERE_Yn = unweighted_n(YLT$INFLHERE),
                      INFLUNI_Yn = unweighted_n(YLT$INFLUNI))
 
+
+
 dataNew <- full_join(niltNew, yltNew)
 
 dataOld <- full_join(niltOld, yltOld)
@@ -411,6 +419,9 @@ new_variables <- data.frame(f2a_Cath = NA,
                             RLRELFUT_YnCath = NA,
                             RLRELFUT_YnProt = NA,
                             RLRELFUT_YnNoR = NA,
+                            FEELCATH_n = NA,
+                            FEELPROT_n = NA,
+                            FEELMEC_n = NA,
                             f8_Prot = NA,
                             f8_Cath = NA,
                             f8_NoR = NA,
@@ -1036,6 +1047,8 @@ source("commentary/fig3.R")
 
 **Current Year (`r LTyear`):**
 
+<!-- below commentary is not properly tested - to some extent it operates on the assumption that YP attitudes are always less favourable than adults, which has always been true as of 2022. In saying less/more favourable, it only tests for attitudes to Catholic communities - so far this has never produced an error but it should be checked. -->
+
 `r round2(dataNew$f3a_young)`% of young people feel favourable towards people from Catholic communities; `r round2(dataNew$f3b_young)`% towards people from Protestant communities; and `r round2(dataNew$f3c_young)`% towards people from Minority Ethnic communities. This `r adultYoungSig` the proportion of adults who feel favourable towards people from: Catholic communities, `r round2(dataNew$f3a_adults)`%; Protestant communities, `r round2(dataNew$f3b_adults)`%; and Minority Ethnic communities, `r round2(dataNew$f3c_adults)`%.
 
 ```{r figure 3}
@@ -1099,7 +1112,7 @@ Note: The YLT survey did not run in 2020.
 
 ```{r how 3}
 
-howWeGotHere(f3para1, f3para2)
+howWeGotHere(f3para1, f3sent3)
 
 ```
 
