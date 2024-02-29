@@ -1390,6 +1390,8 @@ Source: School Omnibus Survey `r omniYear`
 Note: Following the 2016 School Omnibus Survey a decision was taken to move the School Omnibus Survey from an annual survey to a biennial survey. The 2020
 survey was cancelled due to the effects of the COVID-19 pandemic. Data from the 2013 survey cannot be presented here due to changes to question and response wordings.
 
+It should also be noted that there are a number of issues which may affect the representativeness and comparability of the 2022 School Omnibus data. Please see the Data Sources section of the Technical Notes for more detail.
+
 ```{r how 9}
 
 howWeGotHere(f9para1)
@@ -2362,7 +2364,7 @@ The School Omnibus Survey is a multi-purpose survey of all Principals in grant-a
 
 The questions produced both quantitative and qualitative data, generally using yes/no and multiple response questions as well as open-ended response types. The survey was web-based, with the option to complete in either English or Irish, and each school received the link to the survey via email, along with a unique username and password to maximise security. The survey was issued in October 2022, with a four week period given for survey returns.
 
-The survey period in 2022 coincided with industrial action by the Northern Ireland teaching unions known as Actions Short of Strike (ASOS). As part of ASOS union members were advised not to comply with some data collections undertaken by DE. As a result, the response rate for the 2022 Omnibus (21.5% primary, post-primary, and special schools) was below the rate in 2018 (39%). Caution should therefore be used when making inferences about the analysis for schools in 2022 due to the lower-than-normal response rate. More information on the representativeness of the 2022 School Omnibus Survey is available in the [2022 School Omnibus Survey Report](https://www.education-ni.gov.uk/sites/default/files/publications/education/School%20Omnibus%20Survey%202022.pdf).
+The survey period in 2022 coincided with industrial action by the Northern Ireland teaching unions known as Actions Short of Strike (ASOS). As part of ASOS union members were advised not to comply with some data collections undertaken by DE. As a result, the response rate for the 2022 Omnibus (21.5% primary, post-primary, and special schools) was below the rate in 2018 (39%). Caution should therefore be used when making inferences about the analysis for schools in 2022 due to the lower-than-normal response rate. The reader should also keep in mind that several questions asked the Principal or School leader to consider the academic year 2021/22. During 2021/22 there was disruption to normal teaching and school / pre-school activities due to the Covid-19 pandemic and this may have an impact on responses given. More information on the representativeness of the 2022 School Omnibus Survey is available in the [2022 School Omnibus Survey Report](https://www.education-ni.gov.uk/sites/default/files/publications/education/School%20Omnibus%20Survey%202022.pdf).
 
 The shared education section received 173 responses out of a total of 220 responses for primary, post-primary and special schools. ([Dept. of Education](https://www.education-ni.gov.uk/publications/school-omnibus-survey-2022))
 
