@@ -160,7 +160,7 @@ f3sent2 <-
     # Only Minority Ethnic not significant while Catholic and Protestant the same
   } else if (ProtSig13 == FALSE & CathSig13 != FALSE & CathSig13 == MESig13) {
     paste0("Young people in ", YLTyear," are ", CathSig13, " than their counterparts in 2013 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_young), "%; 2013: ", round2(data$f3a_young[data$year == 2013]),
-           "%) and Protesant communities (", YLTyear , ": ", round2(dataNew$f3b_young), "%; 2013: ", round2(data$f3b_young[data$year == 2013]),
+           "%) and Protestant communities (", YLTyear , ": ", round2(dataNew$f3b_young), "%; 2013: ", round2(data$f3b_young[data$year == 2013]),
            "%). However, there was no significant change in young people's attitudes towards Minority Ethnic communities since 2013.")
     # Only Minority Ethnic not significant while Catholic and Protestant are significant but different
   } else if (ProtSig13 == FALSE & CathSig13 != FALSE & MESig13 != FALSE & CathSig13 != MESig13) {
@@ -259,97 +259,96 @@ f3sent3 <-
            ". However, there was no significant change in adults' attitudes towards Catholic or Protestant Communities.")
   }
 
-# CathSig13A <- significanceTest(p1 = dataNew$f3a_adults,
-#                               n1 = dataNew$FEELCATH_n,
-#                               p2 = data$f3a_adults[data$year == 2013],
-#                               n2 = data$FEELCATH_n[data$year == 2013])
-# 
-# CathSig13A <-  if (CathSig13A == "significant increase") {
-#   "more positive"
-# } else if (CathSig13A == "significant decrease") {
-#   "more negative"
-# }
-# 
-# CathDiff <- abs(round2(dataNew$f3a_adults - data$f3a_adults[data$year == 2013]))
-# 
-# ProtSig13A <- significanceTest(p1 = dataNew$f3b_adults,
-#                               n1 = dataNew$FEELPROT_n,
-#                               p2 = data$f3b_adults[data$year == 2013],
-#                               n2 = data$FEELPROT_n[data$year == 2013])
-# 
-# ProtSig13A <-  if (ProtSig13A == "significant increase") {
-#   "more positive"
-# } else if (ProtSig13A == "significant decrease") {
-#   "more negative"
-# }
-# 
-# ProtDiff <- abs(round2(dataNew$f3b_adults - data$f3b_adults[data$year == 2013]))
-# 
-# MESig13A <- significanceTest(p1 = dataNew$f3c_adults,
-#                             n1 = dataNew$FEELMEC_n,
-#                             p2 = data$f3c_adults[data$year == 2013],
-#                             n2 = data$FEELMEC_n[data$year == 2013])
-# 
-# MESig13A <-  if (MESig13A == "significant increase") {
-#   "more positive"
-# } else if (MESig13A == "significant decrease") {
-#   "more negative"
-# }
-# 
-# MEDiff <- abs(round2(dataNew$f3c_adults - data$f3c_adults[data$year == 2013]))
-# 
-# f3sent4 <-
-#   # All three significant and the same
-#   if (CathSig13A != FALSE & CathSig13A == ProtSig13A & ProtSig13A == MESig13A) {
-#     paste0("Adults in ", YLTyear," are ", CathSig13A, " than their counterparts in 2013 towards Catholic communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2013: ", round2(data$f3a_adults[data$year == 2013]),
-#            "%), Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2013: ", round2(data$f3b_adults[data$year == 2013]),
-#            "%), and Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2013: ", round2(data$f3c_adults[data$year == 2013]), "%).")
-#     # No significant change in all three
-#   } else if (CathSig13A == FALSE & ProtSig13A == FALSE & MESig13A == FALSE) {
-#     paste0("There is no significant change between young people in ", YLTyear, " and their counterparts in 2013 in their attitudes towards Catholic communities, Protestant Communities and Minority Ethnic communities.")
-#     # Only Catholic not significant while Protestant and Minority Ethnic the same
-#   } else if (CathSig13A == FALSE & ProtSig13A != FALSE & ProtSig13A == MESig13A) {
-#     paste0("Adults in ", YLTyear," are ", ProtSig13A,
-#            " than their counterparts in 2013 towards Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2013: ", round2(data$f3b_adults[data$year == 2013]),
-#            "%) and Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2013: ", round2(data$f3c_adults[data$year == 2013]), 
-#            "%). However, there was no significant change in adults' attitudes towards Catholic communities.")
-#     # Only Catholic not significant while Protestant and Minority Ethnic are significant but different
-#   } else if (CathSig13A == FALSE & ProtSig13A != FALSE & MESig13A != FALSE & ProtSig13A != MESig13A) {
-#     paste0("Adults in ", YLTyear," are ", ProtSig13A, " than their counterparts in 2013 towards Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2013: ", round2(data$f3b_adults[data$year == 2013]),
-#            "%), but are ", MESig13A, " towards Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2013: ", round2(data$f3c_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Catholic communities since 2013.")
-#     # Only Protestant not significant while Catholic and Minority Ethnic the same
-#   } else if (ProtSig13A == FALSE & CathSig13A != FALSE & CathSig13A == MESig13A) {
-#     paste0("Adults in ", YLTyear," are ", CathSig13A, " than their counterparts in 2013 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2013: ", round2(data$f3a_adults[data$year == 2013]),
-#            "%) and Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2013: ", round2(data$f3c_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Protestant communities since 2013.")
-#     # Only Protestant not significant while Catholic and Minority Ethnic are significant but different
-#   } else if (ProtSig13A == FALSE & CathSig13A != FALSE & MESig13A != FALSE & CathSig13A != MESig13A) {
-#     paste0("Adults in ", YLTyear," are ", CathSig13A, " than their counterparts in 2013 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2013: ", round2(data$f3a_adults[data$year == 2013]),
-#            "%) but are ", MESig13A, " towards Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2013: ", round2(data$f3c_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Protestant communities since 2013.")
-#     # Only Minority Ethnic not significant while Catholic and Protestant the same
-#   } else if (ProtSig13A == FALSE & CathSig13A != FALSE & CathSig13A == MESig13A) {
-#     paste0("Adults in ", YLTyear," are ", CathSig13A, " than their counterparts in 2013 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2013: ", round2(data$f3a_adults[data$year == 2013]),
-#            "%) and Protesant communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2013: ", round2(data$f3b_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Minority Ethnic communities since 2013.")
-#     # Only Minority Ethnic not significant while Catholic and Protestant are significant but different
-#   } else if (ProtSig13A == FALSE & CathSig13A != FALSE & MESig13A != FALSE & CathSig13A != MESig13A) {
-#     paste0("Adults in ", YLTyear," are ", CathSig13A, " than their counterparts in 2013 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2013: ", round2(data$f3a_adults[data$year == 2013]),
-#            "%) but are ", ProtSig13A, " towards Protestant communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2013: ", round2(data$f3b_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Minority Ethnic communities since 2013.")
-#     # Only Catholic significant
-#   } else if (CathSig13A != FALSE & ProtSig13A == FALSE & MESig13A == FALSE) {
-#     paste0("Adults in ", YLTyear," are ", CathSig13A, " than their counterparts in 2013 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2013: ", round2(data$f3a_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Protestant or Minority Ethnic communities since 2013.")
-#     # Only Protestant significant
-#   } else if (CathSig13A == FALSE & ProtSig13A != FALSE & MESig13A == FALSE) {
-#     paste0("Adults in ", YLTyear," are ", ProtSig13A, " than their counterparts in 2013 towards Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2013: ", round2(data$f3b_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Catholic or Minority Ethnic communities since 2013.")
-#     # Only Minority Ethnic significant
-#   } else if (CathSig13A == FALSE & ProtSig13A == FALSE & MESig13A != FALSE) {
-#     paste0("Adults in ", YLTyear," are ", MESig13A, " than their counterparts in 2013 towards Minority Ethnic Communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2013: ", round2(data$f3c_adults[data$year == 2013]),
-#            "%). However, there was no significant change in adults' attitudes towards Catholic or Protestant communities since 2013.")
-#   }
-# 
-# f3para2 <- paste(f3sent3, f3sent4)
+CathSig14A <- significanceTest(p1 = dataNew$f3a_adults,
+                              n1 = dataNew$FEELCATH_n,
+                              p2 = data$f3a_adults[data$year == 2014],
+                              n2 = data$FEELCATH_n[data$year == 2014])
+
+CathSig14A <-  if (CathSig14A == "significant increase") {
+  "more positive"
+} else if (CathSig14A == "significant decrease") {
+  "more negative"
+}
+
+CathDiff <- abs(round2(dataNew$f3a_adults - data$f3a_adults[data$year == 2014]))
+
+ProtSig14A <- significanceTest(p1 = dataNew$f3b_adults,
+                              n1 = dataNew$FEELPROT_n,
+                              p2 = data$f3b_adults[data$year == 2014],
+                              n2 = data$FEELPROT_n[data$year == 2014])
+
+ProtSig14A <-  if (ProtSig14A == "significant increase") {
+  "more positive"
+} else if (ProtSig14A == "significant decrease") {
+  "more negative"
+}
+
+ProtDiff <- abs(round2(dataNew$f3b_adults - data$f3b_adults[data$year == 2014]))
+
+MESig14A <- significanceTest(p1 = dataNew$f3c_adults,
+                            n1 = dataNew$FEELMEC_n,
+                            p2 = data$f3c_adults[data$year == 2014],
+                            n2 = data$FEELMEC_n[data$year == 2014])
+
+MESig14A <-  if (MESig14A == "significant increase") {
+  "more positive"
+} else if (MESig14A == "significant decrease") {
+  "more negative"
+} else {FALSE}
+
+MEDiff <- abs(round2(dataNew$f3c_adults - data$f3c_adults[data$year == 2014]))
+
+f3sent4 <-
+  # All three significant and the same
+  if (CathSig14A != FALSE & CathSig14A == ProtSig14A & ProtSig14A == MESig14A) {
+    paste0("Adults in ", YLTyear," are ", CathSig14A, " than their counterparts in 2014 towards Catholic communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2014: ", round2(data$f3a_adults[data$year == 2014]),
+           "%), Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2014: ", round2(data$f3b_adults[data$year == 2014]),
+           "%), and Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2014: ", round2(data$f3c_adults[data$year == 2014]), "%).")
+    # No significant change in all three
+  } else if (CathSig14A == FALSE & ProtSig14A == FALSE & MESig14A == FALSE) {
+    paste0("There is no significant change between young people in ", YLTyear, " and their counterparts in 2014 in their attitudes towards Catholic communities, Protestant Communities and Minority Ethnic communities.")
+    # Only Catholic not significant while Protestant and Minority Ethnic the same
+  } else if (CathSig14A == FALSE & ProtSig14A != FALSE & ProtSig14A == MESig14A) {
+    paste0("Adults in ", YLTyear," are ", ProtSig14A,
+           " than their counterparts in 2014 towards Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2014: ", round2(data$f3b_adults[data$year == 2014]),
+           "%) and Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2014: ", round2(data$f3c_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Catholic communities.")
+    # Only Catholic not significant while Protestant and Minority Ethnic are significant but different
+  } else if (CathSig14A == FALSE & ProtSig14A != FALSE & MESig14A != FALSE & ProtSig14A != MESig14A) {
+    paste0("Adults in ", YLTyear," are ", ProtSig14A, " than their counterparts in 2014 towards Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2014: ", round2(data$f3b_adults[data$year == 2014]),
+           "%), but are ", MESig14A, " towards Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2014: ", round2(data$f3c_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Catholic communities since 2014.")
+    # Only Protestant not significant while Catholic and Minority Ethnic the same
+  } else if (ProtSig14A == FALSE & CathSig14A != FALSE & CathSig14A == MESig14A) {
+    paste0("Adults in ", YLTyear," are ", CathSig14A, " than their counterparts in 2014 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2014: ", round2(data$f3a_adults[data$year == 2014]),
+           "%) and Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2014: ", round2(data$f3c_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Protestant communities since 2014.")
+    # Only Protestant not significant while Catholic and Minority Ethnic are significant but different
+    paste0("Adults in ", YLTyear," are ", CathSig14A, " than their counterparts in 2014 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2014: ", round2(data$f3a_adults[data$year == 2014]),
+           "%) but are ", MESig14A, " towards Minority Ethnic communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2014: ", round2(data$f3c_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Protestant communities since 2014.")
+    # Only Minority Ethnic not significant while Catholic and Protestant the same
+  } else if (ProtSig14A != FALSE & CathSig14A == ProtSig14A &  MESig14A == FALSE) {
+    paste0("Adults in ", YLTyear," are ", CathSig14A, " than their counterparts in 2014 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2014: ", round2(data$f3a_adults[data$year == 2014]),
+           "%) and Protestant communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2014: ", round2(data$f3b_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Minority Ethnic communities since 2014.")
+    # Only Minority Ethnic not significant while Catholic and Protestant are significant but different
+  } else if (ProtSig14A == FALSE & CathSig14A != FALSE & MESig14A != FALSE & CathSig14A != MESig14A) {
+    paste0("Adults in ", YLTyear," are ", CathSig14A, " than their counterparts in 2014 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2014: ", round2(data$f3a_adults[data$year == 2014]),
+           "%) but are ", ProtSig14A, " towards Protestant communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2014: ", round2(data$f3b_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Minority Ethnic communities since 2014.")
+    # Only Catholic significant
+  } else if (CathSig14A != FALSE & ProtSig14A == FALSE & MESig14A == FALSE) {
+    paste0("Adults in ", YLTyear," are ", CathSig14A, " than their counterparts in 2014 towards Catholic Communities (", YLTyear , ": ", round2(dataNew$f3a_adults), "%; 2014: ", round2(data$f3a_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Protestant or Minority Ethnic communities since 2014.")
+    # Only Protestant significant
+  } else if (CathSig14A == FALSE & ProtSig14A != FALSE & MESig14A == FALSE) {
+    paste0("Adults in ", YLTyear," are ", ProtSig14A, " than their counterparts in 2014 towards Protestant Communities (", YLTyear , ": ", round2(dataNew$f3b_adults), "%; 2014: ", round2(data$f3b_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Catholic or Minority Ethnic communities since 2014.")
+    # Only Minority Ethnic significant
+  } else if (CathSig14A == FALSE & ProtSig14A == FALSE & MESig14A != FALSE) {
+    paste0("Adults in ", YLTyear," are ", MESig14A, " than their counterparts in 2014 towards Minority Ethnic Communities (", YLTyear , ": ", round2(dataNew$f3c_adults), "%; 2014: ", round2(data$f3c_adults[data$year == 2014]),
+           "%). However, there was no significant change in adults' attitudes towards Catholic or Protestant communities since 2014.")
+  }
+
+f3para2 <- paste(f3sent3, f3sent4)

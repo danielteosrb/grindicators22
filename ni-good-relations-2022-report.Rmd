@@ -77,6 +77,7 @@ NILTlast <- read.spss("data/NILT 2021.sav", to.data.frame = TRUE)
 YLTlast <- read.spss("data/YLT 2020-21.sav", to.data.frame = TRUE)
 NILT <- read.spss("data/NILT 2022.sav", to.data.frame = TRUE)
 YLT <- read.spss("data/YLT 2022.sav", to.data.frame = TRUE)
+NILT14 <- read.spss("data/NILT 2014.sav", to.data.frame = TRUE)
 
 # Location of PSNI tables on hate crimes
 psniTables <- "https://www.psni.police.uk/globalassets/inside-the-psni/our-statistics/hate-motivation-statistics/2020-21/q4/hate-motivations-tables-mar-_21.xls"
@@ -548,6 +549,10 @@ fig1 <- extractFig("f1")
   
 # Extract Figure 2 values from data, drop f2 from variable names
 fig2 <- extractFig("f2")
+
+data[2, which(colnames(data)=="FEELCATH_n")] = unweighted_n(NILT14$FEELCATH)
+data[2, which(colnames(data)=="FEELPROT_n")] = unweighted_n(NILT14$FEELPROT)
+data[2, which(colnames(data)=="FEELMEC_n")] = unweighted_n(NILT14$FEELMEG)
 
 # Extract Figure 3a values from data, drop f3a from variable names
 fig3a <- extractFig("f3a")
@@ -1112,7 +1117,7 @@ Note: The YLT survey did not run in 2020.
 
 ```{r how 3}
 
-howWeGotHere(f3para1, f3sent3)
+howWeGotHere(f3para1, f3para2)
 
 ```
 
