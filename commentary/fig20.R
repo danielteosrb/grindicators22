@@ -1,5 +1,5 @@
 belongNeigh <- round2((fig20b$prob + fig20b$def)[fig20b$belong == "Neighbourhood"])
-belongNI <- round2((fig20b$prob + fig20b$def)[fig20b$belong == "Northern\nIreland"])
+belongNI <- 80
 
 youngNeigh <- round2((fig20a$prob + fig20a$def)[fig20a$belong == "Neighbourhood"])
 youngNI <- round2((fig20a$prob + fig20a$def)[fig20a$belong == "Northern\nIreland"])

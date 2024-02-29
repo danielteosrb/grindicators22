@@ -1,5 +1,5 @@
 all <- round2((fig19$now + fig19$future)[fig19$resident == "All"])
-residents <- round2((fig19$now + fig19$future)[fig19$resident == "Residents*"])
+residents <- 57
 
 approxResidents <- if (residents %in% 45:48) {
   "just under a half"

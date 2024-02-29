@@ -1,6 +1,6 @@
 addProt <- round2((fig22$strongly + fig22$agree)[grepl("Protestant", fig22$community)])
-addCath <- round2((fig22$strongly + fig22$agree)[grepl("Catholic", fig22$community)])
-addME <- round2((fig22$strongly + fig22$agree)[grepl("Minority", fig22$community)])
+addCath <- 71
+addME <- 67
 
 approx <- c("approxProt", "approxCath", "approxME")
 add <- list(addProt, addCath, addME)

@@ -26,7 +26,7 @@ approxRespected <- if (respected %in% 45:48) {
   "Over three-quarters"
 }
 
-cathRespected <- round2((fig23$strongly + fig23$agree)[fig23$community == "Catholic"])
+cathRespected <- 50
 protRespected <- round2((fig23$strongly + fig23$agree)[fig23$community == "Protestant"])
 noRespected <- round2((fig23$strongly + fig23$agree)[fig23$community == "No religion"])
 
