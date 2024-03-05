@@ -28,7 +28,7 @@ youngInfographic <- function() {
   if (youngSig == "significant decrease") {
     youngArrow <- "images/downArrow.png"
     youngCap <- paste0(abs(youngDiff), "% lower than in ", NILTyear - 1)
-  } else if (youngDiff == "significant increase") {
+  } else if (youngSig == "significant increase") {
     youngArrow <- "images/upArrow.png"
     youngCap <- paste0(youngDiff, "% higher than in ", NILTyear - 1)
   } else {
@@ -123,7 +123,7 @@ youngInfographic <- function() {
         list(source = dataURI(file = adultArrow),
              x = 0.09, y = 0.56, sizex = 0.05, sizey = 0.05),
         list(source = dataURI(file = youngArrow),
-             x = 0.09, y = 0.06, sizex = 0.05, sizey = 0.05),
+             x = 0.12, y = 0.06, sizex = 0.05, sizey = 0.05),
         list(source = dataURI(file = "images/book.png"),
              x = 0.6, y = 0.97, sizex = 0.16, sizey = 0.16, xanchor = "center", yanchor = "top"),
         list(source = dataURI(file = "images/school.png"),
