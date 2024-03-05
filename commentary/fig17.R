@@ -1,8 +1,8 @@
 # Values for current year commentary
 
 townSafe <- dataNew$f17_compare
-townSafeCath <- 50
-townSafeProt <- round2((fig17$strongly + fig17$agree)[fig17$respondents == "Protestant\nrespondents"])
+townSafeCath <- 37
+townSafeProt <- 50
 townSafeNo <- round2((fig17$strongly + fig17$agree)[fig17$respondents == "Respondents with\nno religion"])
 
 # How we got here
