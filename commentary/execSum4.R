@@ -19,7 +19,7 @@ sigStatement <-
            NILTyear, ": ", dataNew$f21b_neighbourhood, "%; ", NILTyear - 1, ": ", dataOld$f21b_neighbourhood, "%) and Northern Ireland decisions (", NILTyear, ": ", dataNew$f21b_NI, "%; ", NILTyear - 1, ": ", dataOld$f21b_NI, "%).")
     # Neither significant
   } else if (localSig == FALSE & NIsig == FALSE) {
-    paste0("Since ", NILTyear - 1, " there has been no significant change in the proportion of adults who feel they have an influence on decisions in their neighbourhood (", abs(dataNew$f21b_neighbourhood), "%) or on Northern Ireland decisions (", dataOld$f21b_NI, "%).")
+    paste0("Since ", NILTyear - 1, " there has been no significant change in the proportion of adults who feel they have an influence on decisions in their neighbourhood (", abs(dataNew$f21b_neighbourhood), "%) or on Northern Ireland decisions (", dataNew$f21b_NI, "%).")
     # Local significant and NI not significant
   } else if (localSig != FALSE & NIsig == FALSE) {
     paste0("Since ", NILTyear - 1, " there has been a ", localSig, " in the proportion of adults who feel they have an influence on decisions in their neighbourhood (",
@@ -36,5 +36,5 @@ sigStatement <-
   }
 
 protAgree <- (fig22$strongly + fig22$agree)[fig22$community == "Protestant\ncommunities"]
-cathAgree <- (fig22$strongly + fig22$agree)[fig22$community == "Catholic\ncommunities"]
-minorityAgree <- (fig22$strongly + fig22$agree)[fig22$community == "Minority Ethnic\ncommunities"]
+cathAgree <- 71
+minorityAgree <- 67

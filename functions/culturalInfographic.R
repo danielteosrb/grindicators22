@@ -77,9 +77,9 @@ culturalInfographic <- function() {
   # Calculate values for percentage bars
   protestant <- (fig22$strongly + fig22$agree)[fig22$community == "Protestant\ncommunities"]
   
-  catholic <- (fig22$strongly + fig22$agree)[fig22$community == "Catholic\ncommunities"]
+  catholic <- 71
   
-  minority <- (fig22$strongly + fig22$agree)[fig22$community == "Minority Ethnic\ncommunities"]
+  minority <- 67
   
   # Plotting the infographic:
   # Plots the first donut chart in top right hand corner
@@ -196,7 +196,7 @@ culturalInfographic <- function() {
       
       # Add text:
       annotations = list(
-        list(text = paste0("<b>", round2(protestant), "%</b>"),
+        list(text = paste0("<b>", round2(catholic), "%</b>"),
              showarrow = FALSE,
              x = 0.17 + protestant * 0.0015, y = 0.8,
              xref = "paper", yref = "paper",
@@ -207,7 +207,7 @@ culturalInfographic <- function() {
              xref = "paper", yref = "paper",
              xanchor = "left", yanchor = "top",
              align = "left"),
-        list(text = paste0("<b>", round2(catholic), "%</b>"),
+        list(text = paste0("<b>", round2(protestant), "%</b>"),
              showarrow = FALSE,
              x = 0.17 + catholic * 0.0015, y = 0.5,
              xref = "paper", yref = "paper",
