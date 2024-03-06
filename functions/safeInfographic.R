@@ -13,7 +13,7 @@ safeInfographic <- function() {
   
   if (safeSig == "significant decrease") {
     
-    cap <- paste0(abs(round2(f17_diff)), "% lower than in ", NILTyear - 1)
+    cap <- paste0(abs(round2(f17_diff)), " percentage points lower than in ", NILTyear - 1)
     arrow <- "images/downArrow.png"
     
   } else if (safeSig == "significant increase") {

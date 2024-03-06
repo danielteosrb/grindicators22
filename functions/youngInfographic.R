@@ -9,10 +9,10 @@ youngInfographic <- function() {
   
   if (adultSig == "significant decrease") {
     adultArrow <- "images/downArrow.png"
-    adultCap <- paste0(abs(adultDiff), "% lower than in ", NILTyear - 1)
+    adultCap <- paste0(abs(adultDiff), " percentage points lower than in ", NILTyear - 1)
   } else if (adultSig == "significant increase") {
     adultArrow <- "images/upArrow.png"
-    adultCap <- paste0(adultDiff, "% higher than in ", NILTyear - 1)
+    adultCap <- paste0(adultDiff, " percentage points higher than in ", NILTyear - 1)
   } else {
     adultArrow <- "images/ArrowSideways.png"
     adultCap <- paste0("No significant change since ", NILTyear - 1)
@@ -27,10 +27,10 @@ youngInfographic <- function() {
 
   if (youngSig == "significant decrease") {
     youngArrow <- "images/downArrow.png"
-    youngCap <- paste0(abs(youngDiff), "% lower than in ", NILTyear - 1)
+    youngCap <- paste0(abs(youngDiff), " percentage points lower than in ", NILTyear - 1)
   } else if (youngSig == "significant increase") {
     youngArrow <- "images/upArrow.png"
-    youngCap <- paste0(youngDiff, "% higher than in ", NILTyear - 1)
+    youngCap <- paste0(youngDiff, " percentage points higher than in ", NILTyear - 1)
   } else {
     youngArrow <- "images/ArrowSideways.png"
     youngCap <- paste0("No sigificant change since ", NILTyear - 1)
@@ -123,7 +123,7 @@ youngInfographic <- function() {
         list(source = dataURI(file = adultArrow),
              x = 0.09, y = 0.56, sizex = 0.05, sizey = 0.05),
         list(source = dataURI(file = youngArrow),
-             x = 0.12, y = 0.06, sizex = 0.05, sizey = 0.05),
+             x = 0.05, y = 0.06, sizex = 0.05, sizey = 0.05),
         list(source = dataURI(file = "images/book.png"),
              x = 0.6, y = 0.97, sizex = 0.16, sizey = 0.16, xanchor = "center", yanchor = "top"),
         list(source = dataURI(file = "images/school.png"),
