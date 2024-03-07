@@ -587,10 +587,11 @@ fig4 <- left_join(fig4a, extractFig("f4"))
 #   mutate(year = as.character(year))
 
 # Figure 5 calculated directly from YLT data
-fig5 <- data.frame(activity = c("Projects", "Classes", "Facilities/\nEquipment"),
+fig5 <- data.frame(activity = c("Projects", "Classes", "Facilities/\nEquipment", "Overall"),
                    young = c(colPct(YLT, DONEWHAT2, "Ticked"),
                              colPct(YLT, DONEWHAT1, "Ticked"),
-                             colPct(YLT, DONEWHAT3, "Ticked")))
+                             colPct(YLT, DONEWHAT3, "Ticked"),
+                             colPct(YLT, DONEWHAT5, "Not Ticked")))
 
 fig5last <- data.frame(activity = c("Projects", "Classes", "Facilities/\nEquipment"),
                   young = c(colPct(YLTlast, DONEWHAT2, "Ticked"),
