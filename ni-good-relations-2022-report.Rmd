@@ -1357,7 +1357,7 @@ source("commentary/fig9.R")
 
 **Current Year (`r omniYear`):**
 
-`r schools`% of schools were involved in shared education with another school in the last academic year. Of those schools who were involved in shared education with another school in the last academic year; `r projects`% had participated in projects; `r resources`% shared resources; `r classes`% have shared classes which are provided other than through the entitlement framework; `r extra`% have shared extra-curricular activities; `r classes2`% have shared classes under the entitlement framework; `r shared`% of schools have developed shared policies; `r teachers`% shared teachers; `r equipment`% share equipment; and, `r other`% have shared education in 'other' ways.
+`r schools`% of schools were involved in shared education with another school in the last academic year. Of those schools who were involved in shared education with another school in the last academic year; `r projects`% had participated in projects; `r resources`% shared resources; `r teachers`% shared teachers; `r classes2`% have shared classes under the entitlement framework;  `r equipment`% shared equipment; `r classes`% have shared classes which are provided other than through the entitlement framework; `r shared`% of schools have developed shared policies; `r extra`% have shared extra-curricular activities; and `r other`% have shared education in 'other' ways.
 
 ```{r figure 9}
 
