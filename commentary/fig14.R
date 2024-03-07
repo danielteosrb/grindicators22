@@ -57,7 +57,7 @@ for (i in 1:length(rsSequence)) {
 
 f14sentence1 <- 
   if(rsSequence[length(rsSequence)] != rsSequence[length(rsSequence) - 1]) {
-  paste0("Unlike last year, the number of ", rsGreater, " hate crimes has surpassed that of ",
+  paste0("For the first time since 2019/2020, the number of ", rsGreater, " hate crimes has surpassed that of ",
          rsFewer," hate crimes.")
   } else {
     paste0("Like last year, the number of ", rsGreater, " hate crimes has surpassed that of ",

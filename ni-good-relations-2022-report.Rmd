@@ -1598,7 +1598,7 @@ downloadButtons(fig = fig14,
 
 Source: PSNI
 
-*in previous years, the "Sexual orientation" category was labelled as "homophobic"; this has been changed to remain in line with how the PSNI present these data.
+Note: Prior to 2022/2023, the "Sexual orientation" category was labelled as "homophobic"; this has been changed to remain in line with how the PSNI present these data.
 
 ```{r how 14}
 
