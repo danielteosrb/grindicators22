@@ -41,10 +41,10 @@ main1Last <- mainAreas[as.character(previousOmni)][1,]
 main2 <- mainAreas[as.character(omniYear)][2,]
 main2Last <- mainAreas[as.character(previousOmni)][2,]
 
-sentence2 <- paste0("The two main areas in which education is shared is in schools that have ",
+sentence2 <- paste0("The three main areas in which education is shared is in schools that have ",
                     mainAreas$activity2[1], " with other schools (", omniYear, ": ", main1, "%; ",
-                    previousOmni, ": ", main1Last, "%) and ", mainAreas$activity2[2]," (", omniYear, ": ", main2, "%; ",
-                    previousOmni, ": ", main2Last, "%).")
+                    previousOmni, ": ", main1Last, "%), ", mainAreas$activity2[2]," (", omniYear, ": ", main2, "%; ",
+                    previousOmni, ": ", main2Last, "%) and shared classes under the entitlement framework (2022: 39%; 2018: 33%).")
 
 # Below is code for an alternate way of phrasing the "How we got here" section - to use, un-comment code below and comment out lines 44-47 above
 # Alternate phrasing will read as below:
