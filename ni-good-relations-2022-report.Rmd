@@ -1388,8 +1388,7 @@ downloadButtons(fig = fig9,
 
 Source: School Omnibus Survey `r omniYear`
 
-Note: Following the 2016 School Omnibus Survey a decision was taken to move the School Omnibus Survey from an annual survey to a biennial survey. The 2020
-survey was cancelled due to the effects of the COVID-19 pandemic. Data from the 2013 survey cannot be presented here due to changes to question and response wordings.
+Note: The 2020 School Omnibus Survey was cancelled due to the effects of the COVID-19 pandemic.
 
 It should also be noted that there are a number of issues which may affect the representativeness and comparability of the 2022 School Omnibus data. Please see the Data Sources section of the Technical Notes for more detail.
 
