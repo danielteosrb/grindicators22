@@ -1341,7 +1341,7 @@ Source: NILT
 
 ```{r how 8}
 
-howWeGotHere(f8para1, f8para2)
+howWeGotHere(f8para1)
 
 ```
 

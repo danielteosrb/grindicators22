@@ -50,7 +50,7 @@ f8gendersentence <- if (f8Siggen != FALSE) {
 f8para1 <- if (f8Sig != FALSE) {
   paste0("Since ", NILTyear - 1, ", there has been a ", f8Sig, " in the proportion of those with children at school who think that their child's school is somewhere their children can be open about their cultural identity (", NILTyear , ": ", round2(dataNew$f8_pct), "%; ", NILTyear - 1, ": ", round2(dataOld$f8_pct), "%).")
 } else {
-  paste0("Since ", NILTyear - 1, ", there has been no significant change in the proportion of those with children at school who think that their child's school is somewhere their children can be open about their cultural identity.")
+  paste0("Since ", NILTyear - 1, ", there has been no significant change in the proportion of those with children at school who think that their child's school is somewhere their children can be open about their cultural identity, nor has there been any change in this figure when analysed by religion.")
 }
 
 protSig <- significanceTest(p1 = dataNew$f8_Prot,
