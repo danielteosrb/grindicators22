@@ -1435,7 +1435,7 @@ downloadButtons(fig = fig10,
 
 Source: House Condition Survey 2016
 
-Note: The House Condition Survey is generally only conducted every 5 years. An additional run of the survey was conducted in 2009 due to emerging data needs at that time, subsequently the survey returned to its original 5 year cycle which it continues to follow. The next House Condition Survey is not due until 2023.
+Note: The next House Condition Survey is not due until 2023.
 
 ```{r how 10}
 
