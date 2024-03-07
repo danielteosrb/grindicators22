@@ -1300,7 +1300,7 @@ downloadButtons(fig = fig7,
 
 Source: NILT
 
-Note: Figures include respondents who responded "Yes, definitely" and "Yes, probably", and exclude those who responded "None in this area" to ensure comparability with previous years.
+Note: Figures exclude those who responded "None in this area" to ensure comparability with previous years.
 
 ```{r how 7}
 
