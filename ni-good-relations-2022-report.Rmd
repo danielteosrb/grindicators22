@@ -806,7 +806,7 @@ fig20b <- data.frame(belong = c("Neighbourhood", "Northern\nIreland"),
                              colPct(NILT, UBELNI, "Yes, definitely")))
 
 # Combined data frame for download buttons
-fig20 <- left_join(fig20a, fig20b, by = "belong")
+fig20 <- left_join(fig20b, fig20a, by = "belong")
 
 # Figure 21a calculated directly from YLT data
 fig21a <- data.frame(influence = c("Neighbourhood", "Northern\nIreland"),
@@ -823,7 +823,7 @@ fig21b <- data.frame(influence = c("Neighbourhood", "Northern\nIreland"),
                              colPct(NILT, INFLNI, "Yes, definitely")))
 
 # Combined data frame for download buttons
-fig21 <- left_join(fig21a, fig21b, by = "influence")
+fig21 <- left_join(fig21b, fig21a, by = "influence")
 
 # Figure 22 calculated directly from NILT data
 fig22 <- data.frame(community = c("Catholic\ncommunities", "Protestant\ncommunities", "Minority Ethnic\ncommunities"),
@@ -1682,7 +1682,7 @@ source("commentary/fig16.R")
 
 **Current Year (`r NILTyear`):**
 
-`r annoyedR`% of respondents had been annoyed by republican murals, kerb-paintings or flags in the last year; with `r intimidatedR`% feeling intimidated by them. `r f16Sig` respondents had been annoyed by loyalist murals, kerb-paintings or flags in the last year (`r annoyedL`%); with `r intimidatedL`% intimidated by them.
+`r annoyedR`% of respondents had been annoyed by republican murals, kerb-paintings or flags in the last year, while significantly more respondents had been annoyed by loyalist murals, kerb-paintings or flags (`r annoyedL`%). `r intimidatedR`% of respondents had felt intimidated by republican murals, kerb-paintings or flags in the last year, while significantly more respondents had felt intimidated by loyalist murals, kerb-paintings or flags (`r intimidatedL`%).
 
 ```{r figure 16}
 
@@ -1862,22 +1862,22 @@ source("commentary/fig20.R")
 
 chartTitle(20, "% who feel a sense of belonging to: their neighbourhood; Northern Ireland")
 
-stackedBarSplit(fig20a, fig20b,
+stackedBarSplit(fig20b, fig20a,
                 x = "belong",
                 y1 = "prob",
                 y1Name = "Yes, probably",
                 y2 = "def",
                 y2Name = "Yes, definitely",
-                title1 = "Young people",
-                title2 = "Adults")
+                title1 = "Adults",
+                title2 = "Young people")
 
 downloadButtons(fig = fig20,
                 indicator = "4.1a",
                 headers = c("Belonging to",
-                            'Young people answering "Yes, probably" (%)',
-                            'Young people answering "Yes, definitely" (%)',
                             'Adults answering "Yes, probably" (%)',
-                            'Adults answering "Yes, definitely" (%)'))
+                            'Adults answering "Yes, definitely" (%)',
+                            'Young people answering "Yes, probably" (%)',
+                            'Young people answering "Yes, definitely" (%)'))
 
 ```
 
@@ -1909,22 +1909,22 @@ Among adults, there is no significant difference in the proportions of male and 
 
 chartTitle(21, "% of people who feel they have an influence on decisions made in: their neighbourhood; Northern Ireland")
 
-stackedBarSplit(fig21a, fig21b,
+stackedBarSplit(fig21b, fig21a,
                 x = "influence",
                 y1 = "prob",
                 y1Name = "Yes, probably",
                 y2 = "def",
                 y2Name = "Yes, definitely",
-                title1 = "Young people",
-                title2 = "Adults")
+                title1 = "Adults",
+                title2 = "Young people")
 
 downloadButtons(fig = fig21,
                 indicator = "4.1b",
                 headers = c("Influence on",
-                            'Young people answering "Yes, probably" (%)',
-                            'Young people answering "Yes, definitely" (%)',
                             'Adults answering "Yes, probably" (%)',
-                            'Adults answering "Yes, definitely" (%)'))
+                            'Adults answering "Yes, definitely" (%)',
+                            'Young people answering "Yes, probably" (%)',
+                            'Young people answering "Yes, definitely" (%)'))
 
 ```
 

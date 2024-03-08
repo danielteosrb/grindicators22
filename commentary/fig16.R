@@ -226,4 +226,4 @@ f16sentence4 <-
            NILTyear, ": ", dataNew$f16_iR, "%; ", NILTyear - 1, ": ", data$f16_iR[data$year == 2013], "%).")
   }
 
-f16para2 <- paste(f16sentence3, f16sentence4)
+f16para2 <- "Since 2013, there has been a significant increase across all categories: adults who felt annoyed by loyalist murals (2022: 55%; 2014: 33%), adults who felt annoyed by republican murals (2022: 40%; 2014: 22%), adults who felt intimidated by loyalist murals (2022: 39%; 2021: 20%) and adults who felt intimidated by republican murals (2022: 28%; 2021: 10%)."
