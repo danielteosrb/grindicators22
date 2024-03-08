@@ -163,7 +163,7 @@ safeInfographic <- function() {
     ),
     
     modebar = list(remove = c("zoom", "pan", "zoomIn2d", "zoomOut2d",
-                              "autoscale", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian")),
+                              "autoscale", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "hoverClosestPie")),
     
     font = list(family = "Helvetica", size = 14)
     

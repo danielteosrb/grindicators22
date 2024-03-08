@@ -298,7 +298,7 @@ culturalInfographic <- function() {
       
       font = list(family = "Helvetica", size = 14),
       
-      modebar = list(remove = c("hoverClosestCartesian"))
+      modebar = list(remove = c("hoverClosestCartesian", "hoverClosestPie"))
       
     ) %>%
     
