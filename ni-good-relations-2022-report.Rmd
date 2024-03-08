@@ -667,6 +667,8 @@ fig10 <- data.frame(year = c(2001, 2006, 2009, 2011, 2016),
 fig11 <- extractFig("f11") %>%
   filter(!is.na(workplace)) # Filter out years question not asked
 
+fig11 <- fig11[,c(1, 3, 2)]
+
 # Extract Figure 12 values from data, drop f12 from variable names
 fig12 <- extractFig("f12")
 
@@ -1467,14 +1469,14 @@ chartTitle(11, "% who would define their neighbourhood/workplace as somewhere th
 
 lineChart(data = fig11,
           x = "year",
-          y1 = "workplace",
-          y1Name = "Workplace",
-          y2 = "neighbourhood",
-          y2Name = "Neighbourhood")
+          y1 = "neighbourhood",
+          y1Name = "Neighbourhood",
+          y2 = "workplace",
+          y2Name = "Workplace")
 
 downloadButtons(fig = fig11,
                 indicator = "2.2a",
-                headers = c("Year", "Workplace (%)", "Neighbourhood (%)"))
+                headers = c("Year", "Neighbourhood (%)", "Workplace (%)"))
 
 ```
 
