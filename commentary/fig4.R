@@ -18,6 +18,8 @@ religionSigsentence <- if (cathprotSig != FALSE & cathnorSig == cathprotSig) {
 
 } else if (cathprotSig == FALSE & cathnorSig == cathprotSig & protnorSig == cathprotSig) {
   "There were no significant differences in young people who report this based on religion."
+} else if (cathprotSig == FALSE & cathnorSig != FALSE & protnorSig == cathprotSig) {
+  paste0("Young people with no religion (", fig4b$often[grepl("No religion", fig4b$religion)], "%) are signfiicantly more likely than Catholic young people (", fig4b$often[grepl("Catholic", fig4b$religion)], "%) to report this, however, there were no other significant differences when analysed by religion.")
 }
 
 genderSig <- significanceTest(p1 = colPct(YLT, SOCDIFF, c("Very often", "Sometimes"), gender = "Male"),
