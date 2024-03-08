@@ -705,6 +705,10 @@ fig15a <- data.frame(option = names(niheNew)[names(niheNew) != "year"],
 
 fig15a$num = as.numeric(as.character(fig15a$num)) 
 
+fig15a <- fig15a[c(3,1, 5, 4, 2, 6, 7), ]
+
+fig15a <- fig15a[-c(5:7), ]
+
 # Extract Figure 16 values from data, drop f16 from variable names
 fig16 <- extractFig("f16")
 
@@ -1626,13 +1630,11 @@ chartTitle(15, "Number of NIHE clients presenting as homeless due to intimidatio
 
 # below line reshapes data for 2022 specifically
 
-fig15a <- fig15a[-c(2, 6, 7), ]
-
 plot15a <- donutChart(data = fig15a,
                       values = "num",
                       sections = "option",
                       colours = c("#426bba", "#c4db0d", "#d0cece", "#002469"),
-                      title = niheYear)
+                      title = "Homeless presentations\nby type of intimidation")
 
 plot15b <- lineChart(data = fig15b,
                      x = "year",
@@ -1656,13 +1658,13 @@ downloadButtons(fig = fig15,
 
 Source: NIHE
 
-\*please note that these data also contain categories pertaining to intimidation on grounds of disability and sexual orientation, however, no clients presented as homeless to NIHE on these grounds in 2022/23, so these categories have been excluded from the graph.
+Note: the data in the time series also includes NIHE clients who presented as homeless by intimidation on grounds of disability and sexual orientation, however, no NIHE clients presented as homeless for either of these reasons in 2022/23, so these reasons for presentation have not been included in the chart on presentations by type of intimidation.
 
 ```{r how 15}
 
 # howWeGotHere(paste0("Between ", niheYearLast," and ", niheYear, ", there has been a decrease in the number of NIHE clients presenting as homeless due to paramilitary intimidation, sectarian intimidation and other intimidation (i.e. anti-social behaviour, disability, and sexual orientation). Those presenting as homeless due to ", biggestChangeReason," has shown the largest decrease (", biggestChange, "%) between ", niheYearLast," and ", niheYear, "."))
 
-howWeGotHere("Changes in how NIHE present this data mean that comparisons cannot be made with years prior to 2021.")
+howWeGotHere("The overall number of NIHE clients presenting as homeless due to intimidation has fallen every year since the start of the time series, from 663 in 2016/17 to 167 in 2022/23. Paramilitary intimidation comprises nearly three quarters (74%) of all reasons for homeless presentation by intimidation in 2022/23, and has been the most prevalent form of intimidation leading to homeless presentation every year since 2016/17.")
 
 ```
 
@@ -2323,7 +2325,7 @@ Please note that, due to rounding, percentages in both this report and the relev
 
 In some cases, where answer categories have been combined, figures presented in the graphs may not sum to the same total as figures presented in the relevant commentary, due to rounding.
 
-Due to COVID-19, some questions in the Northern Ireland Life and Times Survey were reworded in 2020, and these changes were maintained in 2021, and reverted back to their original format in 2022. These changes affected the following Indicators: 2.2a, 3.2a, 3.2b.
+Due to COVID-19, some questions in the Northern Ireland Life and Times Survey were reworded in 2020, and these changes were maintained in 2021, and reverted back to their original format in 2022. The questions were altered to include the phrase "In a world without coronavirus (COVID-19)...". These changes affected the following Indicators: 2.2a, 3.2a, 3.2b.
 
 Prior to 2019, the Good Relations Indicators Report was produced as a PDF document, with all calculations performed in SPSS Statistics. Since 2019, the report has been produced in HTML format, with all calculations performed in R. Due to minor differences in how the two programs make calculations, there can sometimes be small differences between the results produced. These differences are never more than 1%.
 

@@ -55,6 +55,6 @@ f23para2 <- if (respectSig13 == FALSE) {
   paste0("Since 2014, there has been no significant change in the proportion of those who feel their own cultural identity is respected by society.")
 } else if (respectSig13 != FALSE ) {
   paste0("Since 2014, there has been a ", respectSig13,
-         " in the proportion of those who feel their own cultural identity is respected by society (",
+         " of 17 percentage points in the proportion of those who feel their own cultural identity is respected by society (",
          NILTyear, ": ", dataNew$f23_compare, "%; 2014: ", data$f23_compare[data$year == 2014], "%).")
 }

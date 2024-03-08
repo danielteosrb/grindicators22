@@ -22,9 +22,9 @@ for (i in 1:length(approx)) {
            "Approaching two-thirds"
          } else if (add[i] %in% 66:67) {
            "Around two-thirds"
-         } else if (add[i] %in% 68:70) {
+         } else if (add[i] %in% 68:72) {
            "Over two-thirds"
-         } else if (add[i] %in% 71:74) {
+         } else if (add[i] %in% 73:74) {
            "Approaching three-quarters"
          } else if (add[i] == 75) {
            "Three-quarters"

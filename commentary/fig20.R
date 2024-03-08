@@ -227,13 +227,13 @@ youngneighreligionsentence <- if (youngProtNORNeighSig != FALSE & youngCathNORNe
 }
 
 adultNIreligionsentence <- if (adultProtCathNISig != FALSE & adultProtNORNISig == adultProtCathNISig) {
-  paste0("Again among adults, significantly ", if (adultProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNI, "%) than either Catholic respondents (", cathNI, "%) or respondents with no religion (", noNI, "%) felt a sense of belonging to Northern Ireland.")
+  paste0("Among adults, significantly ", if (adultProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", protNI, "%) than either Catholic respondents (", cathNI, "%) or respondents with no religion (", noNI, "%) felt a sense of belonging to Northern Ireland.")
 } else if (adultProtCathNISig == FALSE & adultProtNORNISig == adultProtCathNISig & adultCathNORNISig == adultProtCathNISig) {
-  paste0("Again among adults, there are no significant differences in feelings of belonging to Northern Ireland based on religion.")
+  paste0("Among adults, there are no significant differences in feelings of belonging to Northern Ireland based on religion.")
 }
 
 youngNIreligionsentence <- if (youngProtCathNISig != FALSE & youngProtNORNISig == youngProtCathNISig) {
-  paste0("Again among young people, significantly ", if (youngProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", youngProtNI, "%) than either Catholic respondents (", youngCathNI, "%) or respondents with no religion (", youngNoNI, "%) felt a sense of belonging to Northern Ireland.")
+  paste0("Among young people, significantly ", if (youngProtCathNISig == "significant increase") {"more"} else {"fewer"}, " Protestant respondents (", youngProtNI, "%) than either Catholic respondents (", youngCathNI, "%) or respondents with no religion (", youngNoNI, "%) felt a sense of belonging to Northern Ireland.")
 } else if (youngProtCathNISig == FALSE & youngProtNORNISig == youngProtCathNISig & youngCathNORNISig == youngProtCathNISig) {
-  paste0("Again among young people, there are no significant differences in feelings of belonging to Northern Ireland based on religion.")
+  paste0("Among young people, there are no significant differences in feelings of belonging to Northern Ireland based on religion.")
 }
