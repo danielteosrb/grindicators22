@@ -436,15 +436,15 @@ parkGenderSig <- significanceTest(p1 = colPct(NILT, PARKOPEN, c("Yes, definitely
                                      p2 = colPct(NILT, PARKOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"),
                                      n2 = unweighted_n(NILT$PARKOPEN[NILT$RSEX == "Female"]))
 
-libraryGenderSig <- significanceTest(p1 = colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"),
-                                     n1 = unweighted_n(NILT$LIBOPEN[NILT$RSEX == "Male"]),
-                                     p2 = colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"),
-                                     n2 = unweighted_n(NILT$LIBOPEN[NILT$RSEX == "Female"]))
+libraryGenderSig <- significanceTest(p1 = 91.607397,
+                                     n1 = 560,
+                                     p2 = 94.476744,
+                                     n2 = 834)
 
-shopGenderSig <- significanceTest(p1 = colPct(NILT, SHCNOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"),
-                                  n1 = unweighted_n(NILT$SHCNOPEN[NILT$RSEX == "Male"]),
-                                  p2 = colPct(NILT, SHCNOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"),
-                                  n2 = unweighted_n(NILT$SHCNOPEN[NILT$RSEX == "Female"]))
+shopGenderSig <- significanceTest(p1 = 92.786421,
+                                  n1 = 562,
+                                  p2 = 95.461201,
+                                  n2 = 827)
 
 
 genderSentence <- if (leisureGenderSig == FALSE & parkGenderSig == FALSE & libraryGenderSig == FALSE & shopGenderSig == FALSE) {
@@ -458,8 +458,10 @@ genderSentence <- if (leisureGenderSig == FALSE & parkGenderSig == FALSE & libra
   paste0("There are no significant differences based on gender in the proportion of respondents who believe that libraries, parks or shopping centres are shared and open, whilst male respondents (",
          colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) are significantly ", if (leisureGenderSig == "significant increase") {"more"} else {"less"}, " likely than female respondents (",
          colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%) to say that leisure centres are shared and open.")
+} else if (parkGenderSig == FALSE & leisureGenderSig != FALSE & libraryGenderSig == leisureGenderSig & shopGenderSig == leisureGenderSig) {
+  paste0("Female respondents are significantly ", if (leisureGenderSig == "significant decrease") {"more"} else {"less"}, " likely than male respondents to say that leisure centres (female: ", colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%; male: ", colPct(NILT, LCOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%), libraries (female: ", colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%; male: ", colPct(NILT, LIBOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) and shopping centres (female: ", colPct(NILT, SHCNOPEN, c("Yes, definitely", "Yes, probably"), gender = "Female"), "%; male: ", colPct(NILT, SHCNOPEN, c("Yes, definitely", "Yes, probably"), gender = "Male"), "%) are shared and open. There is no significant difference between male and female respondents' feelings concerning parks.")
 } else { "There are some significant differences based on the gender of the respondent."
-}
+} 
 
 # How we got here.
 
