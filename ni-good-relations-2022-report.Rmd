@@ -1461,7 +1461,7 @@ source("commentary/fig11.R")
 
 **Current Year (`r NILTyear`):**
 
-`r f11SigStatement`
+`r f11SigStatement` Protestant respondents are significantly more likely than either Catholic respondents or respondents with no religion to say their neighbourhood is somewhere they can be open about their cultural identity. There were no other significant differences in either of these figures when analysed by religion.
 
 ```{r figure 11}
 
