@@ -22,3 +22,5 @@ f17sentence2 <- if (f17Sig != FALSE) {
 }
 
 f17para1 <- paste(f17sentence1, f17sentence2)
+
+f17para2 <- paste0("Since 2014, the proportion of respondents who see town centres as safe and welcoming for people of all walks of life has decreased significantly (2022: ", dataNew$f17_compare, "%; 2014: ", data$f17_compare[data$year == 2014], "%).")

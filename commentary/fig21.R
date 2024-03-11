@@ -127,7 +127,7 @@ NISig <- significanceTest(p1 = dataNew$f21b_NI,
                              p2 = dataOld$f21b_NI,
                              n2 = dataOld$INFLNI_n)
 
-f21para1 <- if (neighSig != FALSE & neighSig == NISig) {
+f21sentence1 <- if (neighSig != FALSE & neighSig == NISig) {
   paste0("Since ", NILTyear - 1,
          ", there has been a ", neighSig, 
          " in the proportion of adults who feel they have an influence on local decisions (",
@@ -167,7 +167,7 @@ youngSig2 <- significanceTest(p1 = dataNew$f21a_NI,
                              n2 = dataOld$INFLUNI_Yn)
 
 
-f21para2 <- if (youngSig == FALSE & youngSig2 == FALSE) {
+f21sentence2 <- if (youngSig == FALSE & youngSig2 == FALSE) {
   paste0("There has been no significant change to young people's perception of influence since ", YLTyear - 1,
          ". Young people feel less influential than adults at both neighbourhood and Northern Ireland level.")
 } else if (youngSig != FALSE & youngSig == youngSig2) {
@@ -214,3 +214,9 @@ adultyoungsentence <- if (adultyoungneighsig != FALSE & adultyoungNIsig == adult
 } else if (adultyoungneighsig == FALSE & adultyoungNIsig == adultyoungneighsig) {
   paste0("There are no significant differences in the proportions of adults and young people who feel they have an influence on decisions made in either their neighbourhood or Northern Ireland.")
 }
+
+f21para1 <- paste(f21sentence1, f21sentence2)
+
+f21para2 <- paste0("Since 2013, the proportion of adults who feel they have an influence on decisions made in both their neighbourhood (",
+                   NILTyear, ": ", dataNew$f21b_neighbourhood, "%; 2013: ", data$f21b_neighbourhood[data$year == 2013], "%) and Northern Ireland (",
+                   NILTyear, ": ", dataNew$f21b_NI, "%; 2013: ", data$f21b_NI[data$year == 2013], "%) has significantly decreased. The proportion of young people who feel the same about their neighbourhood has also significantly decreased (", NILTyear, ": ", dataNew$f21a_neighbourhood, "%; 2013: ", data$f21a_neighbourhood[data$year == 2013], "%), however there has been no significant change in the proportion of young people who feel a sense of influence over decisions taken in Northern Ireland.")
