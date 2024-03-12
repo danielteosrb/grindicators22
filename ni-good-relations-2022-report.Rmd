@@ -2169,6 +2169,7 @@ headings <- c("Purpose",
               "Copyright",
               "Feedback",
               "Official statistics",
+              "Code of Practice",
               "Acknowledgement")
 
 information <- c("Data to monitor and report on Together: Building a United Community Strategy (2013) key priorities.",
@@ -2182,6 +2183,7 @@ information <- c("Data to monitor and report on Together: Building a United Comm
                  "This publication is Crown copyright and may be reproduced free of charge in any format or medium. Acknowledgement should be given for any material used, and the title of the publication specified.",
                  "Comments on this publication are welcome. Please fill in our",
                  "Our statistical practice is regulated by the Office for Statistics Regulation (OSR). OSR sets the standards of trustworthiness, quality and value in the Code of Practice for Statistics that all producers of official statistics should adhere to. You are welcome to contact us directly with any comments about how we meet these standards. Alternatively, you can contact OSR by emailing ",
+                                  "This report has been produced in accordance with the principles of trustworthiness, quality and value outlined in the Code of Practice for Statistics. The data sources used are robust and known to collect data in accordance with best practice, and the presentation of the data in the report is thoroughly quality assured. The report is needed to monitor the progress of the T:BUC strategy and the state of community relations in Northern Ireland.",
                  "Thanks are offered to all the individuals who took part in the surveys contributing to the findings presented in this report. Without their help this report would not have been possible.")
 
 for (i in 1:length(headings)) {
