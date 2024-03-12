@@ -1636,7 +1636,7 @@ plot15a <- donutChart(data = fig15a,
                       values = "num",
                       sections = "option",
                       colours = c("#426bba", "#c4db0d", "#d0cece", "#002469"),
-                      title = "Homeless presentations\nby type of intimidation")
+                      title = "Homeless presentations by\ntype of intimidation 2022/23")
 
 plot15b <- lineChart(data = fig15b,
                      x = "year",

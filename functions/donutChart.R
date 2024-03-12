@@ -42,7 +42,7 @@ donutChart <- function(data,
            font = list(family = "Helvetica", size = 14),  # font properties
            annotations = list(
              list(text = title, showarrow = FALSE,
-                  font = list(size = 20),
+                  font = list(size = 18),
                   x = 0.5, xref = "paper", xanchor = "center",
                   y = 1, yref = "paper", yanchor = "top")   # add a title
            )) %>%
