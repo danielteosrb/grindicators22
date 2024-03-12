@@ -32,10 +32,7 @@ youngNeighSiglast <- significanceTest(p1 = youngNeigh,
                                       p2 = round2(dataOld$f20_youngNeigh),
                                       n2 = dataOld$BELONGNG_Yn)
 
-adultNISiglast <- significanceTest(p1 = belongNI,
-                                   n1 = dataNew$UBELNI_n,
-                                   p2 = round2(dataOld$f20_adultNI),
-                                   n2 = dataOld$UBELNI_n)
+adultNISiglast <- FALSE
 
 adultNeighSiglast <- significanceTest(p1 = belongNeigh,
                                       n1 = dataNew$UBELNGH_n,

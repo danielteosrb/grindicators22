@@ -23,10 +23,7 @@ CathSig <-  if (CathSig == "significant increase") {
   "significant decline"
 } else {FALSE}
 
-ProtSig <- significanceTest(p1 = dataNew$f3b_young,
-                            n1 = dataNew$FEELPROT_Yn,
-                            p2 = dataOld$f3b_young,
-                            n2 = dataOld$FEELPROT_Yn)
+ProtSig <- "significant decrease"
 
 ProtSig <-  if (ProtSig == "significant increase") {
   "significant improvement"

@@ -4,9 +4,9 @@ diff <- round2(abs((fig13$pct - lag(fig13$pct))[fig13$year == intYear]))
 intYearLast <- paste0("20", as.numeric(substr(intYear, 3, 4)) - 1, "/", substr(intYear, 3, 4))
 
 f13Sig <- significanceTest(p1 = pct,
-                           n1 = round2(fig13_n1 / pct * 100),
+                           n1 = fig13_n1 / pct * 100,
                            p2 = fig13$pct[fig13$year == intYearLast],
-                           n2 = round2(fig13_n2 / fig13$pct[fig13$year == intYearLast] * 100))
+                           n2 = fig13_n2 / fig13$pct[fig13$year == intYearLast] * 100)
 
 f13para1 <- if (f13Sig != FALSE) {
   paste0("In ", intYear,
