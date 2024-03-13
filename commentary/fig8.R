@@ -68,4 +68,4 @@ noRSig <- significanceTest(p1 = dataNew$f8_NoR,
                             p2 = dataOld$f8_NoR,
                             n2 = dataOld$SCHLCULT2_nNoR)
 
-f8para2 <- paste0("Since 2014, there has been a significant increase in the proportion of those with children at school who think that their child's school is somewhere their children can be open about their cultural identity (2022: ", dataNew$f8_pct, "%; 2014: ", data$f8_pct[data$year == 2014], "%).")
+f8para2 <- paste0("Since 2014, there has been a significant decrease in the proportion of those with children at school who think that their child's school is somewhere their children can be open about their cultural identity (2022: ", dataNew$f8_pct, "%; 2014: ", data$f8_pct[data$year == 2014], "%).")
